@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GJV Planlegger — Gi Jesus Videre 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+  :root {
+    --bg-primary:#1a1a1a;--bg-secondary:#222;--bg-card:#2a2a2a;--bg-card-hover:#333;
+    --cyan:#2ecde6;--cyan-dark:#1a9fb5;--orange:#fca232;--orange-dark:#e08a1a;
+    --green:#4ade80;--red:#f87171;--yellow:#facc15;--purple:#a78bfa;
+    --text-primary:#f2ede6;--text-secondary:#a0a0a0;--text-muted:#666;--border:#3a3a3a;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg-primary);color:var(--text-primary);min-height:100vh;}
+  /* LOGIN */
+  .login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:var(--bg-primary);background-image:radial-gradient(circle at 20% 50%,rgba(46,205,230,.06) 0%,transparent 50%),radial-gradient(circle at 80% 50%,rgba(252,162,50,.06) 0%,transparent 50%);}
+  .login-box{background:var(--bg-secondary);border:1px solid var(--border);border-radius:16px;padding:48px 40px;width:100%;max-width:420px;text-align:center;}
+  .login-logo{font-size:28px;font-weight:900;letter-spacing:-.5px;margin-bottom:4px;}
+  .login-logo span{color:var(--cyan);}.login-logo .pipe{color:var(--text-muted);font-weight:400;}
+  .login-subtitle{color:var(--text-secondary);font-size:14px;margin-bottom:32px;}
+  .login-box input,.input{width:100%;padding:12px 14px;background:var(--bg-primary);border:1px solid var(--border);border-radius:10px;color:var(--text-primary);font-size:14px;margin-bottom:12px;outline:none;font-family:inherit;transition:border-color .2s;}
+  .login-box input:focus,.input:focus{border-color:var(--cyan);}
+  .login-box input::placeholder,.input::placeholder{color:var(--text-muted);}
+  .btn-primary{width:100%;padding:14px;background:var(--cyan);color:var(--bg-primary);border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;transition:background .2s,transform .1s;font-family:inherit;margin-top:8px;}
+  .btn-primary:hover{background:var(--cyan-dark);}.btn-primary:active{transform:scale(.98);}
+  .login-note{margin-top:20px;font-size:12px;color:var(--text-muted);line-height:1.5;}
+  /* APP */
+  .app{display:none;}.app.active{display:flex;min-height:100vh;}
+  .sidebar{width:260px;background:var(--bg-secondary);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;}
+  .sidebar-header{padding:24px 20px 20px;border-bottom:1px solid var(--border);}
+  .sidebar-brand{font-size:18px;font-weight:800;}.sidebar-brand span{color:var(--cyan);}
+  .sidebar-tag{display:inline-block;background:var(--orange);color:var(--bg-primary);font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;margin-top:6px;text-transform:uppercase;letter-spacing:.5px;}
+  .sidebar-nav{padding:16px 12px;flex:1;overflow-y:auto;}
+  .nav-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;cursor:pointer;font-size:14px;font-weight:500;color:var(--text-secondary);transition:all .15s;margin-bottom:2px;}
+  .nav-item:hover{background:var(--bg-card);color:var(--text-primary);}
+  .nav-item.active{background:var(--bg-card);color:var(--cyan);}
+  .nav-item svg{width:20px;height:20px;flex-shrink:0;}
+  .nav-badge{margin-left:auto;background:var(--orange);color:var(--bg-primary);font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;}
+  .sidebar-user{padding:16px 20px;border-top:1px solid var(--border);display:flex;align-items:center;gap:12px;}
+  .user-avatar{width:36px;height:36px;border-radius:50%;background:var(--cyan);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:var(--bg-primary);flex-shrink:0;}
+  .user-info{flex:1;min-width:0;}.user-name{font-size:13px;font-weight:600;}.user-role{font-size:11px;color:var(--text-muted);}
+  .logout-btn{background:none;border:none;color:var(--text-muted);cursor:pointer;padding:4px;transition:color .2s;}.logout-btn:hover{color:var(--red);}
+  .main{flex:1;margin-left:260px;}
+  .topbar{padding:20px 32px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--bg-primary);z-index:50;}
+  .topbar h1{font-size:22px;font-weight:800;letter-spacing:-.3px;}
+  .topbar-actions{display:flex;gap:10px;}
+  .btn-sm{padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--bg-card);color:var(--text-primary);font-family:inherit;transition:all .15s;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;}
+  .btn-sm:hover{background:var(--bg-card-hover);}.btn-sm.accent{background:var(--cyan);color:var(--bg-primary);border-color:var(--cyan);}.btn-sm.accent:hover{background:var(--cyan-dark);}
+  .btn-sm.orange{background:var(--orange);color:var(--bg-primary);border-color:var(--orange);}
+  .btn-sm.danger{background:rgba(248,113,113,.15);color:var(--red);border-color:rgba(248,113,113,.3);}.btn-sm.danger:hover{background:rgba(248,113,113,.25);}
+  .content{padding:28px 32px;}
+  /* STATS */
+  .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px;}
+  .stat-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:20px;}
+  .stat-label{font-size:12px;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;}
+  .stat-value{font-size:32px;font-weight:800;letter-spacing:-1px;}
+  .stat-value.cyan{color:var(--cyan);}.stat-value.orange{color:var(--orange);}.stat-value.green{color:var(--green);}.stat-value.red{color:var(--red);}
+  .stat-sub{font-size:12px;color:var(--text-muted);margin-top:4px;}
+  .progress-bar{width:100%;height:8px;background:var(--bg-primary);border-radius:4px;overflow:hidden;margin-top:8px;}
+  .progress-fill{height:100%;border-radius:4px;transition:width .3s;}
+  /* PROGRAM */
+  .day-section{margin-bottom:32px;}
+  .day-header{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+  .day-badge{background:var(--orange);color:var(--bg-primary);font-size:12px;font-weight:800;padding:6px 14px;border-radius:8px;text-transform:uppercase;letter-spacing:.5px;}
+  .day-date{font-size:16px;font-weight:600;}
+  .meeting-section{margin-bottom:24px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+  .meeting-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border);background:rgba(46,205,230,.04);}
+  .meeting-title{font-size:16px;font-weight:700;}
+  .meeting-time{font-size:14px;color:var(--cyan);font-weight:600;}
+  .meeting-slots{padding:8px;}
+  .slot-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;margin-bottom:4px;cursor:grab;transition:all .15s;border:1px solid transparent;}
+  .slot-item:hover{background:var(--bg-card);border-color:var(--border);}
+  .slot-item.dragging{opacity:.5;background:var(--bg-card-hover);}
+  .slot-item.drag-over{border-color:var(--cyan);background:rgba(46,205,230,.05);}
+  .slot-order{width:28px;height:28px;border-radius:6px;background:var(--bg-primary);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--text-muted);flex-shrink:0;}
+  .slot-drag{color:var(--text-muted);cursor:grab;flex-shrink:0;font-size:16px;user-select:none;}
+  .slot-info{flex:1;min-width:0;}
+  .slot-title{font-size:14px;font-weight:600;margin-bottom:2px;}
+  .slot-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+  .type-badge{padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.3px;}
+  .type-tale{background:rgba(46,205,230,.15);color:var(--cyan);}
+  .type-sang{background:rgba(74,222,128,.15);color:var(--green);}
+  .type-gjv-talk{background:rgba(252,162,50,.15);color:var(--orange);}
+  .type-underholdning{background:rgba(167,139,250,.15);color:var(--purple);}
+  .type-panelsamtale{background:rgba(248,113,113,.15);color:var(--red);}
+  .type-video{background:rgba(250,204,21,.15);color:var(--yellow);}
+  .type-annet{background:rgba(160,160,160,.15);color:var(--text-secondary);}
+  .slot-contributor{font-size:12px;color:var(--text-secondary);}
+  .slot-duration{font-size:12px;color:var(--text-muted);white-space:nowrap;}
+  .slot-actions{display:flex;gap:4px;flex-shrink:0;}
+  .slot-btn{width:28px;height:28px;border-radius:6px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .15s;}
+  .slot-btn:hover{background:var(--bg-card);color:var(--text-primary);}
+  .slot-btn.del:hover{color:var(--red);}
+  .add-slot-btn{width:100%;padding:10px;border:1px dashed var(--border);border-radius:8px;background:transparent;color:var(--text-muted);font-family:inherit;font-size:13px;cursor:pointer;transition:all .15s;margin:4px 0 8px;}
+  .add-slot-btn:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(46,205,230,.03);}
+  /* MODAL */
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
+  .modal-overlay.show{display:flex;}
+  .modal{background:var(--bg-secondary);border:1px solid var(--border);border-radius:16px;padding:28px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;}
+  .modal h2{font-size:18px;font-weight:800;margin-bottom:20px;}
+  .form-group{margin-bottom:16px;}
+  .form-label{font-size:12px;font-weight:600;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;display:block;}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  select.input{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;cursor:pointer;}
+  textarea.input{min-height:70px;resize:vertical;}
+  .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px;padding-top:16px;border-top:1px solid var(--border);}
+  /* BIDRAGSYTERE TABLE */
+  .filter-bar{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;align-items:center;}
+  .search-input{flex:1;min-width:200px;padding:10px 14px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;color:var(--text-primary);font-size:14px;font-family:inherit;outline:none;}
+  .search-input:focus{border-color:var(--cyan);}.search-input::placeholder{color:var(--text-muted);}
+  .filter-chip{padding:8px 14px;border-radius:20px;font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:var(--bg-card);color:var(--text-secondary);font-family:inherit;transition:all .15s;}
+  .filter-chip:hover{border-color:var(--text-secondary);}.filter-chip.active{background:var(--cyan);color:var(--bg-primary);border-color:var(--cyan);}
+  .table-wrap{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;overflow:hidden;overflow-x:auto;}
+  table{width:100%;border-collapse:collapse;min-width:800px;}
+  th{text-align:left;padding:14px 16px;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);border-bottom:1px solid var(--border);background:var(--bg-secondary);font-weight:600;}
+  td{padding:12px 16px;font-size:14px;border-bottom:1px solid var(--border);vertical-align:middle;}
+  tr:last-child td{border-bottom:none;}tr:hover td{background:rgba(46,205,230,.03);}
+  .td-name{font-weight:600;white-space:nowrap;}.td-org{color:var(--text-secondary);font-size:13px;}
+  .td-title{font-size:13px;line-height:1.4;max-width:280px;}.td-contact{font-size:13px;color:var(--text-secondary);}
+  .badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:600;white-space:nowrap;}
+  .badge-signert{background:rgba(74,222,128,.15);color:var(--green);}
+  .badge-sendt{background:rgba(250,204,21,.15);color:var(--yellow);}
+  .badge-spurt{background:rgba(252,162,50,.15);color:var(--orange);}
+  .badge-avvent{background:rgba(46,205,230,.15);color:var(--cyan);}
+  .badge-avslatt{background:rgba(248,113,113,.15);color:var(--red);}
+  .komite-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:600;background:rgba(167,139,250,.12);color:var(--purple);}
+  .edit-btn{width:30px;height:30px;border-radius:6px;border:none;background:transparent;color:var(--text-muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .15s;}
+  .edit-btn:hover{background:var(--bg-card-hover);color:var(--cyan);}
+  /* INNSPILL */
+  .feed-list{max-width:700px;}
+  .feed-item{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:12px;}
+  .feed-header{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+  .feed-avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:var(--bg-primary);flex-shrink:0;}
+  .feed-author{font-size:14px;font-weight:600;}.feed-time{font-size:12px;color:var(--text-muted);margin-left:auto;}
+  .feed-body{font-size:14px;line-height:1.6;color:var(--text-secondary);}
+  .feed-tag{display:inline-block;padding:2px 8px;background:rgba(46,205,230,.1);color:var(--cyan);border-radius:4px;font-size:12px;font-weight:500;margin-top:10px;}
+  .new-post{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:24px;}
+  .new-post textarea{width:100%;background:var(--bg-primary);border:1px solid var(--border);border-radius:8px;padding:12px;color:var(--text-primary);font-family:inherit;font-size:14px;min-height:80px;resize:vertical;outline:none;margin-bottom:10px;}
+  .new-post textarea:focus{border-color:var(--cyan);}.new-post textarea::placeholder{color:var(--text-muted);}
+  .new-post-actions{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;}
+  .page{display:none;}.page.active{display:block;}
+  .toast{position:fixed;bottom:24px;right:24px;background:var(--bg-card);border:1px solid var(--green);color:var(--text-primary);padding:14px 20px;border-radius:10px;font-size:14px;font-weight:500;z-index:999;opacity:0;transform:translateY(20px);transition:all .3s;display:flex;align-items:center;gap:10px;}
+  .toast.show{opacity:1;transform:translateY(0);}
+  .empty-state{text-align:center;padding:40px;color:var(--text-muted);font-size:14px;}
+  .time-calc{font-size:11px;color:var(--text-muted);margin-top:2px;}
+  @media(max-width:900px){.stats-grid{grid-template-columns:repeat(2,1fr);}.sidebar{transform:translateX(-100%);transition:transform .3s;}.sidebar.open{transform:translateX(0);}.main{margin-left:0;}}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo"><span>GI JESUS VIDERE</span> <span class="pipe">|</span> Planlegger</div>
+    <div class="login-subtitle">Internt arbeidsverktøy for hovedkomitéen</div>
+    <input type="email" id="loginEmail" placeholder="din@gjv.no" autocomplete="email" />
+    <input type="password" id="loginPass" placeholder="Passord" />
+    <button class="btn-primary" onclick="doLogin()">Logg inn</button>
+    <div class="login-note">Bruk din @gjv.no-konto for å logge inn.<br>Kontakt admin om du trenger tilgang.</div>
+  </div>
+</div>
+
+<!-- APP -->
+<div class="app" id="app">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-brand"><span>GJV</span> Planlegger</div>
+      <div class="sidebar-tag">23–24 okt 2026</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-item active" data-page="dashboard" onclick="showPage('dashboard')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        Oversikt
+      </div>
+      <div class="nav-item" data-page="program" onclick="showPage('program')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+        Program
+      </div>
+      <div class="nav-item" data-page="bidragsytere" onclick="showPage('bidragsytere')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Bidragsytere
+        <span class="nav-badge" id="bidragCount">0</span>
+      </div>
+      <div class="nav-item" data-page="innspill" onclick="showPage('innspill')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Innspill
+        <span class="nav-badge">3</span>
+      </div>
+    </nav>
+    <div class="sidebar-user">
+      <div class="user-avatar" id="userAvatar">E</div>
+      <div class="user-info"><div class="user-name" id="userName">Eirik</div><div class="user-role">Hovedkomité</div></div>
+      <button class="logout-btn" onclick="doLogout()" title="Logg ut">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+      </button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <!-- DASHBOARD -->
+    <div class="page active" id="page-dashboard">
+      <div class="topbar"><h1>Oversikt</h1></div>
+      <div class="content">
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-label">Programposter</div><div class="stat-value cyan" id="statSlots">0</div><div class="stat-sub">Fordelt på 6 møter</div></div>
+          <div class="stat-card"><div class="stat-label">Bidragsytere</div><div class="stat-value orange" id="statBidrag">0</div><div class="stat-sub">fra seminaroversikt</div></div>
+          <div class="stat-card"><div class="stat-label">Signerte</div><div class="stat-value green" id="statSignert">0</div><div class="progress-bar"><div class="progress-fill" id="progressSignert" style="background:var(--green);width:0%"></div></div></div>
+          <div class="stat-card"><div class="stat-label">Trenger oppfølging</div><div class="stat-value red" id="statPending">0</div><div class="stat-sub">spurt / sendt / avvent</div></div>
+        </div>
+        <h2 style="font-size:18px;font-weight:700;margin-bottom:16px;">Programoversikt</h2>
+        <div id="dashProgram"></div>
+      </div>
+    </div>
+
+    <!-- PROGRAM -->
+    <div class="page" id="page-program">
+      <div class="topbar"><h1>Program</h1></div>
+      <div class="content" id="programContent"></div>
+    </div>
+
+    <!-- BIDRAGSYTERE -->
+    <div class="page" id="page-bidragsytere">
+      <div class="topbar"><h1>Bidragsytere</h1><div class="topbar-actions"><button class="btn-sm accent" onclick="openBidragModal()">+ Ny bidragsyter</button></div></div>
+      <div class="content">
+        <div class="filter-bar">
+          <input type="text" class="search-input" placeholder="Søk etter navn, org. eller seminartittel..." id="searchInput" oninput="renderBidrag()" />
+          <button class="filter-chip active" data-filter="all" onclick="setFilter(this,'all')">Alle</button>
+          <button class="filter-chip" data-filter="Signert" onclick="setFilter(this,'Signert')">Signert</button>
+          <button class="filter-chip" data-filter="Kontrakt sendt" onclick="setFilter(this,'Kontrakt sendt')">Sendt</button>
+          <button class="filter-chip" data-filter="Spurt" onclick="setFilter(this,'Spurt')">Spurt</button>
+          <button class="filter-chip" data-filter="Avvent" onclick="setFilter(this,'Avvent')">Avvent</button>
+          <button class="filter-chip" data-filter="Avslått" onclick="setFilter(this,'Avslått')">Avslått</button>
+        </div>
+        <div class="table-wrap"><table><thead><tr><th>Navn</th><th>Org</th><th>Seminartittel</th><th>Ansvarlig</th><th>Status</th><th></th></tr></thead><tbody id="bidragTable"></tbody></table></div>
+      </div>
+    </div>
+
+    <!-- INNSPILL -->
+    <div class="page" id="page-innspill">
+      <div class="topbar"><h1>Innspill &amp; diskusjon</h1></div>
+      <div class="content">
+        <div class="feed-list">
+          <div class="new-post">
+            <textarea id="newPostText" placeholder="Del et innspill, idé eller kommentar med komitéen..."></textarea>
+            <div class="new-post-actions">
+              <select class="input" id="postTag" style="width:auto;margin-bottom:0;">
+                <option value="">Velg programpost (valgfri)</option>
+              </select>
+              <button class="btn-sm accent" onclick="postInnspill()">Publiser</button>
+            </div>
+          </div>
+          <div id="feedList"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Slot (programpost) -->
+<div class="modal-overlay" id="slotModal">
+  <div class="modal">
+    <h2 id="slotModalTitle">Ny programpost</h2>
+    <input type="hidden" id="slotEditDay" /><input type="hidden" id="slotEditMeeting" /><input type="hidden" id="slotEditIdx" />
+    <div class="form-group"><label class="form-label">Tittel</label><input class="input" id="slotTitleInput" placeholder="Hva er denne programposten?" style="margin-bottom:0"/></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Type</label>
+        <select class="input" id="slotTypeInput" style="margin-bottom:0">
+          <option value="tale">Tale</option><option value="sang">Sang</option><option value="gjv-talk">GJV-talk</option>
+          <option value="underholdning">Underholdning</option><option value="panelsamtale">Panelsamtale</option>
+          <option value="video">Video</option><option value="annet">Annet</option>
+        </select>
+      </div>
+      <div class="form-group"><label class="form-label">Varighet (min)</label><input class="input" id="slotDurInput" type="number" value="15" min="5" step="5" style="margin-bottom:0"/></div>
+    </div>
+    <div class="form-group"><label class="form-label">Bidragsyter</label>
+      <select class="input" id="slotContribInput" style="margin-bottom:0"><option value="">— Ingen valgt —</option></select>
+    </div>
+    <div class="form-group"><label class="form-label">Beskrivelse / notater</label><textarea class="input" id="slotDescInput" placeholder="Valgfritt..." style="margin-bottom:0"></textarea></div>
+    <div class="modal-actions">
+      <button class="btn-sm" onclick="closeModal('slotModal')">Avbryt</button>
+      <button class="btn-sm accent" onclick="saveSlot()">Lagre</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Bidragsyter -->
+<div class="modal-overlay" id="bidragModal">
+  <div class="modal">
+    <h2 id="bidragModalTitle">Ny bidragsyter</h2>
+    <input type="hidden" id="bidragEditIdx" />
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Navn</label><input class="input" id="bidragNavnInput" placeholder="Fullt navn" style="margin-bottom:0"/></div>
+      <div class="form-group"><label class="form-label">Organisasjon</label><input class="input" id="bidragOrgInput" placeholder="Org / kirkesamfunn" style="margin-bottom:0"/></div>
+    </div>
+    <div class="form-group"><label class="form-label">Seminartittel</label><input class="input" id="bidragTittelInput" placeholder="Tittel på seminar/bidrag" style="margin-bottom:0"/></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Ansvarlig i komitéen</label>
+        <select class="input" id="bidragAnsvarligInput" style="margin-bottom:0">
+          <option value="">— Velg —</option>
+          <option>Mats</option><option>Roald</option><option>Bente</option>
+          <option>Eirik</option><option>Per Kristian</option><option>Ståle</option>
+        </select>
+      </div>
+      <div class="form-group"><label class="form-label">Status</label>
+        <select class="input" id="bidragStatusInput" style="margin-bottom:0">
+          <option>Spurt</option><option>Kontrakt sendt</option><option>Signert</option><option>Avvent</option><option>Avslått</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group"><label class="form-label">E-post</label><input class="input" id="bidragEpostInput" placeholder="epost@eksempel.no" style="margin-bottom:0"/></div>
+    <div class="form-group"><label class="form-label">Telefon</label><input class="input" id="bidragTlfInput" placeholder="+47 ..." style="margin-bottom:0"/></div>
+    <div class="form-group"><label class="form-label">Notater</label><textarea class="input" id="bidragNotaterInput" placeholder="Interne notater..." style="margin-bottom:0"></textarea></div>
+    <div class="modal-actions">
+      <button class="btn-sm danger" id="bidragDeleteBtn" style="display:none;margin-right:auto" onclick="deleteBidrag()">Slett</button>
+      <button class="btn-sm" onclick="closeModal('bidragModal')">Avbryt</button>
+      <button class="btn-sm accent" onclick="saveBidrag()">Lagre</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════ DATA ═══════
+const komite = ['Mats','Roald','Bente','Eirik','Per Kristian','Ståle'];
+const slotTypes = {tale:'Tale',sang:'Sang','gjv-talk':'GJV-talk',underholdning:'Underholdning',panelsamtale:'Panelsamtale',video:'Video',annet:'Annet'};
+
+const meetings = [
+  { day:0, id:'m1', title:'Oppstartsmøte: "Det faste"', startTime:'13:00', endTime:'15:00', slots:[ {title:'Velkommen og åpning',type:'gjv-talk',duration:15,contributor:'',desc:''},{title:'Devotion',type:'tale',duration:20,contributor:'',desc:''},{title:'Det grunnleggende i barne- og ungdomsarbeid',type:'tale',duration:45,contributor:'',desc:''} ]},
+  { day:0, id:'m2', title:'Fasesamling', startTime:'16:00', endTime:'18:00', slots:[ {title:'Intro og inndeling',type:'gjv-talk',duration:10,contributor:'',desc:''},{title:'Workshop barn',type:'annet',duration:50,contributor:'',desc:''},{title:'Workshop ungdom',type:'annet',duration:50,contributor:'',desc:''} ]},
+  { day:0, id:'m3', title:'Det som rører seg', startTime:'19:00', endTime:'21:00', slots:[ {title:'Aktuelle temaer',type:'tale',duration:30,contributor:'',desc:''},{title:'Paneldebatt',type:'panelsamtale',duration:45,contributor:'',desc:''},{title:'Åpen dialog',type:'annet',duration:30,contributor:'',desc:''} ]},
+  { day:1, id:'m4', title:'Seminarer', startTime:'09:00', endTime:'11:00', slots:[ {title:'Seminar 1',type:'tale',duration:60,contributor:'',desc:'Parallelt seminar'},{title:'Seminar 2',type:'tale',duration:60,contributor:'',desc:'Parallelt seminar'},{title:'Seminar 3',type:'tale',duration:60,contributor:'',desc:'Parallelt seminar'} ]},
+  { day:1, id:'m5', title:'Det nye', startTime:'12:00', endTime:'14:00', slots:[ {title:'Nytenkning og innovasjon',type:'gjv-talk',duration:30,contributor:'',desc:''},{title:'Nye initiativer',type:'tale',duration:40,contributor:'',desc:''} ]},
+  { day:1, id:'m6', title:'Det evige', startTime:'16:00', endTime:'18:00', slots:[ {title:'Evangeliet i dag',type:'tale',duration:40,contributor:'',desc:''},{title:'Lovsang',type:'sang',duration:20,contributor:'',desc:''},{title:'Avslutningsgudstjeneste',type:'tale',duration:45,contributor:'',desc:''} ]}
+];
+
+const days = [{label:'Fredag',date:'23. oktober 2026'},{label:'Lørdag',date:'24. oktober 2026'}];
+
+let bidragsytere = [
+  {navn:'Janne Dale Hauger',org:'Annet',tittel:'Alle trenger å bli sett',ansvarlig:'Eirik',status:'Signert',epost:'',tlf:'',notater:''},
+  {navn:'Helga Irene Fossum',org:'Annet',tittel:'Støtte og tilskudd til menigheten',ansvarlig:'Bente',status:'Signert',epost:'',tlf:'',notater:''},
+  {navn:'Andreas Bjørntvedt',org:'Annet',tittel:'Hvem og hva har betydning ved etablering av trospraksis hos unge?',ansvarlig:'Roald',status:'Signert',epost:'',tlf:'',notater:''},
+  {navn:'Jorun Singstad Djupvik',org:'Annet',tittel:'Tweens i tjeneste',ansvarlig:'Bente',status:'Signert',epost:'',tlf:'',notater:''},
+  {navn:'Asbjørn Håkonseth',org:'Annet',tittel:'Barneteologi for å gi Jesus videre',ansvarlig:'Bente',status:'Signert',epost:'',tlf:'',notater:''},
+  {navn:'Peder Kjøs',org:'Annet',tittel:'Samtale over kløfta',ansvarlig:'Eirik',status:'Kontrakt sendt',epost:'',tlf:'',notater:''},
+  {navn:'Hans Magnus Gjerlaug',org:'Annet',tittel:'Hvordan arbeide forebyggende blant barn og unge?',ansvarlig:'Per Kristian',status:'Kontrakt sendt',epost:'',tlf:'',notater:''},
+  {navn:'Kristian Landro',org:'Annet',tittel:'Hvordan disippelgjøre/nå ungdom utenfor kristne sammenhenger',ansvarlig:'Eirik',status:'Signert',epost:'',tlf:'',notater:''},
+  {navn:'Olve Fagermoen',org:'Annet',tittel:'KVS Krigerne - Hvordan engasjere Gen Z',ansvarlig:'Eirik',status:'Signert',epost:'',tlf:'',notater:''},
+  {navn:'Sigurd Stakkeland',org:'Annet',tittel:'Familier og vennergjenger som lever ut troen i hverdagen',ansvarlig:'Mats',status:'Signert',epost:'',tlf:'',notater:''},
+  {navn:'Joakim Magnus',org:'Annet',tittel:'Kristen i verden / Teologi for livet',ansvarlig:'Eirik',status:'Signert',epost:'',tlf:'',notater:''},
+  {navn:'Hewan Negassi / Sindre Sørlie',org:'Annet',tittel:'Historier fra disippelhus - studenter og unge voksne',ansvarlig:'Ståle',status:'Signert',epost:'',tlf:'',notater:''},
+  {navn:'Linn Margit Bru',org:'Annet',tittel:'Disippelskap som sprenger tradisjonelle rammer',ansvarlig:'Roald',status:'Signert',epost:'',tlf:'',notater:''},
+  {navn:'Mark DeYMaz + Baptist/Bente',org:'Baptist',tittel:'Fleretniske menigheter (3 seminarer)',ansvarlig:'Bente',status:'Signert',epost:'',tlf:'',notater:'Kan delta digitalt – hybridløsning nødvendig'},
+  {navn:'Jan Inge Jenssen',org:'FriBU',tittel:'Kristent barne-/ungdomsarbeid i Nord-Norge',ansvarlig:'Eirik',status:'Signert',epost:'',tlf:'',notater:''},
+  {navn:'Ruben Lie',org:'FriBU',tittel:'Å lede barn og unge inn i bønn som livsstil',ansvarlig:'Eirik',status:'Signert',epost:'',tlf:'',notater:''},
+  {navn:'Yvonne Aas',org:'FriBU',tittel:'Hvordan lage trosopplæring alle vil ha?',ansvarlig:'Mats',status:'Signert',epost:'',tlf:'',notater:''},
+  {navn:'FriBU Team',org:'FriBU',tittel:'Konfirmant som disippel',ansvarlig:'Mats',status:'Signert',epost:'',tlf:'',notater:''},
+  {navn:'Gunnhild Litleskare',org:'Pinse',tittel:'Hvordan bruke Bibelen med barn?',ansvarlig:'Bente',status:'Signert',epost:'',tlf:'',notater:''},
+  {navn:'Karen Hetland',org:'MBU',tittel:'Samtale og sjelesorg med unge',ansvarlig:'Per Kristian',status:'Signert',epost:'',tlf:'',notater:''},
+  {navn:'Hege Bergjord',org:'FaBU',tittel:'Foreldreveiledning i tro',ansvarlig:'Roald',status:'Signert',epost:'',tlf:'',notater:''},
+  {navn:'Torbjørg Oline Nyli & Martin Jakobsen',org:'Annet',tittel:'Om kjønnsroller og ledelse / Kvinner i tjeneste',ansvarlig:'Ståle',status:'Avvent',epost:'',tlf:'',notater:''},
+  {navn:'Britt Solveig Spilde',org:'Annet',tittel:'Bety en forskjell i nabolaget',ansvarlig:'Roald',status:'Avvent',epost:'',tlf:'',notater:''},
+  {navn:'Eirin Sørheim',org:'Annet',tittel:'Samhandling og relasjon mellom barn og Den Hellige Ånd',ansvarlig:'Bente',status:'Avslått',epost:'',tlf:'',notater:''},
+  {navn:'Maria Østhassel Abrahamsen',org:'Annet',tittel:'Psykt deg',ansvarlig:'Mats',status:'Avslått',epost:'',tlf:'',notater:''},
+  {navn:'Damaris Norge',org:'Partner',tittel:'Kritisk medieforståelse for ungdom',ansvarlig:'Eirik',status:'Spurt',epost:'',tlf:'',notater:''},
+  {navn:'Awana / Laget',org:'Partner',tittel:'Disippelskap i praksis – verktøy og ressurser',ansvarlig:'Per Kristian',status:'Spurt',epost:'',tlf:'',notater:''},
+];
+
+let innspillData = [
+  {author:'Linda',avatar:'L',color:'#e879f9',time:'8. mars 2026',body:'Foreslår at vi deler fasesamlingen etter alder som sist, men vurderer å slå sammen tweens og ungdom denne gangen. Tanker?',tag:'Fasesamling'},
+  {author:'Roald',avatar:'R',color:'#fca232',time:'6. mars 2026',body:'Har hatt dialog med Linn Margit Bru – hun ønsker gjerne en lengre sesjon. Kan vi vurdere dobbeltseminar?',tag:'Seminarer'},
+  {author:'Bente',avatar:'B',color:'#2ecde6',time:'4. mars 2026',body:'Mark DeYMaz bekrefter at han kan delta digitalt. Vi bør planlegge for en god hybridløsning på hans tre seminarer om fleretniske menigheter.',tag:'Seminarer'},
+];
+
+let currentFilter = 'all';
+let currentUser = {name:'Eirik',email:'eirik@gjv.no',initials:'E'};
+let dragState = null;
+
+// ═══════ AUTH ═══════
+function doLogin(){
+  const email = document.getElementById('loginEmail').value || 'eirik@gjv.no';
+  const name = email.split('@')[0];
+  currentUser = {name:name.charAt(0).toUpperCase()+name.slice(1),email,initials:name.charAt(0).toUpperCase()};
+  document.getElementById('userName').textContent = currentUser.name;
+  document.getElementById('userAvatar').textContent = currentUser.initials;
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('app').classList.add('active');
+  renderAll();
+}
+function doLogout(){document.getElementById('app').classList.remove('active');document.getElementById('loginScreen').style.display='flex';}
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active',n.dataset.page===id));
+}
+
+// ═══════ RENDER ALL ═══════
+function renderAll(){renderDashboard();renderProgram();renderBidrag();renderFeed();populateContribSelect();}
+
+function calcTimeSlots(meeting){
+  const [sh,sm] = meeting.startTime.split(':').map(Number);
+  let mins = sh*60+sm;
+  return meeting.slots.map(s=>{
+    const startH = String(Math.floor(mins/60)).padStart(2,'0');
+    const startM = String(mins%60).padStart(2,'0');
+    const end = mins + s.duration;
+    const endH = String(Math.floor(end/60)).padStart(2,'0');
+    const endM = String(end%60).padStart(2,'0');
+    const r = {start:`${startH}:${startM}`,end:`${endH}:${endM}`};
+    mins = end;
+    return r;
+  });
+}
+
+// ═══════ DASHBOARD ═══════
+function renderDashboard(){
+  const totalSlots = meetings.reduce((a,m)=>a+m.slots.length,0);
+  const signert = bidragsytere.filter(b=>b.status==='Signert').length;
+  const pending = bidragsytere.filter(b=>['Spurt','Kontrakt sendt','Avvent'].includes(b.status)).length;
+  document.getElementById('statSlots').textContent = totalSlots;
+  document.getElementById('statBidrag').textContent = bidragsytere.length;
+  document.getElementById('statSignert').textContent = signert;
+  document.getElementById('statPending').textContent = pending;
+  document.getElementById('progressSignert').style.width = Math.round(signert/bidragsytere.length*100)+'%';
+  document.getElementById('bidragCount').textContent = bidragsytere.length;
+
+  let html = '';
+  days.forEach((day,di)=>{
+    const dayMeetings = meetings.filter(m=>m.day===di);
+    html += `<div class="day-section"><div class="day-header"><span class="day-badge">${day.label}</span><span class="day-date">${day.date}</span></div>`;
+    dayMeetings.forEach(m=>{
+      const times = calcTimeSlots(m);
+      html += `<div class="meeting-section"><div class="meeting-header"><span class="meeting-title">${m.title}</span><span class="meeting-time">${m.startTime}–${m.endTime}</span></div><div class="meeting-slots" style="padding:12px 16px">`;
+      m.slots.forEach((s,si)=>{
+        const contribName = s.contributor ? bidragsytere.find(b=>b.navn===s.contributor)?.navn || s.contributor : '';
+        html += `<div style="display:flex;align-items:center;gap:10px;padding:6px 0;font-size:13px;border-bottom:1px solid var(--border)">
+          <span style="color:var(--cyan);font-weight:600;min-width:100px">${times[si].start}–${times[si].end}</span>
+          <span class="type-badge type-${s.type}">${slotTypes[s.type]}</span>
+          <span style="font-weight:600">${s.title}</span>
+          ${contribName ? `<span style="color:var(--text-muted);margin-left:auto">→ ${contribName}</span>` : ''}
+          <span style="color:var(--text-muted);margin-left:${contribName?'0':'auto'}">${s.duration} min</span>
+        </div>`;
+      });
+      html += '</div></div>';
+    });
+    html += '</div>';
+  });
+  document.getElementById('dashProgram').innerHTML = html;
+}
+
+// ═══════ PROGRAM ═══════
+function renderProgram(){
+  let html = '';
+  days.forEach((day,di)=>{
+    const dayMeetings = meetings.filter(m=>m.day===di);
+    html += `<div class="day-section"><div class="day-header"><span class="day-badge">${day.label}</span><span class="day-date">${day.date}</span></div>`;
+    dayMeetings.forEach(m=>{
+      const mi = meetings.indexOf(m);
+      const times = calcTimeSlots(m);
+      const totalUsed = m.slots.reduce((a,s)=>a+s.duration,0);
+      const [eh,em] = m.endTime.split(':').map(Number);
+      const [sh,smm] = m.startTime.split(':').map(Number);
+      const totalAvail = (eh*60+em)-(sh*60+smm);
+      const remaining = totalAvail - totalUsed;
+      html += `<div class="meeting-section">
+        <div class="meeting-header">
+          <div><span class="meeting-title">${m.title}</span>
+            <div class="time-calc">${totalUsed} av ${totalAvail} min brukt${remaining>0?` · <span style="color:var(--green)">${remaining} min ledig</span>`:(remaining<0?` · <span style="color:var(--red)">${Math.abs(remaining)} min over!</span>`:' · Fullt')}</div>
+          </div>
+          <span class="meeting-time">${m.startTime}–${m.endTime}</span>
+        </div>
+        <div class="meeting-slots" id="slots-${mi}">`;
+      m.slots.forEach((s,si)=>{
+        const contribName = s.contributor ? (bidragsytere.find(b=>b.navn===s.contributor)?.navn || s.contributor) : '';
+        html += `<div class="slot-item" draggable="true" data-mi="${mi}" data-si="${si}"
+          ondragstart="dragStart(event)" ondragover="dragOver(event)" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" ondrop="dragDrop(event)" ondragend="dragEnd(event)">
+          <span class="slot-drag">⠿</span>
+          <span class="slot-order">${si+1}</span>
+          <div class="slot-info">
+            <div class="slot-title">${s.title}</div>
+            <div class="slot-meta">
+              <span class="type-badge type-${s.type}">${slotTypes[s.type]}</span>
+              ${contribName ? `<span class="slot-contributor">→ ${contribName}</span>` : ''}
+              <span class="slot-duration">${times[si].start}–${times[si].end} (${s.duration} min)</span>
+            </div>
+          </div>
+          <div class="slot-actions">
+            <button class="slot-btn" onclick="event.stopPropagation();editSlot(${mi},${si})" title="Rediger">✏️</button>
+            <button class="slot-btn del" onclick="event.stopPropagation();deleteSlot(${mi},${si})" title="Slett">🗑</button>
+          </div>
+        </div>`;
+      });
+      html += `</div><button class="add-slot-btn" onclick="openSlotModal(${mi})">+ Legg til programpost</button></div>`;
+    });
+    html += '</div>';
+  });
+  document.getElementById('programContent').innerHTML = html;
+}
+
+// Drag & drop
+function dragStart(e){
+  const el=e.currentTarget;dragState={mi:+el.dataset.mi,si:+el.dataset.si};
+  el.classList.add('dragging');e.dataTransfer.effectAllowed='move';
+}
+function dragOver(e){e.preventDefault();e.dataTransfer.dropEffect='move';}
+function dragEnter(e){e.preventDefault();const el=e.currentTarget;if(el.classList.contains('slot-item'))el.classList.add('drag-over');}
+function dragLeave(e){e.currentTarget.classList.remove('drag-over');}
+function dragDrop(e){
+  e.preventDefault();const el=e.currentTarget;el.classList.remove('drag-over');
+  if(!dragState)return;
+  const tmi=+el.dataset.mi,tsi=+el.dataset.si;
+  if(dragState.mi===tmi){
+    const m=meetings[tmi];const item=m.slots.splice(dragState.si,1)[0];
+    m.slots.splice(tsi,0,item);renderProgram();renderDashboard();toast('Rekkefølge oppdatert');
+  }
+}
+function dragEnd(e){e.currentTarget.classList.remove('dragging');dragState=null;document.querySelectorAll('.drag-over').forEach(el=>el.classList.remove('drag-over'));}
+
+// Slot modal
+function openSlotModal(mi,si){
+  document.getElementById('slotModalTitle').textContent = si!==undefined ? 'Rediger programpost' : 'Ny programpost';
+  document.getElementById('slotEditMeeting').value = mi;
+  document.getElementById('slotEditIdx').value = si!==undefined ? si : -1;
+  populateContribSelect();
+  if(si!==undefined){
+    const s=meetings[mi].slots[si];
+    document.getElementById('slotTitleInput').value=s.title;
+    document.getElementById('slotTypeInput').value=s.type;
+    document.getElementById('slotDurInput').value=s.duration;
+    document.getElementById('slotContribInput').value=s.contributor||'';
+    document.getElementById('slotDescInput').value=s.desc||'';
+  } else {
+    document.getElementById('slotTitleInput').value='';
+    document.getElementById('slotTypeInput').value='tale';
+    document.getElementById('slotDurInput').value=15;
+    document.getElementById('slotContribInput').value='';
+    document.getElementById('slotDescInput').value='';
+  }
+  document.getElementById('slotModal').classList.add('show');
+}
+function editSlot(mi,si){openSlotModal(mi,si);}
+function saveSlot(){
+  const mi=+document.getElementById('slotEditMeeting').value;
+  const si=+document.getElementById('slotEditIdx').value;
+  const data={
+    title:document.getElementById('slotTitleInput').value||'Uten tittel',
+    type:document.getElementById('slotTypeInput').value,
+    duration:+document.getElementById('slotDurInput').value||15,
+    contributor:document.getElementById('slotContribInput').value,
+    desc:document.getElementById('slotDescInput').value
+  };
+  if(si>=0){meetings[mi].slots[si]=data;}else{meetings[mi].slots.push(data);}
+  closeModal('slotModal');renderProgram();renderDashboard();toast(si>=0?'Programpost oppdatert':'Programpost lagt til');
+}
+function deleteSlot(mi,si){
+  if(confirm('Slett denne programposten?')){meetings[mi].slots.splice(si,1);renderProgram();renderDashboard();toast('Programpost slettet');}
+}
+
+function populateContribSelect(){
+  const sel=document.getElementById('slotContribInput');
+  const cur=sel.value;
+  sel.innerHTML='<option value="">— Ingen valgt —</option>'+bidragsytere.filter(b=>b.status==='Signert').map(b=>`<option value="${b.navn}">${b.navn}</option>`).join('');
+  sel.value=cur;
+  // also populate innspill tag select
+  const tagSel=document.getElementById('postTag');
+  tagSel.innerHTML='<option value="">Velg programpost (valgfri)</option>'+meetings.map(m=>`<option value="${m.title}">${m.title}</option>`).join('')+'<option value="Generelt">Generelt</option>';
+}
+
+// ═══════ BIDRAGSYTERE ═══════
+function setFilter(el,filter){
+  currentFilter=filter;
+  document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  renderBidrag();
+}
+function renderBidrag(){
+  const query=(document.getElementById('searchInput')?.value||'').toLowerCase();
+  const filtered=bidragsytere.filter(b=>{
+    const matchFilter=currentFilter==='all'||b.status===currentFilter;
+    const matchSearch=!query||b.navn.toLowerCase().includes(query)||b.org.toLowerCase().includes(query)||b.tittel.toLowerCase().includes(query)||(b.ansvarlig||'').toLowerCase().includes(query);
+    return matchFilter&&matchSearch;
+  });
+  document.getElementById('bidragTable').innerHTML=filtered.map((b,i)=>{
+    const realIdx=bidragsytere.indexOf(b);
+    const bc=b.status==='Signert'?'badge-signert':b.status==='Kontrakt sendt'?'badge-sendt':b.status==='Spurt'?'badge-spurt':b.status==='Avvent'?'badge-avvent':'badge-avslatt';
+    return `<tr>
+      <td class="td-name">${b.navn}</td>
+      <td class="td-org">${b.org}</td>
+      <td class="td-title">${b.tittel}</td>
+      <td>${b.ansvarlig?`<span class="komite-badge">${b.ansvarlig}</span>`:'-'}</td>
+      <td><span class="badge ${bc}">${b.status}</span></td>
+      <td><button class="edit-btn" onclick="openBidragModal(${realIdx})" title="Rediger">✏️</button></td>
+    </tr>`;
+  }).join('');
+}
+
+function openBidragModal(idx){
+  const isEdit=idx!==undefined&&idx>=0;
+  document.getElementById('bidragModalTitle').textContent=isEdit?'Rediger bidragsyter':'Ny bidragsyter';
+  document.getElementById('bidragEditIdx').value=isEdit?idx:-1;
+  document.getElementById('bidragDeleteBtn').style.display=isEdit?'inline-flex':'none';
+  if(isEdit){
+    const b=bidragsytere[idx];
+    document.getElementById('bidragNavnInput').value=b.navn;
+    document.getElementById('bidragOrgInput').value=b.org;
+    document.getElementById('bidragTittelInput').value=b.tittel;
+    document.getElementById('bidragAnsvarligInput').value=b.ansvarlig||'';
+    document.getElementById('bidragStatusInput').value=b.status;
+    document.getElementById('bidragEpostInput').value=b.epost||'';
+    document.getElementById('bidragTlfInput').value=b.tlf||'';
+    document.getElementById('bidragNotaterInput').value=b.notater||'';
+  } else {
+    ['bidragNavnInput','bidragOrgInput','bidragTittelInput','bidragEpostInput','bidragTlfInput','bidragNotaterInput'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('bidragAnsvarligInput').value='';
+    document.getElementById('bidragStatusInput').value='Spurt';
+  }
+  document.getElementById('bidragModal').classList.add('show');
+}
+function saveBidrag(){
+  const idx=+document.getElementById('bidragEditIdx').value;
+  const data={
+    navn:document.getElementById('bidragNavnInput').value||'Ukjent',
+    org:document.getElementById('bidragOrgInput').value||'',
+    tittel:document.getElementById('bidragTittelInput').value||'',
+    ansvarlig:document.getElementById('bidragAnsvarligInput').value,
+    status:document.getElementById('bidragStatusInput').value,
+    epost:document.getElementById('bidragEpostInput').value,
+    tlf:document.getElementById('bidragTlfInput').value,
+    notater:document.getElementById('bidragNotaterInput').value
+  };
+  if(idx>=0){bidragsytere[idx]=data;}else{bidragsytere.push(data);}
+  closeModal('bidragModal');renderAll();toast(idx>=0?'Bidragsyter oppdatert':'Ny bidragsyter lagt til');
+}
+function deleteBidrag(){
+  const idx=+document.getElementById('bidragEditIdx').value;
+  if(idx>=0&&confirm('Slett denne bidragsyteren?')){
+    bidragsytere.splice(idx,1);closeModal('bidragModal');renderAll();toast('Bidragsyter slettet');
+  }
+}
+
+// ═══════ INNSPILL ═══════
+function renderFeed(){
+  document.getElementById('feedList').innerHTML=innspillData.map(i=>`
+    <div class="feed-item"><div class="feed-header">
+      <div class="feed-avatar" style="background:${i.color}">${i.avatar}</div>
+      <span class="feed-author">${i.author}</span><span class="feed-time">${i.time}</span></div>
+      <div class="feed-body">${i.body}</div>${i.tag?`<span class="feed-tag">${i.tag}</span>`:''}
+    </div>`).join('');
+}
+function postInnspill(){
+  const text=document.getElementById('newPostText').value.trim();if(!text)return;
+  const tag=document.getElementById('postTag').value;
+  const colors=['#e879f9','#fca232','#2ecde6','#4ade80','#f87171','#a78bfa'];
+  innspillData.unshift({author:currentUser.name,avatar:currentUser.initials,color:colors[Math.floor(Math.random()*colors.length)],time:'Nå',body:text,tag:tag||null});
+  document.getElementById('newPostText').value='';renderFeed();toast('Innspill publisert!');
+}
+
+// ═══════ UTILS ═══════
+function closeModal(id){document.getElementById(id).classList.remove('show');}
+function toast(msg){const t=document.getElementById('toast');t.innerHTML='✅ '+msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){document.querySelectorAll('.modal-overlay.show').forEach(m=>m.classList.remove('show'));}
+  if(e.key==='Enter'&&document.getElementById('loginScreen').style.display!=='none'){doLogin();}
+});
+// Close modal on overlay click
+document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('show');}));
+</script>
+</body>
+</html>
