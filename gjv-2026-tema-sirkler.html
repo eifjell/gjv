@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GJV 2026 — Temavisualisering: Overlappende sirkler</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #F59E2A;
+    --orange-light: #FDB94D;
+    --orange-dark: #D4850F;
+    --sage: #4A8B6F;
+    --sage-light: #6BAF8E;
+    --sage-pale: #E8F0EB;
+    --sage-dark: #2D6B4F;
+    --dark: #1E1D1B;
+    --dark-warm: #2C2926;
+    --cream: #FAF8F4;
+    --cream-warm: #F5F0E8;
+    --text: #3D3830;
+    --text-light: #78716C;
+    --text-muted: #A8A29E;
+    --border: #E7E2DA;
+    --font-display: 'Bricolage Grotesque', sans-serif;
+    --font-body: 'Plus Jakarta Sans', sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: var(--font-body);
+    background: var(--cream);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.02;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px;
+  }
+
+  .container { max-width: 1000px; margin: 0 auto; padding: 0 40px; }
+
+  /* Header */
+  .header {
+    background: var(--dark);
+    padding: 48px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    right: -5%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(245,158,42,0.1) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .badge {
+    display: inline-block;
+    background: var(--sage);
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 100px;
+    margin-bottom: 14px;
+    position: relative;
+    z-index: 1;
+  }
+  .header h1 {
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: white;
+    letter-spacing: -0.5px;
+    position: relative;
+    z-index: 1;
+  }
+  .header h1 span { color: var(--orange); }
+  .header p {
+    margin-top: 8px;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.95rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  section { padding: 56px 0; }
+  section + section { border-top: 1px solid var(--border); }
+  .section-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--dark);
+    letter-spacing: -0.3px;
+    margin-bottom: 6px;
+  }
+  .section-desc {
+    color: var(--text-light);
+    max-width: 600px;
+    margin-bottom: 36px;
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  /* === WORD EXPLORATION === */
+  .word-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .word-card {
+    background: white;
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    transition: all 0.3s cubic-bezier(0.22,1,0.36,1);
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+  }
+  .word-card:hover {
+    border-color: var(--orange);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  }
+  .word-card.recommended {
+    border-color: var(--orange);
+    box-shadow: 0 4px 16px rgba(245,158,42,0.1);
+  }
+  .word-card.recommended::after {
+    content: 'Anbefalt';
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: var(--orange);
+    color: white;
+    font-size: 0.55rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 100px;
+  }
+  .word-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 4px;
+  }
+  .word-card .subtitle {
+    font-size: 0.8rem;
+    color: var(--sage);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .word-card p {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    line-height: 1.6;
+  }
+  .word-card .verdict {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .verdict-good { color: var(--sage-dark); }
+  .verdict-neutral { color: var(--text-muted); }
+
+  .note-box {
+    background: var(--sage-pale);
+    border-left: 3px solid var(--sage);
+    border-radius: 0 12px 12px 0;
+    padding: 18px 22px;
+    margin: 24px 0;
+    font-size: 0.85rem;
+    color: var(--sage-dark);
+    line-height: 1.65;
+  }
+
+  /* === CIRCLE VISUALIZATIONS === */
+  .viz-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .viz-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 36px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.22,1,0.36,1);
+  }
+  .viz-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+  }
+  .viz-card.full-width {
+    grid-column: 1 / -1;
+  }
+  .viz-card.dark-bg {
+    background: var(--dark);
+    border-color: transparent;
+  }
+  .viz-label {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+  }
+  .viz-card.dark-bg .viz-label { color: rgba(255,255,255,0.35); }
+  .viz-title {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-top: 20px;
+    margin-bottom: 4px;
+  }
+  .viz-card.dark-bg .viz-title { color: white; }
+  .viz-desc {
+    font-size: 0.78rem;
+    color: var(--text-light);
+    max-width: 320px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+  .viz-card.dark-bg .viz-desc { color: rgba(255,255,255,0.4); }
+
+  /* SVG circles */
+  .circle-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 220px;
+  }
+  .circle-container svg {
+    width: 100%;
+    max-width: 380px;
+    height: auto;
+  }
+  .circle-container.large svg {
+    max-width: 500px;
+  }
+
+  /* === HERO CONCEPT === */
+  .hero-concept {
+    background: var(--dark);
+    border-radius: 24px;
+    overflow: hidden;
+    position: relative;
+    padding: 72px 56px;
+    min-height: 420px;
+    display: flex;
+    align-items: center;
+    margin-top: 24px;
+  }
+  .hero-concept::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--orange), var(--sage));
+  }
+  .hero-concept-text {
+    position: relative;
+    z-index: 2;
+    max-width: 420px;
+  }
+  .hero-concept-circles {
+    position: absolute;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+  }
+  .hero-concept-circles svg {
+    width: 360px;
+    height: 320px;
+  }
+  .hero-overline {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--sage-light);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .hero-overline::before {
+    content: '';
+    width: 24px;
+    height: 2px;
+    background: var(--sage);
+  }
+  .hero-title-big {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    font-weight: 800;
+    color: white;
+    line-height: 0.98;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
+  }
+  .hero-title-big .orange { color: var(--orange); }
+  .hero-subtitle-concept {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.7;
+    margin-bottom: 28px;
+  }
+  .btn-mock {
+    display: inline-block;
+    background: var(--orange);
+    color: white;
+    font-family: var(--font-body);
+    font-size: 0.88rem;
+    font-weight: 700;
+    padding: 14px 28px;
+    border: none;
+    border-radius: 10px;
+  }
+
+  /* === USAGE EXAMPLES === */
+  .usage-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .usage-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .usage-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--sage);
+  }
+  .usage-card:nth-child(2)::before { background: var(--orange); }
+  .usage-card:nth-child(3)::before { background: linear-gradient(90deg, var(--orange), var(--sage)); }
+  .usage-card h4 {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 6px;
+  }
+  .usage-card p {
+    font-size: 0.78rem;
+    color: var(--text-light);
+    line-height: 1.55;
+  }
+
+  /* Animations */
+  @keyframes floatSlow { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+  @keyframes pulseOpacity { 0%,100% { opacity: 0.6; } 50% { opacity: 1; } }
+
+  @media (max-width: 768px) {
+    .container { padding: 0 20px; }
+    .word-grid, .viz-grid { grid-template-columns: 1fr; }
+    .usage-grid { grid-template-columns: 1fr; }
+    .hero-concept { padding: 48px 28px; }
+    .hero-concept-circles { display: none; }
+    .hero-title-big { font-size: 2.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="container">
+    <div class="badge">Tema + Visuelt konsept</div>
+    <h1>Overlappende <span>generasjoner</span></h1>
+    <p>Hvordan formulere temaet — og bruke sirkler som visuell signatur</p>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- === 1. ORDVALG === -->
+<section>
+  <div class="section-label">01 — Ordvalg</div>
+  <div class="section-title">Bedre enn «parallell»</div>
+  <div class="section-desc">«Parallell» antyder linjer som aldri møtes. Dere mener det motsatte — generasjoner som vokser <em>sammen</em>, i overlapp. Her er alternativer som fanger det bedre.</div>
+
+  <div class="word-grid">
+    <div class="word-card recommended">
+      <h3>Sammenvevd disippelgjøring</h3>
+      <div class="subtitle">«Generasjoner som veves sammen i tro»</div>
+      <p>To tråder — foreldre og barn, unge voksne og ungdom — som flettes sammen til noe sterkere. Visuelt og konkret. Fanger både det samtidige og det relasjonelle.</p>
+      <div class="verdict verdict-good">Sterkt visuelt. Unik formulering. God preketekst.</div>
+    </div>
+    <div class="word-card recommended">
+      <h3>Tro i overlapp</h3>
+      <div class="subtitle">«Der generasjonene møtes, vokser troen»</div>
+      <p>Direkte, enkelt, og knytter seg rett til den visuelle identiteten med overlappende sirkler. Lett å forstå, lett å huske. Fungerer som både tittel og konsept.</p>
+      <div class="verdict verdict-good">Enklest. Sterkest kobling til visuell identitet.</div>
+    </div>
+    <div class="word-card">
+      <h3>Gjensidig disippelgjøring</h3>
+      <div class="subtitle">«Vi former hverandre»</div>
+      <p>Understreker at det går begge veier — foreldre formes mens de former. Akademisk korrekt, men litt tungt som festivaluttrykk.</p>
+      <div class="verdict verdict-neutral">Presist men noe akademisk.</div>
+    </div>
+    <div class="word-card">
+      <h3>Felles vekst</h3>
+      <div class="subtitle">«Sammen i tro, på tvers av generasjoner»</div>
+      <p>Varmt, inkluderende, lavterskel. Kanskje litt for generisk — kunne vært tema for hva som helst. Mangler den spesifikke «disippelgjøring»-kanten.</p>
+      <div class="verdict verdict-neutral">Varmt men noe generisk.</div>
+    </div>
+  </div>
+
+  <div class="word-grid" style="grid-template-columns: 1fr 1fr;">
+    <div class="word-card">
+      <h3>Disippelgjøring i relasjon</h3>
+      <div class="subtitle">«Tro overføres i fellesskap»</div>
+      <p>Relasjonsaspektet er tydelig. Fungerer godt teologisk. «I relasjon» er mer organisk enn «parallell» — det handler om at livet deles, ikke at det løper side om side.</p>
+      <div class="verdict verdict-good">Teologisk solid. Varmt.</div>
+    </div>
+    <div class="word-card">
+      <h3>Generasjonsoverlapp</h3>
+      <div class="subtitle">«Tro vokser der generasjonene møtes»</div>
+      <p>Direkte, norsk, konkret. Peker rett på overlappet som visuelt motiv. Kan føles litt som en fagterm, men har kraft som konsept.</p>
+      <div class="verdict verdict-neutral">Direkte, noe faglig.</div>
+    </div>
+  </div>
+
+  <div class="note-box">
+    <strong>Anbefaling:</strong> «Tro i overlapp» fungerer best som kort, slagkraftig konferansetema — det er enkelt, visuelt, og oversetter direkte til den grafiske identiteten. For undertittel eller utdyping: «Generasjoner som veves sammen i tro» eller «Der generasjonene møtes, vokser troen».
+  </div>
+</section>
+
+<!-- === 2. SIRKEL-VARIANTER === -->
+<section>
+  <div class="section-label">02 — Overlappende sirkler</div>
+  <div class="section-title">Visuell signatur</div>
+  <div class="section-desc">Sirklene representerer generasjonene. Overlappet er der disippelgjøringen skjer — der tro overføres, der relasjon bygges. Her er variasjoner å velge mellom.</div>
+
+  <div class="viz-grid">
+
+    <!-- A: Enkel to-sirkel (Venn) -->
+    <div class="viz-card">
+      <div class="viz-label">Variant A — Klassisk overlapp</div>
+      <div class="circle-container">
+        <svg viewBox="0 0 380 220" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="gradA" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#F59E2A" stop-opacity="0.6"/>
+              <stop offset="100%" stop-color="#4A8B6F" stop-opacity="0.6"/>
+            </linearGradient>
+          </defs>
+          <circle cx="140" cy="110" r="90" fill="none" stroke="#F59E2A" stroke-width="2.5" opacity="0.7"/>
+          <circle cx="240" cy="110" r="90" fill="none" stroke="#4A8B6F" stroke-width="2.5" opacity="0.7"/>
+          <!-- Overlap fill -->
+          <clipPath id="clipA1"><circle cx="240" cy="110" r="90"/></clipPath>
+          <circle cx="140" cy="110" r="90" fill="url(#gradA)" opacity="0.15" clip-path="url(#clipA1)"/>
+          <!-- Labels -->
+          <text x="100" y="108" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="600" fill="#D4850F" text-anchor="middle">Foreldre</text>
+          <text x="100" y="122" font-family="Plus Jakarta Sans, sans-serif" font-size="9" fill="#A8A29E" text-anchor="middle">Unge voksne</text>
+          <text x="280" y="108" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="600" fill="#2D6B4F" text-anchor="middle">Barn</text>
+          <text x="280" y="122" font-family="Plus Jakarta Sans, sans-serif" font-size="9" fill="#A8A29E" text-anchor="middle">Ungdom</text>
+          <text x="190" y="106" font-family="Bricolage Grotesque, sans-serif" font-size="10" font-weight="700" fill="#3D3830" text-anchor="middle">Tro i</text>
+          <text x="190" y="120" font-family="Bricolage Grotesque, sans-serif" font-size="10" font-weight="700" fill="#3D3830" text-anchor="middle">overlapp</text>
+        </svg>
+      </div>
+      <div class="viz-title">To generasjoner, ett møtepunkt</div>
+      <div class="viz-desc">Enkel, tydelig, ikonisk. Fungerer i alle størrelser — fra favicon til festivalscene.</div>
+    </div>
+
+    <!-- B: Tre sirkler -->
+    <div class="viz-card">
+      <div class="viz-label">Variant B — Tre generasjoner</div>
+      <div class="circle-container">
+        <svg viewBox="0 0 380 260" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="gradB" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#F59E2A" stop-opacity="0.5"/>
+              <stop offset="50%" stop-color="#4A8B6F" stop-opacity="0.4"/>
+              <stop offset="100%" stop-color="#1E1D1B" stop-opacity="0.3"/>
+            </linearGradient>
+          </defs>
+          <circle cx="155" cy="105" r="80" fill="rgba(245,158,42,0.06)" stroke="#F59E2A" stroke-width="2" opacity="0.7"/>
+          <circle cx="225" cy="105" r="80" fill="rgba(74,139,111,0.06)" stroke="#4A8B6F" stroke-width="2" opacity="0.7"/>
+          <circle cx="190" cy="165" r="80" fill="rgba(30,29,27,0.04)" stroke="#3D3830" stroke-width="2" opacity="0.4"/>
+          <!-- Labels -->
+          <text x="120" y="82" font-family="Plus Jakarta Sans, sans-serif" font-size="10" font-weight="600" fill="#D4850F" text-anchor="middle">Foreldre</text>
+          <text x="260" y="82" font-family="Plus Jakarta Sans, sans-serif" font-size="10" font-weight="600" fill="#2D6B4F" text-anchor="middle">Barn</text>
+          <text x="190" y="210" font-family="Plus Jakarta Sans, sans-serif" font-size="10" font-weight="600" fill="#78716C" text-anchor="middle">Menighet</text>
+          <text x="190" y="128" font-family="Bricolage Grotesque, sans-serif" font-size="9" font-weight="700" fill="#3D3830" text-anchor="middle">Sammen</text>
+        </svg>
+      </div>
+      <div class="viz-title">Tre kontekster som overlapper</div>
+      <div class="viz-desc">Foreldre, barn og menighetens rolle — alle møtes i midten. Viser bredden i GJVs visjon.</div>
+    </div>
+
+    <!-- C: Konsentriske ringer -->
+    <div class="viz-card">
+      <div class="viz-label">Variant C — Generasjonskjede</div>
+      <div class="circle-container">
+        <svg viewBox="0 0 380 220" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="120" cy="110" r="55" fill="none" stroke="#F59E2A" stroke-width="2.5" opacity="0.7"/>
+          <circle cx="190" cy="110" r="55" fill="none" stroke="#4A8B6F" stroke-width="2.5" opacity="0.7"/>
+          <circle cx="260" cy="110" r="55" fill="none" stroke="#D4850F" stroke-width="2" opacity="0.4"/>
+          <!-- Overlap zones -->
+          <clipPath id="clipC1"><circle cx="190" cy="110" r="55"/></clipPath>
+          <circle cx="120" cy="110" r="55" fill="rgba(245,158,42,0.08)" clip-path="url(#clipC1)"/>
+          <clipPath id="clipC2"><circle cx="260" cy="110" r="55"/></clipPath>
+          <circle cx="190" cy="110" r="55" fill="rgba(74,139,111,0.08)" clip-path="url(#clipC2)"/>
+          <!-- Labels -->
+          <text x="90" y="108" font-family="Plus Jakarta Sans, sans-serif" font-size="9" font-weight="600" fill="#D4850F" text-anchor="middle">Voksne</text>
+          <text x="90" y="120" font-family="Plus Jakarta Sans, sans-serif" font-size="8" fill="#A8A29E" text-anchor="middle">mentorer</text>
+          <text x="190" y="108" font-family="Plus Jakarta Sans, sans-serif" font-size="9" font-weight="600" fill="#2D6B4F" text-anchor="middle">Unge</text>
+          <text x="190" y="120" font-family="Plus Jakarta Sans, sans-serif" font-size="8" fill="#A8A29E" text-anchor="middle">voksne</text>
+          <text x="290" y="108" font-family="Plus Jakarta Sans, sans-serif" font-size="9" font-weight="600" fill="#D4850F" text-anchor="middle">Ung-</text>
+          <text x="290" y="120" font-family="Plus Jakarta Sans, sans-serif" font-size="8" fill="#A8A29E" text-anchor="middle">dommer</text>
+          <!-- Arrows between overlaps -->
+          <text x="152" y="145" font-family="Plus Jakarta Sans, sans-serif" font-size="7" fill="#78716C" text-anchor="middle">overlapp</text>
+          <text x="228" y="145" font-family="Plus Jakarta Sans, sans-serif" font-size="7" fill="#78716C" text-anchor="middle">overlapp</text>
+        </svg>
+      </div>
+      <div class="viz-title">Kjede av overlapp</div>
+      <div class="viz-desc">Voksne mentorer unge voksne, som mentorer ungdommer. Tro overføres i kjede — alltid med overlapp.</div>
+    </div>
+
+    <!-- D: Abstrakt / mørk hero -->
+    <div class="viz-card dark-bg">
+      <div class="viz-label">Variant D — Abstrakt/kunstnerisk</div>
+      <div class="circle-container">
+        <svg viewBox="0 0 380 220" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="glow1" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#F59E2A" stop-opacity="0.2"/>
+              <stop offset="100%" stop-color="#F59E2A" stop-opacity="0"/>
+            </radialGradient>
+            <radialGradient id="glow2" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#4A8B6F" stop-opacity="0.2"/>
+              <stop offset="100%" stop-color="#4A8B6F" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <!-- Glows -->
+          <circle cx="155" cy="110" r="100" fill="url(#glow1)"/>
+          <circle cx="225" cy="110" r="100" fill="url(#glow2)"/>
+          <!-- Circles -->
+          <circle cx="155" cy="110" r="80" fill="none" stroke="#F59E2A" stroke-width="1.5" opacity="0.4"/>
+          <circle cx="225" cy="110" r="80" fill="none" stroke="#4A8B6F" stroke-width="1.5" opacity="0.4"/>
+          <!-- Inner circles -->
+          <circle cx="155" cy="110" r="50" fill="none" stroke="#F59E2A" stroke-width="0.8" opacity="0.2"/>
+          <circle cx="225" cy="110" r="50" fill="none" stroke="#4A8B6F" stroke-width="0.8" opacity="0.2"/>
+          <!-- Center glow -->
+          <circle cx="190" cy="110" r="20" fill="rgba(255,255,255,0.04)"/>
+          <circle cx="190" cy="110" r="4" fill="rgba(255,255,255,0.3)"/>
+          <!-- Dots at intersections -->
+          <circle cx="190" cy="56" r="2.5" fill="rgba(255,255,255,0.2)"/>
+          <circle cx="190" cy="164" r="2.5" fill="rgba(255,255,255,0.2)"/>
+        </svg>
+      </div>
+      <div class="viz-title">Atmosfærisk — for scenebruk</div>
+      <div class="viz-desc">Subtile glow-effekter, doble ringer. Fungerer som bakgrunnsgrafikk på skjermer, slides og sceneelementer.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- === 3. HERO MED SIRKLER === -->
+<section>
+  <div class="section-label">03 — Hero-konsept med sirkelmotiv</div>
+  <div class="section-title">Slik kan det se ut i bruk</div>
+  <div class="section-desc">Sirklene som integrert del av hero-seksjonen — ikke bare dekor, men meningsbærende.</div>
+
+  <div class="hero-concept">
+    <div class="hero-concept-text">
+      <div class="hero-overline">23–24. oktober 2026 · Oslo</div>
+      <div class="hero-title-big">
+        Tro i<br><span class="orange">overlapp</span>
+      </div>
+      <div class="hero-subtitle-concept">
+        Gi Jesus Videre 2026 handler om generasjoner som vokser i tro — sammen. For alle som arbeider med barn, unge og neste generasjon.
+      </div>
+      <div class="btn-mock">Meld deg på</div>
+    </div>
+    <div class="hero-concept-circles">
+      <svg viewBox="0 0 360 320" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="heroGlow1" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#F59E2A" stop-opacity="0.15"/>
+            <stop offset="100%" stop-color="#F59E2A" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="heroGlow2" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#4A8B6F" stop-opacity="0.15"/>
+            <stop offset="100%" stop-color="#4A8B6F" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <!-- Outer glows -->
+        <circle cx="140" cy="145" r="140" fill="url(#heroGlow1)"/>
+        <circle cx="220" cy="175" r="140" fill="url(#heroGlow2)"/>
+        <!-- Main circles -->
+        <circle cx="140" cy="145" r="110" fill="none" stroke="#F59E2A" stroke-width="1.5" opacity="0.35">
+          <animate attributeName="r" values="108;112;108" dur="6s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="220" cy="175" r="110" fill="none" stroke="#4A8B6F" stroke-width="1.5" opacity="0.35">
+          <animate attributeName="r" values="112;108;112" dur="6s" repeatCount="indefinite"/>
+        </circle>
+        <!-- Inner rings -->
+        <circle cx="140" cy="145" r="70" fill="none" stroke="#F59E2A" stroke-width="0.8" opacity="0.15"/>
+        <circle cx="220" cy="175" r="70" fill="none" stroke="#4A8B6F" stroke-width="0.8" opacity="0.15"/>
+        <!-- Center point of overlap -->
+        <circle cx="180" cy="160" r="6" fill="rgba(255,255,255,0.06)"/>
+        <circle cx="180" cy="160" r="2.5" fill="rgba(255,255,255,0.25)">
+          <animate attributeName="opacity" values="0.15;0.35;0.15" dur="4s" repeatCount="indefinite"/>
+        </circle>
+        <!-- Small accent dots -->
+        <circle cx="180" cy="85" r="2" fill="rgba(245,158,42,0.3)"/>
+        <circle cx="180" cy="235" r="2" fill="rgba(74,139,111,0.3)"/>
+        <circle cx="100" cy="230" r="1.5" fill="rgba(245,158,42,0.15)"/>
+        <circle cx="270" cy="105" r="1.5" fill="rgba(74,139,111,0.15)"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- === 4. BRUKSOMRÅDER === -->
+<section>
+  <div class="section-label">04 — Bruksområder</div>
+  <div class="section-title">Hvor sirklene lever</div>
+  <div class="section-desc">Sirkelmotivet kan skaleres og brukes konsistent på tvers av alt materiell — fra digitalt til fysisk.</div>
+
+  <div class="usage-grid">
+    <div class="usage-card">
+      <h4>Nettside + SoMe</h4>
+      <p>Hero-seksjon, profilbilder, Instagram-stories. Sirklene animeres subtilt med CSS/SVG — puster sakte inn og ut.</p>
+    </div>
+    <div class="usage-card">
+      <h4>Trykksaker</h4>
+      <p>Plakater, programmer, ID-kort. Sirklene i outline-stil fungerer godt i print — med oransje og grønn som fargetoner.</p>
+    </div>
+    <div class="usage-card">
+      <h4>Scene + skjermer</h4>
+      <p>Motion graphics med sirkler som puster, overlapper, og samles. Atmosfærisk bakgrunn under lovsang og mellom øktene.</p>
+    </div>
+  </div>
+
+  <div class="note-box" style="margin-top: 24px;">
+    <strong>Oppsummert:</strong> Overlappende sirkler er et sterkt visuelt grep fordi de er meningsbærende (generasjoner som møtes), fleksible (skalerer fra ikon til scene), og distinkte (skiller GJV fra andre konferanser). Koblet med «Tro i overlapp» som tema, får dere en profil der ord og bilde forsterker hverandre.
+  </div>
+</section>
+
+</div>
+
+<div style="height: 48px;"></div>
+
+</body>
+</html>

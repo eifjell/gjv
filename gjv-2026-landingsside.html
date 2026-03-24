@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gi Jesus Videre 2026 — Konferanse for neste generasjon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #F59E2A;
+    --orange-light: #FDB94D;
+    --orange-dark: #D4850F;
+    --orange-glow: rgba(245,158,42,0.15);
+    --sage: #4A8B6F;
+    --sage-light: #6BAF8E;
+    --sage-pale: #E8F0EB;
+    --sage-dark: #2D6B4F;
+    --dark: #1E1D1B;
+    --dark-warm: #2C2926;
+    --dark-mid: #3D3830;
+    --cream: #FAF8F4;
+    --cream-warm: #F5F0E8;
+    --text: #3D3830;
+    --text-light: #78716C;
+    --text-muted: #A8A29E;
+    --border: #E7E2DA;
+    --font-display: 'Bricolage Grotesque', sans-serif;
+    --font-body: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--cream);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* === NOISE TEXTURE OVERLAY === */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+  }
+
+  /* === ANIMATIONS === */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(32px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes slideInRight {
+    from { opacity: 0; transform: translateX(40px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+  @keyframes pulseGlow {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.05); }
+  }
+  @keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.92); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes drawLine {
+    from { width: 0; }
+    to { width: 100%; }
+  }
+
+  .animate { opacity: 0; }
+  .animate.visible { animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+  .animate-delay-1 { animation-delay: 0.1s !important; }
+  .animate-delay-2 { animation-delay: 0.2s !important; }
+  .animate-delay-3 { animation-delay: 0.3s !important; }
+  .animate-delay-4 { animation-delay: 0.4s !important; }
+  .animate-delay-5 { animation-delay: 0.5s !important; }
+
+  /* === NAV === */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding: 0 48px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(30,29,27,0.92);
+    backdrop-filter: blur(20px) saturate(1.4);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    animation: fadeIn 0.5s ease forwards;
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: white;
+    letter-spacing: -0.3px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .nav-logo .logo-mark {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, var(--orange), var(--sage));
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: white;
+  }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: white; }
+  .nav-cta {
+    background: var(--orange) !important;
+    color: white !important;
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-weight: 600 !important;
+    transition: all 0.2s !important;
+  }
+  .nav-cta:hover {
+    background: var(--orange-light) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(245,158,42,0.3);
+  }
+
+  /* === HERO === */
+  .hero {
+    min-height: 100vh;
+    background: var(--dark);
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding: 120px 48px 80px;
+  }
+  .hero-bg-gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 80%, rgba(74,139,111,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse 60% 80% at 80% 20%, rgba(245,158,42,0.06) 0%, transparent 50%),
+      radial-gradient(ellipse 50% 50% at 60% 60%, rgba(245,158,42,0.04) 0%, transparent 40%);
+  }
+
+  /* Decorative circles */
+  .hero-circle {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.04);
+  }
+  .hero-circle-1 { width: 600px; height: 600px; top: -200px; right: -100px; animation: pulseGlow 8s ease-in-out infinite; }
+  .hero-circle-2 { width: 400px; height: 400px; bottom: -120px; left: -80px; border-color: rgba(74,139,111,0.08); animation: pulseGlow 10s ease-in-out infinite 2s; }
+  .hero-circle-3 { width: 200px; height: 200px; top: 30%; right: 20%; border-color: rgba(245,158,42,0.06); animation: float 6s ease-in-out infinite; }
+
+  /* Diagonal accent line */
+  .hero-accent-line {
+    position: absolute;
+    top: 0;
+    right: 35%;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(180deg, transparent, rgba(74,139,111,0.12), rgba(245,158,42,0.08), transparent);
+    transform: rotate(15deg);
+    transform-origin: top;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 720px;
+  }
+  .hero-overline {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    color: var(--sage-light);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+  }
+  .hero-overline::before {
+    content: '';
+    width: 32px;
+    height: 2px;
+    background: var(--sage);
+    border-radius: 1px;
+  }
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(3.2rem, 7vw, 5.5rem);
+    font-weight: 800;
+    color: white;
+    line-height: 0.95;
+    letter-spacing: -2px;
+    margin-bottom: 28px;
+    animation: fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both;
+  }
+  .hero-title .word-videre {
+    color: var(--orange);
+    position: relative;
+    display: inline-block;
+  }
+  .hero-title .word-videre::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 0;
+    height: 4px;
+    background: var(--orange);
+    border-radius: 2px;
+    opacity: 0.3;
+    animation: drawLine 0.8s cubic-bezier(0.22, 1, 0.36, 1) 1.2s both;
+  }
+  .hero-subtitle {
+    font-size: 1.15rem;
+    color: rgba(255,255,255,0.5);
+    max-width: 480px;
+    line-height: 1.75;
+    margin-bottom: 44px;
+    font-weight: 400;
+    animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.5s both;
+  }
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+    animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.65s both;
+  }
+  .btn-hero-primary {
+    background: var(--orange);
+    color: white;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 700;
+    padding: 18px 36px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    letter-spacing: 0.2px;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-hero-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.15) 100%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .btn-hero-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(245,158,42,0.35);
+  }
+  .btn-hero-primary:hover::before { opacity: 1; }
+
+  .btn-hero-secondary {
+    background: rgba(255,255,255,0.04);
+    color: rgba(255,255,255,0.7);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 17px 32px;
+    border: 1.5px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.25s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-hero-secondary:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.2);
+    color: white;
+    transform: translateY(-2px);
+  }
+  .btn-hero-secondary svg {
+    width: 18px;
+    height: 18px;
+    opacity: 0.7;
+  }
+
+  /* Hero date card */
+  .hero-date-card {
+    position: absolute;
+    top: 50%;
+    right: 8%;
+    transform: translateY(-50%);
+    z-index: 2;
+    animation: slideInRight 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.8s both;
+  }
+  .date-card-inner {
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 24px;
+    padding: 40px 36px;
+    text-align: center;
+    min-width: 200px;
+  }
+  .date-card-month {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--sage-light);
+    margin-bottom: 4px;
+  }
+  .date-card-days {
+    font-family: var(--font-display);
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: white;
+    line-height: 1;
+    letter-spacing: -1px;
+  }
+  .date-card-year {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.3);
+    margin-top: -2px;
+  }
+  .date-card-divider {
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--orange), var(--sage));
+    border-radius: 1px;
+    margin: 16px auto;
+  }
+  .date-card-location {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .date-card-location svg {
+    width: 14px;
+    height: 14px;
+    color: var(--orange);
+  }
+
+  /* Hero bottom gradient bar */
+  .hero-gradient-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--orange), var(--sage-light), var(--sage));
+  }
+
+  /* === INTRO SECTION === */
+  .intro {
+    padding: 100px 48px;
+    position: relative;
+  }
+  .intro-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .intro-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 16px;
+  }
+  .intro-heading {
+    font-family: var(--font-display);
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: var(--dark);
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+  .intro-heading em {
+    font-style: normal;
+    color: var(--orange);
+  }
+  .intro-text {
+    color: var(--text-light);
+    font-size: 1.02rem;
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+  .intro-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .stat-card {
+    background: white;
+    border-radius: 20px;
+    padding: 28px 24px;
+    text-align: center;
+    border: 1px solid var(--border);
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+    border-color: transparent;
+  }
+  .stat-number {
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--dark);
+    letter-spacing: -1px;
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.78rem;
+    color: var(--text-light);
+    margin-top: 6px;
+    font-weight: 500;
+  }
+  .stat-card:nth-child(1) .stat-number { color: var(--orange); }
+  .stat-card:nth-child(2) .stat-number { color: var(--sage); }
+
+  /* === PROGRAM SECTION === */
+  .program {
+    padding: 100px 48px;
+    background: white;
+    position: relative;
+  }
+  .program::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--border);
+  }
+  .program-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .program-header {
+    text-align: center;
+    margin-bottom: 64px;
+  }
+  .program-header .section-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 14px;
+  }
+  .program-header h2 {
+    font-family: var(--font-display);
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--dark);
+    letter-spacing: -0.5px;
+  }
+
+  .program-days {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  .day-column {
+    background: var(--cream);
+    border-radius: 24px;
+    padding: 40px;
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .day-column::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    border-radius: 24px 24px 0 0;
+  }
+  .day-column.friday::before { background: var(--orange); }
+  .day-column.saturday::before { background: var(--sage); }
+
+  .day-label {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 6px;
+  }
+  .day-date {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    margin-bottom: 28px;
+  }
+  .schedule-item {
+    display: flex;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+    align-items: flex-start;
+  }
+  .schedule-item:last-child { border-bottom: none; }
+  .schedule-time {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    min-width: 52px;
+    padding-top: 2px;
+    font-variant-numeric: tabular-nums;
+  }
+  .schedule-content h4 {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 2px;
+  }
+  .schedule-content p {
+    font-size: 0.78rem;
+    color: var(--text-light);
+  }
+  .schedule-tag {
+    display: inline-block;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-top: 4px;
+  }
+  .tag-plenum { background: rgba(245,158,42,0.1); color: var(--orange-dark); }
+  .tag-seminar { background: var(--sage-pale); color: var(--sage-dark); }
+  .tag-fest { background: rgba(30,29,27,0.06); color: var(--dark-mid); }
+
+  /* === SPEAKERS SECTION === */
+  .speakers {
+    padding: 100px 48px;
+    position: relative;
+  }
+  .speakers-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .speakers-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 48px;
+  }
+  .speakers-header h2 {
+    font-family: var(--font-display);
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--dark);
+    letter-spacing: -0.5px;
+  }
+  .speakers-header .section-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 8px;
+  }
+  .speakers-cta {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--sage);
+    text-decoration: none;
+    border-bottom: 1.5px solid var(--sage);
+    padding-bottom: 2px;
+    transition: all 0.2s;
+  }
+  .speakers-cta:hover { color: var(--sage-dark); border-color: var(--sage-dark); }
+
+  .speakers-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  .speaker-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    cursor: pointer;
+  }
+  .speaker-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 48px rgba(0,0,0,0.08);
+    border-color: transparent;
+  }
+  .speaker-image {
+    height: 240px;
+    background: var(--cream-warm);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .speaker-image .placeholder-icon {
+    width: 64px;
+    height: 64px;
+    background: var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: 1.5rem;
+  }
+  .speaker-image::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    background: linear-gradient(transparent, rgba(0,0,0,0.03));
+  }
+  .speaker-info {
+    padding: 20px 24px 24px;
+  }
+  .speaker-name {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 4px;
+  }
+  .speaker-role {
+    font-size: 0.78rem;
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+  .speaker-tag {
+    display: inline-block;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 4px 10px;
+    border-radius: 100px;
+    margin-top: 10px;
+    background: rgba(245,158,42,0.1);
+    color: var(--orange-dark);
+  }
+
+  /* === CTA SECTION === */
+  .cta-section {
+    padding: 0 48px 100px;
+  }
+  .cta-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: var(--dark);
+    border-radius: 32px;
+    padding: 80px 64px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+  .cta-inner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 20% 100%, rgba(74,139,111,0.1) 0%, transparent 50%),
+      radial-gradient(ellipse 50% 60% at 80% 0%, rgba(245,158,42,0.08) 0%, transparent 50%);
+  }
+  .cta-inner::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--sage), var(--orange));
+    border-radius: 0 0 32px 32px;
+  }
+
+  /* Decorative dots */
+  .cta-dot {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.03);
+  }
+  .cta-dot-1 { width: 200px; height: 200px; top: -60px; left: -40px; }
+  .cta-dot-2 { width: 140px; height: 140px; bottom: -40px; right: 10%; }
+
+  .cta-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--sage-light);
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+  }
+  .cta-heading {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 800;
+    color: white;
+    letter-spacing: -1px;
+    line-height: 1.05;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+  }
+  .cta-heading span { color: var(--orange); }
+  .cta-text {
+    color: rgba(255,255,255,0.5);
+    font-size: 1.05rem;
+    max-width: 500px;
+    margin: 0 auto 40px;
+    line-height: 1.7;
+    position: relative;
+    z-index: 1;
+  }
+  .cta-buttons {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .btn-cta-primary {
+    background: var(--orange);
+    color: white;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 20px 40px;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .btn-cta-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(245,158,42,0.35);
+    background: var(--orange-light);
+  }
+  .btn-cta-secondary {
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.8);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 19px 36px;
+    border: 1.5px solid rgba(255,255,255,0.12);
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+  .btn-cta-secondary:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.25);
+    transform: translateY(-2px);
+  }
+
+  /* === WHAT YOU GET SECTION === */
+  .features {
+    padding: 100px 48px;
+    background: white;
+  }
+  .features-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .features-header {
+    text-align: center;
+    margin-bottom: 64px;
+  }
+  .features-header .section-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 14px;
+  }
+  .features-header h2 {
+    font-family: var(--font-display);
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--dark);
+    letter-spacing: -0.5px;
+  }
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .feature-card {
+    background: var(--cream);
+    border-radius: 24px;
+    padding: 36px 32px;
+    border: 1px solid transparent;
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    position: relative;
+    overflow: hidden;
+  }
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--border);
+    transition: background 0.3s;
+  }
+  .feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.06);
+    border-color: var(--border);
+    background: white;
+  }
+  .feature-card:nth-child(1):hover::before { background: var(--orange); }
+  .feature-card:nth-child(2):hover::before { background: var(--sage); }
+  .feature-card:nth-child(3):hover::before { background: var(--orange); }
+  .feature-card:nth-child(4):hover::before { background: var(--sage); }
+  .feature-card:nth-child(5):hover::before { background: var(--orange); }
+  .feature-card:nth-child(6):hover::before { background: var(--sage); }
+
+  .feature-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+  }
+  .fi-orange { background: rgba(245,158,42,0.12); }
+  .fi-sage { background: var(--sage-pale); }
+  .feature-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 8px;
+  }
+  .feature-card p {
+    font-size: 0.88rem;
+    color: var(--text-light);
+    line-height: 1.65;
+  }
+
+  /* === QUOTE === */
+  .quote-section {
+    padding: 80px 48px;
+    position: relative;
+  }
+  .quote-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .quote-mark {
+    font-family: var(--font-display);
+    font-size: 5rem;
+    color: var(--orange);
+    line-height: 0.5;
+    margin-bottom: 24px;
+    opacity: 0.3;
+  }
+  .quote-text {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--dark);
+    line-height: 1.4;
+    letter-spacing: -0.3px;
+    margin-bottom: 20px;
+  }
+  .quote-text em {
+    font-style: normal;
+    color: var(--sage);
+  }
+  .quote-attr {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  /* === FOOTER === */
+  footer {
+    background: var(--dark);
+    padding: 64px 48px 40px;
+    position: relative;
+  }
+  footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--orange), var(--sage));
+  }
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 48px;
+    flex-wrap: wrap;
+    gap: 40px;
+  }
+  .footer-brand {
+    max-width: 320px;
+  }
+  .footer-logo {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .footer-logo .logo-mark {
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(135deg, var(--orange), var(--sage));
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    font-weight: 800;
+    color: white;
+  }
+  .footer-desc {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.7;
+  }
+  .footer-links-group h4 {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 16px;
+  }
+  .footer-links-group a {
+    display: block;
+    color: rgba(255,255,255,0.55);
+    text-decoration: none;
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+    transition: color 0.2s;
+  }
+  .footer-links-group a:hover { color: white; }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .footer-copy {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.25);
+  }
+  .footer-orgs {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.25);
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 1024px) {
+    .hero-date-card { display: none; }
+    .speakers-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 768px) {
+    nav { padding: 0 24px; }
+    .nav-links { display: none; }
+    .hero { padding: 100px 24px 60px; }
+    .intro { padding: 64px 24px; }
+    .intro-grid { grid-template-columns: 1fr; gap: 40px; }
+    .program { padding: 64px 24px; }
+    .program-days { grid-template-columns: 1fr; }
+    .speakers { padding: 64px 24px; }
+    .speakers-grid { grid-template-columns: 1fr; }
+    .features { padding: 64px 24px; }
+    .features-grid { grid-template-columns: 1fr; }
+    .cta-section { padding: 0 24px 64px; }
+    .cta-inner { padding: 48px 32px; border-radius: 24px; }
+    footer { padding: 48px 24px 32px; }
+    .footer-top { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <span class="logo-mark">GJV</span>
+    Gi Jesus Videre
+  </a>
+  <ul class="nav-links">
+    <li><a href="#program">Program</a></li>
+    <li><a href="#talere">Talere</a></li>
+    <li><a href="#om">Om konferansen</a></li>
+    <li><a href="#kontakt">Kontakt</a></li>
+    <li><a href="#" class="nav-cta">Meld deg på</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-gradient"></div>
+  <div class="hero-circle hero-circle-1"></div>
+  <div class="hero-circle hero-circle-2"></div>
+  <div class="hero-circle hero-circle-3"></div>
+  <div class="hero-accent-line"></div>
+
+  <div class="hero-content">
+    <div class="hero-overline">Konferanse for neste generasjon</div>
+    <h1 class="hero-title">
+      Gi Jesus<br>
+      <span class="word-videre">Videre</span>
+    </h1>
+    <p class="hero-subtitle">
+      To dager med utrustning, fellesskap og fornyet tro — for alle som brenner for barn, unge og neste generasjon.
+    </p>
+    <div class="hero-actions">
+      <button class="btn-hero-primary">Meld deg på</button>
+      <button class="btn-hero-secondary">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Se video fra 2024
+      </button>
+    </div>
+  </div>
+
+  <div class="hero-date-card">
+    <div class="date-card-inner">
+      <div class="date-card-month">Oktober</div>
+      <div class="date-card-days">23–24</div>
+      <div class="date-card-year">2026</div>
+      <div class="date-card-divider"></div>
+      <div class="date-card-location">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Oslo
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-gradient-bar"></div>
+</section>
+
+<!-- INTRO -->
+<section class="intro" id="om">
+  <div class="intro-grid">
+    <div>
+      <div class="intro-label animate">Om konferansen</div>
+      <h2 class="intro-heading animate animate-delay-1">
+        Utrustning til å gi Jesus videre — <em>livet ut</em>
+      </h2>
+      <p class="intro-text animate animate-delay-2">
+        Gi Jesus Videre er en tverrkirkelig konferanse for alle som arbeider med neste generasjon. Enten du er ansatt i en menighet, frivillig ungdomsleder eller ung leder selv — her møter du andre som deler den samme lidenskapen.
+      </p>
+      <p class="intro-text animate animate-delay-3">
+        I 2026 er vi tilbake i Oslo, hvor de tre første konferansene ble holdt. To dager med hovedtaler, seminarer, bordsamtaler og fellesskap.
+      </p>
+    </div>
+    <div class="intro-stats">
+      <div class="stat-card animate animate-delay-1">
+        <div class="stat-number">500+</div>
+        <div class="stat-label">Deltakere i 2024</div>
+      </div>
+      <div class="stat-card animate animate-delay-2">
+        <div class="stat-number">40+</div>
+        <div class="stat-label">Seminarer</div>
+      </div>
+      <div class="stat-card animate animate-delay-3">
+        <div class="stat-number">2</div>
+        <div class="stat-label">Dager i Oslo</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<section class="quote-section">
+  <div class="quote-inner animate">
+    <div class="quote-mark">"</div>
+    <p class="quote-text">
+      Vi vil ikke bare at unge mennesker skal <em>finne tro</em> — vi vil at de skal utvikle en tro som <em>varer livet ut</em>.
+    </p>
+    <p class="quote-attr">— Visjonen bak Gi Jesus Videre</p>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="hva">
+  <div class="features-inner">
+    <div class="features-header">
+      <div class="section-label animate">Hva du får</div>
+      <h2 class="animate animate-delay-1">Alt du trenger for å vokse</h2>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card animate animate-delay-1">
+        <div class="feature-icon fi-orange">🎙</div>
+        <h3>Hovedtalere</h3>
+        <p>Erfarne stemmer fra Norge og internasjonalt som deler innsikt, forskning og praktisk visdom.</p>
+      </div>
+      <div class="feature-card animate animate-delay-2">
+        <div class="feature-icon fi-sage">🧩</div>
+        <h3>Praktiske seminarer</h3>
+        <p>Velg mellom 40+ seminarer — alt fra ungdomsteologi til kreativ formidling og foreldresamarbeid.</p>
+      </div>
+      <div class="feature-card animate animate-delay-3">
+        <div class="feature-icon fi-orange">💬</div>
+        <h3>Bordsamtaler</h3>
+        <p>Dypt fellesskap rundt bordene. Refleksjon, deling og bønn med andre i samme arbeid.</p>
+      </div>
+      <div class="feature-card animate animate-delay-4">
+        <div class="feature-icon fi-sage">🎵</div>
+        <h3>Lovsang</h3>
+        <p>Tid til å møte Gud sammen — felles tilbedelse som fornyer og gir kraft til tjenesten.</p>
+      </div>
+      <div class="feature-card animate animate-delay-5">
+        <div class="feature-icon fi-orange">🤝</div>
+        <h3>Nettverk</h3>
+        <p>Møt andre som brenner for det samme. Bygg relasjoner på tvers av kirkesamfunn og geografi.</p>
+      </div>
+      <div class="feature-card animate animate-delay-3">
+        <div class="feature-icon fi-sage">📦</div>
+        <h3>Ressurser</h3>
+        <p>Ta med deg konkrete verktøy, materiell og ideer du kan bruke med en gang du kommer hjem.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAM -->
+<section class="program" id="program">
+  <div class="program-inner">
+    <div class="program-header">
+      <div class="section-label animate">Programoversikt</div>
+      <h2 class="animate animate-delay-1">To dager — én misjon</h2>
+    </div>
+    <div class="program-days">
+      <div class="day-column friday animate animate-delay-1">
+        <div class="day-label">Fredag</div>
+        <div class="day-date">23. oktober 2026</div>
+        <div class="schedule-item">
+          <div class="schedule-time">09:00</div>
+          <div class="schedule-content">
+            <h4>Registrering</h4>
+            <p>Kaffe, velkomst og nettverking</p>
+          </div>
+        </div>
+        <div class="schedule-item">
+          <div class="schedule-time">11:00</div>
+          <div class="schedule-content">
+            <h4>«Det faste»</h4>
+            <p>Hovedplenum med taler</p>
+            <span class="schedule-tag tag-plenum">Plenum</span>
+          </div>
+        </div>
+        <div class="schedule-item">
+          <div class="schedule-time">13:00</div>
+          <div class="schedule-content">
+            <h4>Pause</h4>
+            <p>Lunsj og utstilling</p>
+          </div>
+        </div>
+        <div class="schedule-item">
+          <div class="schedule-time">15:00</div>
+          <div class="schedule-content">
+            <h4>Fasefest</h4>
+            <p>Seminarer tilpasset din fase</p>
+            <span class="schedule-tag tag-seminar">Seminar</span>
+          </div>
+        </div>
+        <div class="schedule-item">
+          <div class="schedule-time">19:00</div>
+          <div class="schedule-content">
+            <h4>«Det som rører seg»</h4>
+            <p>Kveldssamling med lovsang</p>
+            <span class="schedule-tag tag-fest">Kveld</span>
+          </div>
+        </div>
+      </div>
+      <div class="day-column saturday animate animate-delay-2">
+        <div class="day-label">Lørdag</div>
+        <div class="day-date">24. oktober 2026</div>
+        <div class="schedule-item">
+          <div class="schedule-time">09:00</div>
+          <div class="schedule-content">
+            <h4>Organisasjonssamling</h4>
+            <p>For ansatte og ledere</p>
+          </div>
+        </div>
+        <div class="schedule-item">
+          <div class="schedule-time">11:00</div>
+          <div class="schedule-content">
+            <h4>«Det nye»</h4>
+            <p>Hovedplenum med taler</p>
+            <span class="schedule-tag tag-plenum">Plenum</span>
+          </div>
+        </div>
+        <div class="schedule-item">
+          <div class="schedule-time">13:00</div>
+          <div class="schedule-content">
+            <h4>Pause</h4>
+            <p>Lunsj og fellesskap</p>
+          </div>
+        </div>
+        <div class="schedule-item">
+          <div class="schedule-time">15:00</div>
+          <div class="schedule-content">
+            <h4>«Det evige»</h4>
+            <p>Avsluttende hovedplenum</p>
+            <span class="schedule-tag tag-plenum">Plenum</span>
+          </div>
+        </div>
+        <div class="schedule-item">
+          <div class="schedule-time">17:00</div>
+          <div class="schedule-content">
+            <h4>Takk for i år!</h4>
+            <p>Avslutning og sending</p>
+            <span class="schedule-tag tag-fest">Avslutning</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPEAKERS -->
+<section class="speakers" id="talere">
+  <div class="speakers-inner">
+    <div class="speakers-header">
+      <div>
+        <div class="section-label animate">Bidragsytere</div>
+        <h2 class="animate animate-delay-1">Talere og ressurspersoner</h2>
+      </div>
+      <a href="#" class="speakers-cta animate animate-delay-2">Se alle bidragsytere</a>
+    </div>
+    <div class="speakers-grid">
+      <div class="speaker-card animate animate-delay-1">
+        <div class="speaker-image">
+          <div class="placeholder-icon">👤</div>
+        </div>
+        <div class="speaker-info">
+          <div class="speaker-name">Hovedtaler 1</div>
+          <div class="speaker-role">Bekreftes snart</div>
+          <span class="speaker-tag">Hovedtaler</span>
+        </div>
+      </div>
+      <div class="speaker-card animate animate-delay-2">
+        <div class="speaker-image">
+          <div class="placeholder-icon">👤</div>
+        </div>
+        <div class="speaker-info">
+          <div class="speaker-name">Hovedtaler 2</div>
+          <div class="speaker-role">Bekreftes snart</div>
+          <span class="speaker-tag">Hovedtaler</span>
+        </div>
+      </div>
+      <div class="speaker-card animate animate-delay-3">
+        <div class="speaker-image">
+          <div class="placeholder-icon">👤</div>
+        </div>
+        <div class="speaker-info">
+          <div class="speaker-name">Seminarleder</div>
+          <div class="speaker-role">Bekreftes snart</div>
+          <span class="speaker-tag" style="background: var(--sage-pale); color: var(--sage-dark);">Seminar</span>
+        </div>
+      </div>
+      <div class="speaker-card animate animate-delay-4">
+        <div class="speaker-image">
+          <div class="placeholder-icon">👤</div>
+        </div>
+        <div class="speaker-info">
+          <div class="speaker-name">Seminarleder</div>
+          <div class="speaker-role">Bekreftes snart</div>
+          <span class="speaker-tag" style="background: var(--sage-pale); color: var(--sage-dark);">Seminar</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <div class="cta-dot cta-dot-1"></div>
+    <div class="cta-dot cta-dot-2"></div>
+    <div class="cta-label animate">23–24. oktober 2026 · Oslo</div>
+    <h2 class="cta-heading animate animate-delay-1">
+      Bli med og gi Jesus<br><span>videre</span>
+    </h2>
+    <p class="cta-text animate animate-delay-2">
+      Meld deg på nå og sikre plassen din på årets viktigste samling for alle som arbeider med neste generasjon.
+    </p>
+    <div class="cta-buttons animate animate-delay-3">
+      <button class="btn-cta-primary">Meld deg på nå</button>
+      <button class="btn-cta-secondary">Last ned program (PDF)</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <span class="logo-mark">GJV</span>
+          Gi Jesus Videre
+        </div>
+        <p class="footer-desc">
+          En tverrkirkelig konferanse for alle som brenner for å utruste neste generasjon til å følge Jesus — livet ut.
+        </p>
+      </div>
+      <div class="footer-links-group">
+        <h4>Konferansen</h4>
+        <a href="#">Program</a>
+        <a href="#">Talere</a>
+        <a href="#">Praktisk info</a>
+        <a href="#">FAQ</a>
+      </div>
+      <div class="footer-links-group">
+        <h4>For deltakere</h4>
+        <a href="#">Påmelding</a>
+        <a href="#">Overnatting</a>
+        <a href="#">Reise til Oslo</a>
+        <a href="#">Studentrabatt</a>
+      </div>
+      <div class="footer-links-group">
+        <h4>Kontakt</h4>
+        <a href="#">post@gijesusvidere.no</a>
+        <a href="#">Instagram</a>
+        <a href="#">Facebook</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">&copy; 2026 Gi Jesus Videre. Alle rettigheter reservert.</span>
+      <span class="footer-orgs">Et samarbeid mellom norske kirkesamfunn og organisasjoner</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Intersection Observer for scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.animate').forEach(el => observer.observe(el));
+
+  // Smooth nav background on scroll
+  const nav = document.querySelector('nav');
+  let lastScroll = 0;
+  window.addEventListener('scroll', () => {
+    const scroll = window.scrollY;
+    if (scroll > 100) {
+      nav.style.background = 'rgba(30,29,27,0.97)';
+    } else {
+      nav.style.background = 'rgba(30,29,27,0.92)';
+    }
+    lastScroll = scroll;
+  }, { passive: true });
+</script>
+
+</body>
+</html>
