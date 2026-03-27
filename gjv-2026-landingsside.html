@@ -3,45 +3,48 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gi Jesus Videre 2026 — Konferanse for neste generasjon</title>
+<title>Gi Jesus Videre 2026 — Tro i overlapp</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --orange: #F59E2A;
-    --orange-light: #FDB94D;
-    --orange-dark: #D4850F;
-    --orange-glow: rgba(245,158,42,0.15);
-    --sage: #4A8B6F;
-    --sage-light: #6BAF8E;
-    --sage-pale: #E8F0EB;
-    --sage-dark: #2D6B4F;
-    --dark: #1E1D1B;
-    --dark-warm: #2C2926;
-    --dark-mid: #3D3830;
-    --cream: #FAF8F4;
-    --cream-warm: #F5F0E8;
-    --text: #3D3830;
-    --text-light: #78716C;
-    --text-muted: #A8A29E;
-    --border: #E7E2DA;
-    --font-display: 'Bricolage Grotesque', sans-serif;
-    --font-body: 'Plus Jakarta Sans', sans-serif;
+    --gjv-orange: #F59E2A;
+    --gjv-orange-text: #9E5F00;
+    --gjv-orange-light: #FDB94D;
+    --gjv-orange-hot: #FF8C00;
+    --gjv-sage: #3B7860;
+    --gjv-sage-ui: #4A8B6F;
+    --gjv-sage-light: #6BAF8E;
+    --gjv-sage-pale: #E8F0EB;
+    --gjv-sage-dark: #2D6B4F;
+    --gjv-dark: #1E1D1B;
+    --gjv-dark-warm: #2C2926;
+    --gjv-cream: #FAF8F4;
+    --gjv-cream-warm: #F5F0E8;
+    --gjv-text: #3D3830;
+    --gjv-text-light: #635D56;
+    --gjv-text-muted: #756E68;
+    --gjv-border: #E7E2DA;
+    --gjv-border-input: #968C7F;
+    --gjv-font-display: 'Bricolage Grotesque', sans-serif;
+    --gjv-font-body: 'Plus Jakarta Sans', sans-serif;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; font-size: 16px; }
 
   body {
-    font-family: var(--font-body);
-    background: var(--cream);
-    color: var(--text);
+    font-family: var(--gjv-font-body);
+    background: var(--gjv-cream);
+    color: var(--gjv-text);
     line-height: 1.6;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  /* === NOISE TEXTURE OVERLAY === */
+  /* Noise texture */
   body::before {
     content: '';
     position: fixed;
@@ -49,1406 +52,1595 @@
     z-index: 9999;
     pointer-events: none;
     opacity: 0.025;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     background-repeat: repeat;
-    background-size: 256px 256px;
+    background-size: 256px;
   }
 
-  /* === ANIMATIONS === */
+  /* ========== ANIMATIONS ========== */
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(32px); }
+    from { opacity: 0; transform: translateY(50px); }
     to { opacity: 1; transform: translateY(0); }
   }
   @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
   }
-  @keyframes slideInRight {
-    from { opacity: 0; transform: translateX(40px); }
-    to { opacity: 1; transform: translateX(0); }
-  }
-  @keyframes gradientShift {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-  }
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-12px); }
-  }
-  @keyframes pulseGlow {
-    0%, 100% { opacity: 0.4; transform: scale(1); }
-    50% { opacity: 0.7; transform: scale(1.05); }
-  }
   @keyframes scaleIn {
-    from { opacity: 0; transform: scale(0.92); }
+    from { opacity: 0; transform: scale(0.85); }
     to { opacity: 1; transform: scale(1); }
   }
-  @keyframes drawLine {
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes marqueeReverse {
+    from { transform: translateX(-50%); }
+    to { transform: translateX(0); }
+  }
+  @keyframes drawGradient {
     from { width: 0; }
     to { width: 100%; }
   }
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-8px) rotate(1deg); }
+  }
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  @keyframes popIn {
+    0% { opacity: 0; transform: scale(0) rotate(-20deg); }
+    60% { transform: scale(1.15) rotate(3deg); }
+    100% { opacity: 1; transform: scale(1) rotate(0deg); }
+  }
 
-  .animate { opacity: 0; }
-  .animate.visible { animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
-  .animate-delay-1 { animation-delay: 0.1s !important; }
-  .animate-delay-2 { animation-delay: 0.2s !important; }
-  .animate-delay-3 { animation-delay: 0.3s !important; }
-  .animate-delay-4 { animation-delay: 0.4s !important; }
-  .animate-delay-5 { animation-delay: 0.5s !important; }
+  .reveal { opacity: 0; transform: translateY(50px); transition: all 0.9s cubic-bezier(0.22, 1, 0.36, 1); }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-d1 { transition-delay: 0.1s; }
+  .reveal-d2 { transition-delay: 0.2s; }
+  .reveal-d3 { transition-delay: 0.3s; }
+  .reveal-d4 { transition-delay: 0.4s; }
+  .reveal-d5 { transition-delay: 0.5s; }
+  .reveal-d6 { transition-delay: 0.6s; }
 
-  /* === NAV === */
-  nav {
+  .reveal-scale { opacity: 0; transform: scale(0.9); transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+  .reveal-scale.visible { opacity: 1; transform: scale(1); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation: none !important;
+      transition-duration: 0.01ms !important;
+    }
+    .reveal, .reveal-scale { opacity: 1; transform: none; }
+  }
+
+  /* ========== NAV ========== */
+  .nav {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: 0; left: 0; right: 0;
     z-index: 1000;
-    padding: 0 48px;
     height: 72px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: rgba(30,29,27,0.92);
-    backdrop-filter: blur(20px) saturate(1.4);
-    -webkit-backdrop-filter: blur(20px) saturate(1.4);
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-    animation: fadeIn 0.5s ease forwards;
+    padding: 0 clamp(24px, 4vw, 64px);
+    background: rgba(30,29,27,0.85);
+    backdrop-filter: blur(24px) saturate(1.5);
+    -webkit-backdrop-filter: blur(24px) saturate(1.5);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    transition: all 0.3s ease;
   }
+  .nav.scrolled { background: rgba(30,29,27,0.97); }
   .nav-logo {
-    font-family: var(--font-display);
-    font-size: 1.15rem;
+    font-family: var(--gjv-font-display);
+    font-size: 1.05rem;
     font-weight: 700;
     color: white;
-    letter-spacing: -0.3px;
     text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .nav-logo .logo-mark {
-    width: 32px;
-    height: 32px;
-    background: linear-gradient(135deg, var(--orange), var(--sage));
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.75rem;
-    font-weight: 800;
-    color: white;
-  }
-  .nav-links {
-    display: flex;
-    align-items: center;
-    gap: 36px;
-    list-style: none;
-  }
-  .nav-links a {
-    color: rgba(255,255,255,0.6);
-    text-decoration: none;
-    font-size: 0.82rem;
-    font-weight: 500;
-    letter-spacing: 0.2px;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: white; }
-  .nav-cta {
-    background: var(--orange) !important;
-    color: white !important;
-    padding: 10px 22px;
-    border-radius: 8px;
-    font-weight: 600 !important;
-    transition: all 0.2s !important;
-  }
-  .nav-cta:hover {
-    background: var(--orange-light) !important;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 16px rgba(245,158,42,0.3);
-  }
-
-  /* === HERO === */
-  .hero {
-    min-height: 100vh;
-    background: var(--dark);
-    position: relative;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-    padding: 120px 48px 80px;
-  }
-  .hero-bg-gradient {
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 80% 60% at 20% 80%, rgba(74,139,111,0.08) 0%, transparent 50%),
-      radial-gradient(ellipse 60% 80% at 80% 20%, rgba(245,158,42,0.06) 0%, transparent 50%),
-      radial-gradient(ellipse 50% 50% at 60% 60%, rgba(245,158,42,0.04) 0%, transparent 40%);
-  }
-
-  /* Decorative circles */
-  .hero-circle {
-    position: absolute;
-    border-radius: 50%;
-    border: 1px solid rgba(255,255,255,0.04);
-  }
-  .hero-circle-1 { width: 600px; height: 600px; top: -200px; right: -100px; animation: pulseGlow 8s ease-in-out infinite; }
-  .hero-circle-2 { width: 400px; height: 400px; bottom: -120px; left: -80px; border-color: rgba(74,139,111,0.08); animation: pulseGlow 10s ease-in-out infinite 2s; }
-  .hero-circle-3 { width: 200px; height: 200px; top: 30%; right: 20%; border-color: rgba(245,158,42,0.06); animation: float 6s ease-in-out infinite; }
-
-  /* Diagonal accent line */
-  .hero-accent-line {
-    position: absolute;
-    top: 0;
-    right: 35%;
-    width: 1px;
-    height: 100%;
-    background: linear-gradient(180deg, transparent, rgba(74,139,111,0.12), rgba(245,158,42,0.08), transparent);
-    transform: rotate(15deg);
-    transform-origin: top;
-  }
-
-  .hero-content {
-    position: relative;
-    z-index: 2;
-    max-width: 720px;
-  }
-  .hero-overline {
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 3.5px;
-    text-transform: uppercase;
-    color: var(--sage-light);
-    margin-bottom: 24px;
     display: flex;
     align-items: center;
     gap: 12px;
-    animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+    letter-spacing: -0.3px;
   }
-  .hero-overline::before {
+  .nav-logo svg { width: 36px; height: 36px; }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    list-style: none;
+  }
+  .nav-links a {
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    transition: color 0.2s ease;
+  }
+  .nav-links a:hover, .nav-links a:focus-visible { color: white; }
+  .nav-cta {
+    background: var(--gjv-orange) !important;
+    color: var(--gjv-dark) !important;
+    font-weight: 700 !important;
+    padding: 10px 24px;
+    border-radius: 10px;
+    transition: all 0.2s ease !important;
+  }
+  .nav-cta:hover { background: var(--gjv-orange-light) !important; transform: translateY(-1px); }
+  .nav-cta:focus-visible { outline: 2px solid var(--gjv-orange); outline-offset: 3px; }
+  .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+  .nav-toggle span { display: block; width: 24px; height: 2px; background: white; margin: 5px 0; border-radius: 2px; }
+
+  /* ========== HERO ========== */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--gjv-dark);
+    overflow: hidden;
+    padding: 120px clamp(24px, 6vw, 80px) 0;
+  }
+  /* Ambient glow */
+  .hero::before {
     content: '';
-    width: 32px;
-    height: 2px;
-    background: var(--sage);
-    border-radius: 1px;
+    position: absolute;
+    top: -30%;
+    left: -20%;
+    width: 80%;
+    height: 160%;
+    background: radial-gradient(ellipse, rgba(245,158,42,0.08) 0%, transparent 60%);
+    pointer-events: none;
   }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -40%;
+    right: -20%;
+    width: 70%;
+    height: 160%;
+    background: radial-gradient(ellipse, rgba(74,139,111,0.07) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 40px;
+    align-items: center;
+  }
+
+  .hero-content {
+    animation: fadeUp 1s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(245,158,42,0.1);
+    border: 1px solid rgba(245,158,42,0.15);
+    border-radius: 100px;
+    padding: 8px 20px 8px 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--gjv-orange);
+    margin-bottom: 32px;
+    animation: popIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.6s both;
+  }
+  .hero-tag-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gjv-orange);
+    animation: float 3s ease-in-out infinite;
+  }
+
   .hero-title {
-    font-family: var(--font-display);
-    font-size: clamp(3.2rem, 7vw, 5.5rem);
+    font-family: var(--gjv-font-display);
     font-weight: 800;
+    font-size: clamp(4rem, 8vw, 7.5rem);
+    line-height: 0.88;
+    letter-spacing: -4px;
     color: white;
-    line-height: 0.95;
-    letter-spacing: -2px;
-    margin-bottom: 28px;
-    animation: fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both;
+    margin-bottom: 36px;
   }
-  .hero-title .word-videre {
-    color: var(--orange);
+  .hero-title .highlight {
+    color: var(--gjv-orange);
     position: relative;
     display: inline-block;
   }
-  .hero-title .word-videre::after {
-    content: '';
-    position: absolute;
-    bottom: 4px;
-    left: 0;
-    height: 4px;
-    background: var(--orange);
-    border-radius: 2px;
-    opacity: 0.3;
-    animation: drawLine 0.8s cubic-bezier(0.22, 1, 0.36, 1) 1.2s both;
+  .hero-title .line {
+    display: block;
   }
+  .hero-title .line-indent {
+    display: block;
+    padding-left: clamp(20px, 4vw, 80px);
+  }
+
   .hero-subtitle {
     font-size: 1.15rem;
-    color: rgba(255,255,255,0.5);
-    max-width: 480px;
-    line-height: 1.75;
-    margin-bottom: 44px;
     font-weight: 400;
-    animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.5s both;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.45);
+    max-width: 500px;
+    margin-bottom: 44px;
   }
+
   .hero-actions {
     display: flex;
-    gap: 16px;
     align-items: center;
+    gap: 16px;
     flex-wrap: wrap;
-    animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.65s both;
   }
-  .btn-hero-primary {
-    background: var(--orange);
-    color: white;
-    font-family: var(--font-body);
-    font-size: 0.95rem;
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--gjv-orange);
+    color: var(--gjv-dark);
+    font-family: var(--gjv-font-body);
     font-weight: 700;
-    padding: 18px 36px;
+    font-size: 1rem;
+    padding: 20px 40px;
+    border-radius: 14px;
     border: none;
-    border-radius: 12px;
     cursor: pointer;
-    transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
-    letter-spacing: 0.2px;
+    text-decoration: none;
+    transition: all 0.25s ease;
     position: relative;
     overflow: hidden;
   }
-  .btn-hero-primary::before {
+  .btn-primary::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.15) 100%);
+    background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.15) 100%);
     opacity: 0;
-    transition: opacity 0.3s;
+    transition: opacity 0.3s ease;
   }
-  .btn-hero-primary:hover {
+  .btn-primary:hover {
     transform: translateY(-3px);
-    box-shadow: 0 12px 32px rgba(245,158,42,0.35);
+    box-shadow: 0 12px 40px rgba(245,158,42,0.3);
   }
-  .btn-hero-primary:hover::before { opacity: 1; }
+  .btn-primary:hover::after { opacity: 1; }
+  .btn-primary:focus-visible { outline: 3px solid var(--gjv-orange); outline-offset: 3px; }
 
-  .btn-hero-secondary {
-    background: rgba(255,255,255,0.04);
-    color: rgba(255,255,255,0.7);
-    font-family: var(--font-body);
-    font-size: 0.95rem;
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,255,255,0.03);
+    color: rgba(255,255,255,0.65);
+    font-family: var(--gjv-font-body);
     font-weight: 600;
-    padding: 17px 32px;
-    border: 1.5px solid rgba(255,255,255,0.1);
-    border-radius: 12px;
+    font-size: 1rem;
+    padding: 20px 36px;
+    border-radius: 14px;
+    border: 1.5px solid rgba(255,255,255,0.08);
     cursor: pointer;
-    transition: all 0.25s;
+    text-decoration: none;
+    transition: all 0.25s ease;
+  }
+  .btn-ghost:hover {
+    background: rgba(255,255,255,0.07);
+    border-color: rgba(255,255,255,0.18);
+    color: white;
+  }
+  .btn-ghost:focus-visible { outline: 2px solid rgba(255,255,255,0.5); outline-offset: 3px; }
+
+  /* Hero circles — contained within grid */
+  .hero-visual {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    max-width: 440px;
+    justify-self: end;
+    animation: scaleIn 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.5s both;
+  }
+
+  /* Date badge — sits under CTA buttons inside hero-content */
+  .hero-date-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 24px;
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 16px;
+    padding: 18px 28px;
+    margin-top: 40px;
+    animation: fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 1s both;
+  }
+  .badge-item { text-align: center; }
+  .badge-label { font-size: 0.55rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 6px; }
+  .badge-value { font-family: var(--gjv-font-display); font-weight: 700; font-size: 1.05rem; color: white; letter-spacing: -0.3px; }
+  .badge-divider { width: 1px; height: 40px; background: rgba(255,255,255,0.08); }
+
+  /* ========== TEXT MARQUEE — Gen Z energy ========== */
+  .text-marquee {
+    overflow: hidden;
+    background: var(--gjv-orange);
+    padding: 16px 0;
+    position: relative;
+    z-index: 3;
+    width: 100%;
+  }
+  .text-marquee-track {
+    display: flex;
+    gap: 0;
+    animation: marquee 25s linear infinite;
+    width: max-content;
+  }
+  .text-marquee-item {
+    font-family: var(--gjv-font-display);
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--gjv-dark);
+    letter-spacing: -0.5px;
+    white-space: nowrap;
+    padding: 0 16px;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 16px;
   }
-  .btn-hero-secondary:hover {
-    background: rgba(255,255,255,0.08);
-    border-color: rgba(255,255,255,0.2);
-    color: white;
-    transform: translateY(-2px);
-  }
-  .btn-hero-secondary svg {
-    width: 18px;
-    height: 18px;
-    opacity: 0.7;
+  .text-marquee-item .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gjv-dark);
+    opacity: 0.3;
+    flex-shrink: 0;
   }
 
-  /* Hero date card */
-  .hero-date-card {
-    position: absolute;
-    top: 50%;
-    right: 8%;
-    transform: translateY(-50%);
-    z-index: 2;
-    animation: slideInRight 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.8s both;
+  /* ========== SECTION STYLES ========== */
+  .section {
+    padding: clamp(100px, 12vw, 160px) clamp(24px, 6vw, 80px);
   }
-  .date-card-inner {
-    background: rgba(255,255,255,0.03);
-    backdrop-filter: blur(24px);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 24px;
-    padding: 40px 36px;
-    text-align: center;
-    min-width: 200px;
+  .section-inner {
+    max-width: 1200px;
+    margin: 0 auto;
   }
-  .date-card-month {
-    font-size: 0.6rem;
+  .section-dark {
+    background: var(--gjv-dark);
+    color: white;
+  }
+  .section-warm {
+    background: var(--gjv-cream-warm);
+  }
+
+  .section-overline {
+    font-family: var(--gjv-font-body);
     font-weight: 700;
+    font-size: 0.72rem;
     letter-spacing: 3px;
     text-transform: uppercase;
-    color: var(--sage-light);
-    margin-bottom: 4px;
+    color: var(--gjv-sage);
+    margin-bottom: 20px;
   }
-  .date-card-days {
-    font-family: var(--font-display);
-    font-size: 3.5rem;
+  .section-dark .section-overline { color: var(--gjv-sage-light); }
+
+  .section-title {
+    font-family: var(--gjv-font-display);
     font-weight: 800;
-    color: white;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-  .date-card-year {
-    font-family: var(--font-display);
-    font-size: 1.3rem;
-    font-weight: 300;
-    color: rgba(255,255,255,0.3);
-    margin-top: -2px;
-  }
-  .date-card-divider {
-    width: 40px;
-    height: 2px;
-    background: linear-gradient(90deg, var(--orange), var(--sage));
-    border-radius: 1px;
-    margin: 16px auto;
-  }
-  .date-card-location {
-    font-size: 0.82rem;
-    font-weight: 600;
-    color: rgba(255,255,255,0.6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-  }
-  .date-card-location svg {
-    width: 14px;
-    height: 14px;
-    color: var(--orange);
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    line-height: 0.95;
+    letter-spacing: -2px;
+    margin-bottom: 24px;
   }
 
-  /* Hero bottom gradient bar */
-  .hero-gradient-bar {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--orange), var(--sage-light), var(--sage));
+  .section-subtitle {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--gjv-text-light);
+    max-width: 560px;
   }
+  .section-dark .section-subtitle { color: rgba(255,255,255,0.45); }
 
-  /* === INTRO SECTION === */
-  .intro {
-    padding: 100px 48px;
-    position: relative;
-  }
+  .accent-orange { color: var(--gjv-orange-text); }
+  .accent-sage { color: var(--gjv-sage); }
+  .section-dark .accent-orange { color: var(--gjv-orange); }
+  .section-dark .accent-sage { color: var(--gjv-sage-light); }
+
+  /* ========== INTRO ========== */
   .intro-grid {
-    max-width: 1100px;
-    margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 80px;
     align-items: center;
   }
-  .intro-label {
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--sage);
-    margin-bottom: 16px;
-  }
-  .intro-heading {
-    font-family: var(--font-display);
-    font-size: 2.6rem;
-    font-weight: 700;
-    color: var(--dark);
-    letter-spacing: -0.5px;
-    line-height: 1.1;
-    margin-bottom: 20px;
-  }
-  .intro-heading em {
-    font-style: normal;
-    color: var(--orange);
-  }
-  .intro-text {
-    color: var(--text-light);
-    font-size: 1.02rem;
+  .intro-text p {
+    font-size: 1.05rem;
     line-height: 1.8;
+    color: var(--gjv-text-light);
     margin-bottom: 16px;
   }
+
   .intro-stats {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 48px;
   }
   .stat-card {
     background: white;
+    border: 1px solid var(--gjv-border);
     border-radius: 20px;
-    padding: 28px 24px;
-    text-align: center;
-    border: 1px solid var(--border);
-    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    padding: 28px;
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
   }
   .stat-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 32px rgba(0,0,0,0.06);
-    border-color: transparent;
+    transform: translateY(-6px) rotate(-1deg);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.08);
   }
   .stat-number {
-    font-family: var(--font-display);
-    font-size: 2.2rem;
+    font-family: var(--gjv-font-display);
     font-weight: 800;
-    color: var(--dark);
-    letter-spacing: -1px;
+    font-size: 2.8rem;
+    letter-spacing: -2px;
+    color: var(--gjv-text);
     line-height: 1;
+    margin-bottom: 6px;
   }
   .stat-label {
-    font-size: 0.78rem;
-    color: var(--text-light);
-    margin-top: 6px;
+    font-size: 0.8rem;
+    color: var(--gjv-text-muted);
     font-weight: 500;
   }
-  .stat-card:nth-child(1) .stat-number { color: var(--orange); }
-  .stat-card:nth-child(2) .stat-number { color: var(--sage); }
 
-  /* === PROGRAM SECTION === */
-  .program {
-    padding: 100px 48px;
-    background: white;
-    position: relative;
+  /* Intro image with sticker badge */
+  .intro-visual { position: relative; }
+  .intro-image {
+    width: 100%;
+    aspect-ratio: 4/5;
+    border-radius: 24px;
+    background: var(--gjv-cream-warm);
+    overflow: hidden;
   }
-  .program::before {
+  .intro-image-inner {
+    width: 100%;
+    height: 100%;
+    background:
+      linear-gradient(135deg, rgba(245,158,42,0.06) 0%, transparent 50%),
+      linear-gradient(225deg, rgba(59,120,96,0.06) 0%, transparent 50%),
+      var(--gjv-cream-warm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gjv-text-muted);
+    font-size: 0.85rem;
+    text-align: center;
+    padding: 40px;
+  }
+  .sticker-badge {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 110px;
+    height: 110px;
+    background: var(--gjv-orange);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(12deg);
+    box-shadow: 0 8px 24px rgba(245,158,42,0.25);
+    animation: float 4s ease-in-out infinite;
+    z-index: 2;
+  }
+  .sticker-badge-text {
+    font-family: var(--gjv-font-display);
+    font-weight: 800;
+    font-size: 0.65rem;
+    color: var(--gjv-dark);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+    line-height: 1.3;
+  }
+  .sticker-badge-year {
+    font-family: var(--gjv-font-display);
+    font-weight: 800;
+    font-size: 1.4rem;
+    color: var(--gjv-dark);
+    letter-spacing: -1px;
+    margin-top: 2px;
+  }
+
+  /* ========== THEME / BIG QUOTE ========== */
+  .theme-section { position: relative; overflow: hidden; }
+  .theme-section::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: var(--border);
-  }
-  .program-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-  .program-header {
-    text-align: center;
-    margin-bottom: 64px;
-  }
-  .program-header .section-label {
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--sage);
-    margin-bottom: 14px;
-  }
-  .program-header h2 {
-    font-family: var(--font-display);
-    font-size: 2.8rem;
-    font-weight: 700;
-    color: var(--dark);
-    letter-spacing: -0.5px;
+    top: -30%;
+    right: -20%;
+    width: 60%;
+    height: 160%;
+    background: radial-gradient(ellipse, rgba(245,158,42,0.05) 0%, transparent 70%);
+    pointer-events: none;
   }
 
-  .program-days {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 32px;
+  .theme-big-quote {
+    font-family: var(--gjv-font-display);
+    font-weight: 800;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    line-height: 0.95;
+    letter-spacing: -3px;
+    color: white;
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto 32px;
   }
-  .day-column {
-    background: var(--cream);
+  .theme-big-quote .hi-orange { color: var(--gjv-orange); }
+  .theme-big-quote .hi-sage { color: var(--gjv-sage-light); }
+
+  .theme-desc {
+    text-align: center;
+    max-width: 580px;
+    margin: 0 auto;
+    font-size: 1.1rem;
+    line-height: 1.75;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .theme-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 72px;
+  }
+  .theme-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
     border-radius: 24px;
-    padding: 40px;
-    border: 1px solid var(--border);
+    padding: 44px 32px;
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
     position: relative;
     overflow: hidden;
   }
-  .day-column::before {
+  .theme-card::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: 0; left: 0; right: 0;
     height: 3px;
-    border-radius: 24px 24px 0 0;
+    background: linear-gradient(90deg, var(--gjv-orange), var(--gjv-sage-ui));
+    opacity: 0;
+    transition: opacity 0.3s ease;
   }
-  .day-column.friday::before { background: var(--orange); }
-  .day-column.saturday::before { background: var(--sage); }
-
-  .day-label {
-    font-family: var(--font-display);
-    font-size: 1.5rem;
+  .theme-card:hover {
+    background: rgba(255,255,255,0.07);
+    border-color: rgba(255,255,255,0.1);
+    transform: translateY(-6px);
+  }
+  .theme-card:hover::before { opacity: 1; }
+  .theme-card-num {
+    font-family: var(--gjv-font-display);
+    font-weight: 800;
+    font-size: 4rem;
+    line-height: 1;
+    letter-spacing: -3px;
+    color: rgba(255,255,255,0.04);
+    margin-bottom: 20px;
+  }
+  .theme-card h3 {
+    font-family: var(--gjv-font-display);
     font-weight: 700;
-    color: var(--dark);
-    margin-bottom: 6px;
-  }
-  .day-date {
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    font-weight: 500;
-    margin-bottom: 28px;
-  }
-  .schedule-item {
-    display: flex;
-    gap: 16px;
-    padding: 14px 0;
-    border-bottom: 1px solid rgba(0,0,0,0.04);
-    align-items: flex-start;
-  }
-  .schedule-item:last-child { border-bottom: none; }
-  .schedule-time {
-    font-size: 0.78rem;
-    font-weight: 700;
-    color: var(--text-muted);
-    min-width: 52px;
-    padding-top: 2px;
-    font-variant-numeric: tabular-nums;
-  }
-  .schedule-content h4 {
-    font-size: 0.92rem;
-    font-weight: 600;
-    color: var(--dark);
-    margin-bottom: 2px;
-  }
-  .schedule-content p {
-    font-size: 0.78rem;
-    color: var(--text-light);
-  }
-  .schedule-tag {
-    display: inline-block;
-    font-size: 0.6rem;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    padding: 3px 8px;
-    border-radius: 4px;
-    margin-top: 4px;
-  }
-  .tag-plenum { background: rgba(245,158,42,0.1); color: var(--orange-dark); }
-  .tag-seminar { background: var(--sage-pale); color: var(--sage-dark); }
-  .tag-fest { background: rgba(30,29,27,0.06); color: var(--dark-mid); }
-
-  /* === SPEAKERS SECTION === */
-  .speakers {
-    padding: 100px 48px;
-    position: relative;
-  }
-  .speakers-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-  .speakers-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 48px;
-  }
-  .speakers-header h2 {
-    font-family: var(--font-display);
-    font-size: 2.8rem;
-    font-weight: 700;
-    color: var(--dark);
+    font-size: 1.35rem;
+    color: white;
+    margin-bottom: 12px;
     letter-spacing: -0.5px;
   }
-  .speakers-header .section-label {
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--sage);
-    margin-bottom: 8px;
+  .theme-card p {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.4);
   }
-  .speakers-cta {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--sage);
-    text-decoration: none;
-    border-bottom: 1.5px solid var(--sage);
-    padding-bottom: 2px;
-    transition: all 0.2s;
-  }
-  .speakers-cta:hover { color: var(--sage-dark); border-color: var(--sage-dark); }
 
+  /* ========== SPEAKERS ========== */
   .speakers-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
+    gap: 20px;
+    margin-top: 56px;
   }
   .speaker-card {
-    background: white;
-    border-radius: 20px;
+    position: relative;
+    border-radius: 24px;
     overflow: hidden;
-    border: 1px solid var(--border);
-    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
     cursor: pointer;
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   }
-  .speaker-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 20px 48px rgba(0,0,0,0.08);
-    border-color: transparent;
-  }
+  .speaker-card:hover { transform: translateY(-10px); }
   .speaker-image {
-    height: 240px;
-    background: var(--cream-warm);
+    aspect-ratio: 3/4;
+    background: var(--gjv-dark-warm);
     position: relative;
     overflow: hidden;
+  }
+  .speaker-image-inner {
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-family: var(--gjv-font-display);
+    font-size: 5rem;
+    font-weight: 800;
+    color: rgba(255,255,255,0.03);
+    background: linear-gradient(160deg, rgba(245,158,42,0.04) 0%, var(--gjv-dark-warm) 50%, rgba(74,139,111,0.04) 100%);
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
   }
-  .speaker-image .placeholder-icon {
-    width: 64px;
-    height: 64px;
-    background: var(--border);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-muted);
-    font-size: 1.5rem;
-  }
-  .speaker-image::after {
-    content: '';
+  .speaker-card:hover .speaker-image-inner { transform: scale(1.08); }
+  .speaker-overlay {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 40%;
-    background: linear-gradient(transparent, rgba(0,0,0,0.03));
-  }
-  .speaker-info {
-    padding: 20px 24px 24px;
-  }
-  .speaker-name {
-    font-family: var(--font-display);
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: var(--dark);
-    margin-bottom: 4px;
-  }
-  .speaker-role {
-    font-size: 0.78rem;
-    color: var(--text-light);
-    line-height: 1.5;
+    bottom: 0; left: 0; right: 0;
+    padding: 72px 24px 28px;
+    background: linear-gradient(to top, rgba(30,29,27,0.97) 0%, rgba(30,29,27,0.5) 50%, transparent 100%);
   }
   .speaker-tag {
     display: inline-block;
     font-size: 0.6rem;
     font-weight: 700;
-    letter-spacing: 0.5px;
-    padding: 4px 10px;
-    border-radius: 100px;
-    margin-top: 10px;
-    background: rgba(245,158,42,0.1);
-    color: var(--orange-dark);
-  }
-
-  /* === CTA SECTION === */
-  .cta-section {
-    padding: 0 48px 100px;
-  }
-  .cta-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-    background: var(--dark);
-    border-radius: 32px;
-    padding: 80px 64px;
-    position: relative;
-    overflow: hidden;
-    text-align: center;
-  }
-  .cta-inner::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 60% 80% at 20% 100%, rgba(74,139,111,0.1) 0%, transparent 50%),
-      radial-gradient(ellipse 50% 60% at 80% 0%, rgba(245,158,42,0.08) 0%, transparent 50%);
-  }
-  .cta-inner::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--sage), var(--orange));
-    border-radius: 0 0 32px 32px;
-  }
-
-  /* Decorative dots */
-  .cta-dot {
-    position: absolute;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.03);
-  }
-  .cta-dot-1 { width: 200px; height: 200px; top: -60px; left: -40px; }
-  .cta-dot-2 { width: 140px; height: 140px; bottom: -40px; right: 10%; }
-
-  .cta-label {
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 3px;
+    letter-spacing: 1.5px;
     text-transform: uppercase;
-    color: var(--sage-light);
-    margin-bottom: 20px;
-    position: relative;
-    z-index: 1;
+    padding: 5px 12px;
+    border-radius: 8px;
+    margin-bottom: 10px;
   }
-  .cta-heading {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 4vw, 3.2rem);
-    font-weight: 800;
-    color: white;
-    letter-spacing: -1px;
-    line-height: 1.05;
-    margin-bottom: 16px;
-    position: relative;
-    z-index: 1;
-  }
-  .cta-heading span { color: var(--orange); }
-  .cta-text {
-    color: rgba(255,255,255,0.5);
-    font-size: 1.05rem;
-    max-width: 500px;
-    margin: 0 auto 40px;
-    line-height: 1.7;
-    position: relative;
-    z-index: 1;
-  }
-  .cta-buttons {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  .btn-cta-primary {
-    background: var(--orange);
-    color: white;
-    font-family: var(--font-body);
-    font-size: 1rem;
+  .tag-main { background: rgba(245,158,42,0.2); color: var(--gjv-orange); }
+  .tag-workshop { background: rgba(74,139,111,0.2); color: var(--gjv-sage-light); }
+  .tag-worship { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6); }
+  .speaker-name {
+    font-family: var(--gjv-font-display);
     font-weight: 700;
-    padding: 20px 40px;
-    border: none;
-    border-radius: 14px;
-    cursor: pointer;
-    transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    font-size: 1.2rem;
+    color: white;
+    letter-spacing: -0.3px;
+    margin-bottom: 4px;
   }
-  .btn-cta-primary:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 32px rgba(245,158,42,0.35);
-    background: var(--orange-light);
-  }
-  .btn-cta-secondary {
-    background: rgba(255,255,255,0.06);
-    color: rgba(255,255,255,0.8);
-    font-family: var(--font-body);
-    font-size: 1rem;
-    font-weight: 600;
-    padding: 19px 36px;
-    border: 1.5px solid rgba(255,255,255,0.12);
-    border-radius: 14px;
-    cursor: pointer;
-    transition: all 0.25s;
-  }
-  .btn-cta-secondary:hover {
-    background: rgba(255,255,255,0.1);
-    border-color: rgba(255,255,255,0.25);
-    transform: translateY(-2px);
+  .speaker-role {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.35);
   }
 
-  /* === WHAT YOU GET SECTION === */
-  .features {
-    padding: 100px 48px;
-    background: white;
-  }
-  .features-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-  .features-header {
-    text-align: center;
+  /* ========== FOR DEG — asymmetric ========== */
+  .audience-section { position: relative; }
+  .audience-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: end;
     margin-bottom: 64px;
   }
-  .features-header .section-label {
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--sage);
-    margin-bottom: 14px;
-  }
-  .features-header h2 {
-    font-family: var(--font-display);
-    font-size: 2.8rem;
-    font-weight: 700;
-    color: var(--dark);
-    letter-spacing: -0.5px;
-  }
-  .features-grid {
+  .audience-header .section-subtitle { margin-bottom: 0; }
+
+  .audience-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+    gap: 20px;
   }
-  .feature-card {
-    background: var(--cream);
+  .audience-card {
+    background: white;
+    border: 1px solid var(--gjv-border);
     border-radius: 24px;
-    padding: 36px 32px;
-    border: 1px solid transparent;
+    padding: 44px 32px 40px;
     transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
     position: relative;
     overflow: hidden;
   }
-  .feature-card::before {
+  .audience-card::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: var(--border);
-    transition: background 0.3s;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    border-radius: 24px 24px 0 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
   }
-  .feature-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 16px 40px rgba(0,0,0,0.06);
-    border-color: var(--border);
-    background: white;
+  .audience-card:nth-child(1)::before { background: var(--gjv-orange); }
+  .audience-card:nth-child(2)::before { background: var(--gjv-sage-ui); }
+  .audience-card:nth-child(3)::before { background: linear-gradient(90deg, var(--gjv-orange), var(--gjv-sage-ui)); }
+  .audience-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 56px rgba(0,0,0,0.07);
+    border-color: transparent;
   }
-  .feature-card:nth-child(1):hover::before { background: var(--orange); }
-  .feature-card:nth-child(2):hover::before { background: var(--sage); }
-  .feature-card:nth-child(3):hover::before { background: var(--orange); }
-  .feature-card:nth-child(4):hover::before { background: var(--sage); }
-  .feature-card:nth-child(5):hover::before { background: var(--orange); }
-  .feature-card:nth-child(6):hover::before { background: var(--sage); }
-
-  .feature-icon {
-    width: 52px;
-    height: 52px;
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.4rem;
-    margin-bottom: 20px;
+  .audience-card:hover::before { opacity: 1; }
+  .audience-emoji {
+    font-size: 2.4rem;
+    margin-bottom: 24px;
+    display: block;
   }
-  .fi-orange { background: rgba(245,158,42,0.12); }
-  .fi-sage { background: var(--sage-pale); }
-  .feature-card h3 {
-    font-family: var(--font-display);
-    font-size: 1.1rem;
+  .audience-card h3 {
+    font-family: var(--gjv-font-display);
     font-weight: 700;
-    color: var(--dark);
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+  }
+  .audience-card p {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--gjv-text-light);
+  }
+
+  /* ========== PROGRAM ========== */
+  .program-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 40px;
+  }
+  .tab {
+    font-family: var(--gjv-font-body);
+    font-size: 0.88rem;
+    font-weight: 600;
+    padding: 14px 28px;
+    border-radius: 12px;
+    border: 1.5px solid var(--gjv-border);
+    background: transparent;
+    color: var(--gjv-text-light);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .tab:hover { border-color: var(--gjv-sage); color: var(--gjv-sage); }
+  .tab.active { background: var(--gjv-sage-dark); color: white; border-color: var(--gjv-sage-dark); }
+  .tab:focus-visible { outline: 2px solid var(--gjv-sage); outline-offset: 2px; }
+
+  .program-list { display: flex; flex-direction: column; gap: 4px; }
+  .program-item {
+    display: grid;
+    grid-template-columns: 120px 1fr auto;
+    gap: 32px;
+    align-items: center;
+    padding: 28px 32px;
+    background: white;
+    border-radius: 16px;
+    transition: all 0.25s ease;
+    cursor: pointer;
+  }
+  .program-item:hover {
+    transform: translateX(8px);
+    box-shadow: -4px 4px 20px rgba(0,0,0,0.04);
+  }
+  .program-time {
+    font-family: var(--gjv-font-display);
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--gjv-text);
+    letter-spacing: -0.3px;
+  }
+  .program-info h4 {
+    font-family: var(--gjv-font-display);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--gjv-text);
+    margin-bottom: 4px;
+    letter-spacing: -0.3px;
+  }
+  .program-info p { font-size: 0.82rem; color: var(--gjv-text-muted); }
+  .program-badge { font-size: 0.7rem; font-weight: 600; padding: 7px 16px; border-radius: 8px; white-space: nowrap; }
+  .badge-plenum { background: rgba(245,158,42,0.1); color: var(--gjv-orange-text); }
+  .badge-seminar { background: var(--gjv-sage-pale); color: var(--gjv-sage-dark); }
+  .badge-pause { background: rgba(30,29,27,0.05); color: var(--gjv-text-muted); }
+
+  /* ========== PARTNER MARQUEE (reversed on bottom) ========== */
+  .partners-strip {
+    overflow: hidden;
+    padding: 20px 0;
+    position: relative;
+  }
+  .partners-strip::before, .partners-strip::after {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 120px;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .partners-strip::before { left: 0; background: linear-gradient(to right, var(--gjv-cream), transparent); }
+  .partners-strip::after { right: 0; background: linear-gradient(to left, var(--gjv-cream), transparent); }
+  .partners-track {
+    display: flex;
+    gap: 56px;
+    align-items: center;
+    animation: marquee 50s linear infinite;
+    width: max-content;
+  }
+  .partners-track:hover { animation-play-state: paused; }
+  .partner-name {
+    font-family: var(--gjv-font-body);
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--gjv-text-muted);
+    opacity: 0.45;
+    white-space: nowrap;
+    transition: opacity 0.2s ease;
+  }
+  .partner-name:hover { opacity: 0.85; }
+
+  /* ========== CTA — BOLD ========== */
+  .cta-section {
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 900px; height: 900px;
+    background: radial-gradient(circle, rgba(245,158,42,0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .cta-giant-text {
+    font-family: var(--gjv-font-display);
+    font-weight: 800;
+    font-size: clamp(3.5rem, 7vw, 6.5rem);
+    line-height: 0.92;
+    letter-spacing: -3px;
+    color: white;
+    margin-bottom: 24px;
+  }
+  .cta-giant-text .hi-orange { color: var(--gjv-orange); }
+
+  .cta-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 740px;
+    margin: 56px auto 0;
+  }
+  .cta-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 24px;
+    padding: 40px 32px;
+    text-align: left;
+    transition: all 0.3s ease;
+  }
+  .cta-card:hover {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.12);
+    transform: translateY(-4px);
+  }
+  .cta-card-label { font-size: 0.62rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gjv-sage-light); margin-bottom: 16px; }
+  .cta-card-price {
+    font-family: var(--gjv-font-display);
+    font-weight: 800;
+    font-size: 3rem;
+    color: white;
+    letter-spacing: -2px;
     margin-bottom: 8px;
   }
-  .feature-card p {
-    font-size: 0.88rem;
-    color: var(--text-light);
-    line-height: 1.65;
+  .cta-card-desc { font-size: 0.88rem; color: rgba(255,255,255,0.38); margin-bottom: 28px; line-height: 1.6; }
+  .cta-card .btn-primary { width: 100%; justify-content: center; }
+  .cta-card-featured { border-color: var(--gjv-orange); position: relative; }
+  .cta-card-featured::after {
+    content: 'Anbefalt';
+    position: absolute;
+    top: -1px; right: 28px;
+    background: var(--gjv-orange);
+    color: var(--gjv-dark);
+    font-size: 0.62rem;
+    font-weight: 700;
+    padding: 6px 16px;
+    border-radius: 0 0 10px 10px;
+    letter-spacing: 0.5px;
   }
 
-  /* === QUOTE === */
-  .quote-section {
-    padding: 80px 48px;
+  /* ========== NEWSLETTER — full-width band ========== */
+  .newsletter-section {
+    background: var(--gjv-dark-warm);
+    padding: clamp(64px, 8vw, 100px) clamp(24px, 6vw, 80px);
     position: relative;
+    overflow: hidden;
   }
-  .quote-inner {
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: center;
-  }
-  .quote-mark {
-    font-family: var(--font-display);
-    font-size: 5rem;
-    color: var(--orange);
-    line-height: 0.5;
-    margin-bottom: 24px;
-    opacity: 0.3;
-  }
-  .quote-text {
-    font-family: var(--font-display);
-    font-size: 1.8rem;
-    font-weight: 600;
-    color: var(--dark);
-    line-height: 1.4;
-    letter-spacing: -0.3px;
-    margin-bottom: 20px;
-  }
-  .quote-text em {
-    font-style: normal;
-    color: var(--sage);
-  }
-  .quote-attr {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    font-weight: 500;
-  }
-
-  /* === FOOTER === */
-  footer {
-    background: var(--dark);
-    padding: 64px 48px 40px;
-    position: relative;
-  }
-  footer::before {
+  .newsletter-section::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--orange), var(--sage));
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--gjv-orange), var(--gjv-sage-ui));
   }
-  .footer-inner {
-    max-width: 1100px;
+  .newsletter-section::after {
+    content: '';
+    position: absolute;
+    top: -40%;
+    right: -15%;
+    width: 50%;
+    height: 180%;
+    background: radial-gradient(ellipse, rgba(245,158,42,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .newsletter-inner {
+    max-width: 1200px;
     margin: 0 auto;
-  }
-  .footer-top {
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 48px;
-    flex-wrap: wrap;
-    gap: 40px;
+    gap: 48px;
+    position: relative;
+    z-index: 2;
   }
-  .footer-brand {
-    max-width: 320px;
-  }
-  .footer-logo {
-    font-family: var(--font-display);
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: white;
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .footer-logo .logo-mark {
-    width: 28px;
-    height: 28px;
-    background: linear-gradient(135deg, var(--orange), var(--sage));
-    border-radius: 7px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.65rem;
+  .newsletter-inner h3 {
+    font-family: var(--gjv-font-display);
     font-weight: 800;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    letter-spacing: -0.5px;
     color: white;
+    margin-bottom: 10px;
   }
-  .footer-desc {
-    font-size: 0.85rem;
-    color: rgba(255,255,255,0.4);
-    line-height: 1.7;
+  .newsletter-inner p { font-size: 0.9rem; color: rgba(255,255,255,0.4); max-width: 420px; }
+  .newsletter-form { display: flex; gap: 12px; flex-shrink: 0; }
+  .newsletter-input {
+    font-family: var(--gjv-font-body);
+    font-size: 0.9rem;
+    padding: 18px 24px;
+    border-radius: 14px;
+    border: 1.5px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.04);
+    color: white;
+    width: 280px;
+    outline: none;
+    transition: all 0.2s ease;
   }
-  .footer-links-group h4 {
-    font-size: 0.65rem;
+  .newsletter-input::placeholder { color: rgba(255,255,255,0.3); }
+  .newsletter-input:focus { border-color: var(--gjv-orange); box-shadow: 0 0 0 3px rgba(245,158,42,0.15); }
+
+  /* ========== FOOTER ========== */
+  .footer {
+    background: var(--gjv-dark);
+    color: white;
+    padding: 0 clamp(24px, 6vw, 80px) 40px;
+  }
+  .footer-inner { max-width: 1200px; margin: 0 auto; }
+  .gradient-bar { height: 4px; background: linear-gradient(90deg, var(--gjv-orange), var(--gjv-sage-ui)); border-radius: 2px; }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    padding: 56px 0 48px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .footer-brand { max-width: 300px; }
+  .footer-logo {
+    font-family: var(--gjv-font-display);
     font-weight: 700;
-    letter-spacing: 2px;
+    font-size: 1.2rem;
+    color: white;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .footer-brand p { font-size: 0.82rem; line-height: 1.7; color: rgba(255,255,255,0.35); }
+  .footer-col h4 {
+    font-family: var(--gjv-font-body);
+    font-weight: 700;
+    font-size: 0.65rem;
+    letter-spacing: 2.5px;
     text-transform: uppercase;
     color: rgba(255,255,255,0.3);
-    margin-bottom: 16px;
+    margin-bottom: 20px;
   }
-  .footer-links-group a {
+  .footer-col a {
     display: block;
     color: rgba(255,255,255,0.55);
     text-decoration: none;
     font-size: 0.85rem;
-    margin-bottom: 10px;
-    transition: color 0.2s;
+    padding: 5px 0;
+    transition: color 0.2s ease;
   }
-  .footer-links-group a:hover { color: white; }
-
+  .footer-col a:hover, .footer-col a:focus-visible { color: white; }
+  .footer-social {
+    display: flex;
+    gap: 12px;
+  }
+  .footer-social a {
+    width: 40px; height: 40px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.07);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.45);
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  .footer-social a:hover {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.15);
+    color: white;
+  }
   .footer-bottom {
-    border-top: 1px solid rgba(255,255,255,0.06);
-    padding-top: 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-  .footer-copy {
+    padding-top: 28px;
     font-size: 0.75rem;
-    color: rgba(255,255,255,0.25);
+    color: rgba(255,255,255,0.2);
   }
-  .footer-orgs {
-    font-size: 0.75rem;
-    color: rgba(255,255,255,0.25);
-  }
+  .footer-bottom a { color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s ease; }
+  .footer-bottom a:hover { color: white; }
 
-  /* === RESPONSIVE === */
+  /* ========== RESPONSIVE ========== */
   @media (max-width: 1024px) {
-    .hero-date-card { display: none; }
+    .hero-inner { grid-template-columns: 1fr; text-align: center; }
+    .hero-subtitle { margin-left: auto; margin-right: auto; }
+    .hero-actions { justify-content: center; }
+    .hero-visual { max-width: 380px; margin: 0 auto; }
+    .intro-grid { grid-template-columns: 1fr; gap: 48px; }
+    .intro-visual { order: -1; max-width: 400px; margin: 0 auto; }
     .speakers-grid { grid-template-columns: repeat(2, 1fr); }
+    .theme-cards { grid-template-columns: 1fr; max-width: 480px; margin-left: auto; margin-right: auto; }
+    .audience-header { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
   }
   @media (max-width: 768px) {
-    nav { padding: 0 24px; }
     .nav-links { display: none; }
-    .hero { padding: 100px 24px 60px; }
-    .intro { padding: 64px 24px; }
-    .intro-grid { grid-template-columns: 1fr; gap: 40px; }
-    .program { padding: 64px 24px; }
-    .program-days { grid-template-columns: 1fr; }
-    .speakers { padding: 64px 24px; }
-    .speakers-grid { grid-template-columns: 1fr; }
-    .features { padding: 64px 24px; }
-    .features-grid { grid-template-columns: 1fr; }
-    .cta-section { padding: 0 24px 64px; }
-    .cta-inner { padding: 48px 32px; border-radius: 24px; }
-    footer { padding: 48px 24px 32px; }
-    .footer-top { flex-direction: column; }
+    .nav-toggle { display: block; }
+    .hero { min-height: auto; padding: 100px 24px 0; }
+    .hero-title { letter-spacing: -2px; }
+    .hero-date-badge { position: relative; bottom: auto; left: auto; transform: none; margin-top: 24px; justify-content: center; }
+    .audience-grid { grid-template-columns: 1fr; max-width: 400px; margin-left: auto; margin-right: auto; }
+    .cta-cards { grid-template-columns: 1fr; }
+    .program-item { grid-template-columns: 80px 1fr; gap: 16px; }
+    .program-badge { display: none; }
+    .newsletter-inner { flex-direction: column; text-align: center; }
+    .newsletter-form { flex-direction: column; width: 100%; }
+    .newsletter-input { width: 100%; }
+    .footer-top { grid-template-columns: 1fr; gap: 28px; }
+    .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
   }
+  @media (max-width: 480px) {
+    .speakers-grid { grid-template-columns: 1fr; max-width: 320px; margin-left: auto; margin-right: auto; }
+    .hero-date-badge { flex-direction: column; gap: 12px; }
+    .badge-divider { width: 36px; height: 1px; }
+  }
+
+  /* Focus */
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--gjv-sage); outline-offset: 3px; }
+
+  /* Skip link */
+  .skip-link {
+    position: absolute;
+    top: -100%;
+    left: 16px;
+    z-index: 10000;
+    background: var(--gjv-orange);
+    color: var(--gjv-dark);
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+  .skip-link:focus { top: 16px; }
 </style>
 </head>
 <body>
 
+<a href="#main" class="skip-link">Hopp til hovedinnhold</a>
+
 <!-- NAV -->
-<nav>
-  <a href="#" class="nav-logo">
-    <span class="logo-mark">GJV</span>
+<nav class="nav" role="navigation" aria-label="Hovednavigasjon">
+  <a href="#" class="nav-logo" aria-label="Gi Jesus Videre — til forsiden">
+    <svg viewBox="0 0 36 36" fill="none" aria-hidden="true">
+      <circle cx="14" cy="18" r="11" stroke="#F59E2A" stroke-width="1.5" fill="none" opacity="0.8"/>
+      <circle cx="22" cy="18" r="11" stroke="#4A8B6F" stroke-width="1.5" fill="none" opacity="0.8"/>
+    </svg>
     Gi Jesus Videre
   </a>
   <ul class="nav-links">
-    <li><a href="#program">Program</a></li>
+    <li><a href="#om">Om GJV</a></li>
+    <li><a href="#tema">Tema</a></li>
     <li><a href="#talere">Talere</a></li>
-    <li><a href="#om">Om konferansen</a></li>
-    <li><a href="#kontakt">Kontakt</a></li>
-    <li><a href="#" class="nav-cta">Meld deg på</a></li>
+    <li><a href="#program">Program</a></li>
+    <li><a href="#billetter" class="nav-cta">Meld deg på</a></li>
   </ul>
+  <button class="nav-toggle" aria-label="Åpne meny" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- HERO -->
-<section class="hero">
-  <div class="hero-bg-gradient"></div>
-  <div class="hero-circle hero-circle-1"></div>
-  <div class="hero-circle hero-circle-2"></div>
-  <div class="hero-circle hero-circle-3"></div>
-  <div class="hero-accent-line"></div>
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-tag">
+        <span class="hero-tag-dot" aria-hidden="true"></span>
+        23.–24. oktober 2026 — Oslo
+      </div>
+      <h1 class="hero-title">
+        <span class="line">Gi Jesus</span>
+        <span class="line-indent"><span class="highlight">Videre.</span></span>
+      </h1>
+      <p class="hero-subtitle">En tverrkirkelig konferanse for alle som arbeider med neste generasjon. Sammen utrustes vi til å hjelpe unge mennesker å følge Jesus — livet ut.</p>
+      <div class="hero-actions">
+        <a href="#billetter" class="btn-primary">
+          Sikre din plass
+          <svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#tema" class="btn-ghost">
+          Utforsk tema 2026
+        </a>
+      </div>
 
-  <div class="hero-content">
-    <div class="hero-overline">Konferanse for neste generasjon</div>
-    <h1 class="hero-title">
-      Gi Jesus<br>
-      <span class="word-videre">Videre</span>
-    </h1>
-    <p class="hero-subtitle">
-      To dager med utrustning, fellesskap og fornyet tro — for alle som brenner for barn, unge og neste generasjon.
-    </p>
-    <div class="hero-actions">
-      <button class="btn-hero-primary">Meld deg på</button>
-      <button class="btn-hero-secondary">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-        Se video fra 2024
-      </button>
+      <div class="hero-date-badge">
+        <div class="badge-item">
+          <div class="badge-label">Dato</div>
+          <div class="badge-value">23.–24. okt</div>
+        </div>
+        <div class="badge-divider"></div>
+        <div class="badge-item">
+          <div class="badge-label">Sted</div>
+          <div class="badge-value">Oslo</div>
+        </div>
+        <div class="badge-divider"></div>
+        <div class="badge-item">
+          <div class="badge-label">Tema</div>
+          <div class="badge-value">Tro i overlapp</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+      <svg viewBox="0 0 500 500" width="100%" height="100%">
+        <defs>
+          <radialGradient id="g1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#F59E2A" stop-opacity="0.18"/><stop offset="100%" stop-color="#F59E2A" stop-opacity="0"/></radialGradient>
+          <radialGradient id="g2" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#4A8B6F" stop-opacity="0.18"/><stop offset="100%" stop-color="#4A8B6F" stop-opacity="0"/></radialGradient>
+        </defs>
+        <circle cx="190" cy="225" r="185" fill="url(#g1)"/>
+        <circle cx="310" cy="275" r="185" fill="url(#g2)"/>
+        <circle cx="190" cy="225" r="120" fill="none" stroke="#F59E2A" stroke-width="1.2" opacity="0.35"><animate attributeName="r" values="118;124;118" dur="6s" repeatCount="indefinite"/></circle>
+        <circle cx="310" cy="275" r="120" fill="none" stroke="#4A8B6F" stroke-width="1.2" opacity="0.35"><animate attributeName="r" values="124;118;124" dur="6s" repeatCount="indefinite"/></circle>
+        <circle cx="190" cy="225" r="75" fill="none" stroke="#F59E2A" stroke-width="0.5" opacity="0.1"/>
+        <circle cx="310" cy="275" r="75" fill="none" stroke="#4A8B6F" stroke-width="0.5" opacity="0.1"/>
+        <circle cx="190" cy="225" r="160" fill="none" stroke="#F59E2A" stroke-width="0.3" opacity="0.05"/>
+        <circle cx="310" cy="275" r="160" fill="none" stroke="#4A8B6F" stroke-width="0.3" opacity="0.05"/>
+        <circle cx="250" cy="250" r="10" fill="rgba(255,255,255,0.02)"/>
+        <circle cx="250" cy="250" r="3.5" fill="rgba(255,255,255,0.2)"><animate attributeName="opacity" values="0.1;0.35;0.1" dur="4s" repeatCount="indefinite"/></circle>
+        <circle cx="250" cy="130" r="2" fill="rgba(245,158,42,0.3)"/>
+        <circle cx="250" cy="370" r="2" fill="rgba(74,139,111,0.3)"/>
+        <circle cx="120" cy="320" r="1.5" fill="rgba(245,158,42,0.15)"/>
+        <circle cx="380" cy="180" r="1.5" fill="rgba(74,139,111,0.15)"/>
+      </svg>
     </div>
   </div>
 
-  <div class="hero-date-card">
-    <div class="date-card-inner">
-      <div class="date-card-month">Oktober</div>
-      <div class="date-card-days">23–24</div>
-      <div class="date-card-year">2026</div>
-      <div class="date-card-divider"></div>
-      <div class="date-card-location">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        Oslo
+</header>
+
+<!-- Scrolling text marquee — full width, outside hero -->
+<div class="text-marquee" aria-hidden="true">
+  <div class="text-marquee-track">
+    <span class="text-marquee-item">Neste generasjon <span class="dot"></span></span>
+    <span class="text-marquee-item">Tro i overlapp <span class="dot"></span></span>
+    <span class="text-marquee-item">23.–24. oktober 2026 <span class="dot"></span></span>
+    <span class="text-marquee-item">Oslo <span class="dot"></span></span>
+    <span class="text-marquee-item">Sammen videre <span class="dot"></span></span>
+    <span class="text-marquee-item">Utrustning <span class="dot"></span></span>
+    <span class="text-marquee-item">Fellesskap <span class="dot"></span></span>
+    <span class="text-marquee-item">Disippelgjøring <span class="dot"></span></span>
+    <span class="text-marquee-item">Neste generasjon <span class="dot"></span></span>
+    <span class="text-marquee-item">Tro i overlapp <span class="dot"></span></span>
+    <span class="text-marquee-item">23.–24. oktober 2026 <span class="dot"></span></span>
+    <span class="text-marquee-item">Oslo <span class="dot"></span></span>
+    <span class="text-marquee-item">Sammen videre <span class="dot"></span></span>
+    <span class="text-marquee-item">Utrustning <span class="dot"></span></span>
+    <span class="text-marquee-item">Fellesskap <span class="dot"></span></span>
+    <span class="text-marquee-item">Disippelgjøring <span class="dot"></span></span>
+  </div>
+</div>
+
+<main id="main">
+
+<!-- INTRO / OM -->
+<section class="section" id="om">
+  <div class="section-inner">
+    <div class="intro-grid">
+      <div class="reveal">
+        <div class="section-overline">Om konferansen</div>
+        <h2 class="section-title">Vi samler de som<br>brenner for <span class="accent-orange">neste<br>generasjon</span></h2>
+        <div class="intro-text">
+          <p>Gi Jesus Videre er Norges største tverrkirkelige konferanse for alle som arbeider med barn, unge og neste generasjon. Her møtes ansatte, frivillige og unge ledere fra hele landet.</p>
+          <p>Siden 2009 har GJV vært stedet der du henter ny kraft, nye verktøy og et fellesskap som bærer — også etter konferansen er over.</p>
+        </div>
+        <div class="intro-stats">
+          <div class="stat-card reveal reveal-d1">
+            <div class="stat-number"><span class="accent-orange">1200</span>+</div>
+            <div class="stat-label">Deltakere i 2024</div>
+          </div>
+          <div class="stat-card reveal reveal-d2">
+            <div class="stat-number"><span class="accent-sage">40</span>+</div>
+            <div class="stat-label">Seminarer & workshops</div>
+          </div>
+          <div class="stat-card reveal reveal-d3">
+            <div class="stat-number">15+</div>
+            <div class="stat-label">Kirkesamfunn</div>
+          </div>
+          <div class="stat-card reveal reveal-d4">
+            <div class="stat-number">2</div>
+            <div class="stat-label">Dager fellesskap</div>
+          </div>
+        </div>
+      </div>
+      <div class="intro-visual reveal reveal-d2">
+        <div class="sticker-badge" aria-hidden="true">
+          <span class="sticker-badge-text">Siden</span>
+          <span class="sticker-badge-year">2009</span>
+        </div>
+        <div class="intro-image">
+          <div class="intro-image-inner">
+            <div>
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" style="margin-bottom: 16px; opacity: 0.3;" aria-hidden="true">
+                <rect x="4" y="4" width="40" height="40" rx="8" stroke="#756E68" stroke-width="1.5" fill="none"/>
+                <circle cx="18" cy="18" r="4" stroke="#756E68" stroke-width="1.5" fill="none"/>
+                <path d="M4 32l12-10 8 6 8-8 12 10" stroke="#756E68" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              </svg>
+              <br>Konferansebilde plasseres her
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-
-  <div class="hero-gradient-bar"></div>
 </section>
 
-<!-- INTRO -->
-<section class="intro" id="om">
-  <div class="intro-grid">
-    <div>
-      <div class="intro-label animate">Om konferansen</div>
-      <h2 class="intro-heading animate animate-delay-1">
-        Utrustning til å gi Jesus videre — <em>livet ut</em>
-      </h2>
-      <p class="intro-text animate animate-delay-2">
-        Gi Jesus Videre er en tverrkirkelig konferanse for alle som arbeider med neste generasjon. Enten du er ansatt i en menighet, frivillig ungdomsleder eller ung leder selv — her møter du andre som deler den samme lidenskapen.
-      </p>
-      <p class="intro-text animate animate-delay-3">
-        I 2026 er vi tilbake i Oslo, hvor de tre første konferansene ble holdt. To dager med hovedtaler, seminarer, bordsamtaler og fellesskap.
-      </p>
+<!-- TEMA -->
+<section class="section section-dark theme-section" id="tema">
+  <div class="section-inner">
+    <div class="reveal" style="text-align: center; margin-bottom: 12px;">
+      <div class="section-overline">Tema 2026</div>
     </div>
-    <div class="intro-stats">
-      <div class="stat-card animate animate-delay-1">
-        <div class="stat-number">500+</div>
-        <div class="stat-label">Deltakere i 2024</div>
-      </div>
-      <div class="stat-card animate animate-delay-2">
-        <div class="stat-number">40+</div>
-        <div class="stat-label">Seminarer</div>
-      </div>
-      <div class="stat-card animate animate-delay-3">
-        <div class="stat-number">2</div>
-        <div class="stat-label">Dager i Oslo</div>
-      </div>
-    </div>
-  </div>
-</section>
+    <h2 class="theme-big-quote reveal reveal-d1">
+      <span class="hi-orange">Tro</span> i <span class="hi-sage">overlapp</span> — generasjoner som veves sammen
+    </h2>
+    <p class="theme-desc reveal reveal-d2">Tro vokser ikke i isolasjon. Den formes i møtene mellom generasjoner — der erfaring og nysgjerrighet overlapper, der eldre og yngre lærer av hverandre.</p>
 
-<!-- QUOTE -->
-<section class="quote-section">
-  <div class="quote-inner animate">
-    <div class="quote-mark">"</div>
-    <p class="quote-text">
-      Vi vil ikke bare at unge mennesker skal <em>finne tro</em> — vi vil at de skal utvikle en tro som <em>varer livet ut</em>.
-    </p>
-    <p class="quote-attr">— Visjonen bak Gi Jesus Videre</p>
-  </div>
-</section>
-
-<!-- FEATURES -->
-<section class="features" id="hva">
-  <div class="features-inner">
-    <div class="features-header">
-      <div class="section-label animate">Hva du får</div>
-      <h2 class="animate animate-delay-1">Alt du trenger for å vokse</h2>
-    </div>
-    <div class="features-grid">
-      <div class="feature-card animate animate-delay-1">
-        <div class="feature-icon fi-orange">🎙</div>
-        <h3>Hovedtalere</h3>
-        <p>Erfarne stemmer fra Norge og internasjonalt som deler innsikt, forskning og praktisk visdom.</p>
+    <div class="theme-cards">
+      <div class="theme-card reveal reveal-d1">
+        <div class="theme-card-num" aria-hidden="true">01</div>
+        <h3>Overlappet</h3>
+        <p>I snittet mellom generasjonene skjer disippelgjøringen. Her deler vi liv, tro og erfaring — og noe nytt vokser frem.</p>
       </div>
-      <div class="feature-card animate animate-delay-2">
-        <div class="feature-icon fi-sage">🧩</div>
-        <h3>Praktiske seminarer</h3>
-        <p>Velg mellom 40+ seminarer — alt fra ungdomsteologi til kreativ formidling og foreldresamarbeid.</p>
+      <div class="theme-card reveal reveal-d2">
+        <div class="theme-card-num" aria-hidden="true">02</div>
+        <h3>Sammen i dybden</h3>
+        <p>Vi går dypere enn overflaten. Faglig innhold, ærlige samtaler og rom for spørsmål — for alle som tar troen på alvor.</p>
       </div>
-      <div class="feature-card animate animate-delay-3">
-        <div class="feature-icon fi-orange">💬</div>
-        <h3>Bordsamtaler</h3>
-        <p>Dypt fellesskap rundt bordene. Refleksjon, deling og bønn med andre i samme arbeid.</p>
-      </div>
-      <div class="feature-card animate animate-delay-4">
-        <div class="feature-icon fi-sage">🎵</div>
-        <h3>Lovsang</h3>
-        <p>Tid til å møte Gud sammen — felles tilbedelse som fornyer og gir kraft til tjenesten.</p>
-      </div>
-      <div class="feature-card animate animate-delay-5">
-        <div class="feature-icon fi-orange">🤝</div>
-        <h3>Nettverk</h3>
-        <p>Møt andre som brenner for det samme. Bygg relasjoner på tvers av kirkesamfunn og geografi.</p>
-      </div>
-      <div class="feature-card animate animate-delay-3">
-        <div class="feature-icon fi-sage">📦</div>
-        <h3>Ressurser</h3>
-        <p>Ta med deg konkrete verktøy, materiell og ideer du kan bruke med en gang du kommer hjem.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PROGRAM -->
-<section class="program" id="program">
-  <div class="program-inner">
-    <div class="program-header">
-      <div class="section-label animate">Programoversikt</div>
-      <h2 class="animate animate-delay-1">To dager — én misjon</h2>
-    </div>
-    <div class="program-days">
-      <div class="day-column friday animate animate-delay-1">
-        <div class="day-label">Fredag</div>
-        <div class="day-date">23. oktober 2026</div>
-        <div class="schedule-item">
-          <div class="schedule-time">09:00</div>
-          <div class="schedule-content">
-            <h4>Registrering</h4>
-            <p>Kaffe, velkomst og nettverking</p>
-          </div>
-        </div>
-        <div class="schedule-item">
-          <div class="schedule-time">11:00</div>
-          <div class="schedule-content">
-            <h4>«Det faste»</h4>
-            <p>Hovedplenum med taler</p>
-            <span class="schedule-tag tag-plenum">Plenum</span>
-          </div>
-        </div>
-        <div class="schedule-item">
-          <div class="schedule-time">13:00</div>
-          <div class="schedule-content">
-            <h4>Pause</h4>
-            <p>Lunsj og utstilling</p>
-          </div>
-        </div>
-        <div class="schedule-item">
-          <div class="schedule-time">15:00</div>
-          <div class="schedule-content">
-            <h4>Fasefest</h4>
-            <p>Seminarer tilpasset din fase</p>
-            <span class="schedule-tag tag-seminar">Seminar</span>
-          </div>
-        </div>
-        <div class="schedule-item">
-          <div class="schedule-time">19:00</div>
-          <div class="schedule-content">
-            <h4>«Det som rører seg»</h4>
-            <p>Kveldssamling med lovsang</p>
-            <span class="schedule-tag tag-fest">Kveld</span>
-          </div>
-        </div>
-      </div>
-      <div class="day-column saturday animate animate-delay-2">
-        <div class="day-label">Lørdag</div>
-        <div class="day-date">24. oktober 2026</div>
-        <div class="schedule-item">
-          <div class="schedule-time">09:00</div>
-          <div class="schedule-content">
-            <h4>Organisasjonssamling</h4>
-            <p>For ansatte og ledere</p>
-          </div>
-        </div>
-        <div class="schedule-item">
-          <div class="schedule-time">11:00</div>
-          <div class="schedule-content">
-            <h4>«Det nye»</h4>
-            <p>Hovedplenum med taler</p>
-            <span class="schedule-tag tag-plenum">Plenum</span>
-          </div>
-        </div>
-        <div class="schedule-item">
-          <div class="schedule-time">13:00</div>
-          <div class="schedule-content">
-            <h4>Pause</h4>
-            <p>Lunsj og fellesskap</p>
-          </div>
-        </div>
-        <div class="schedule-item">
-          <div class="schedule-time">15:00</div>
-          <div class="schedule-content">
-            <h4>«Det evige»</h4>
-            <p>Avsluttende hovedplenum</p>
-            <span class="schedule-tag tag-plenum">Plenum</span>
-          </div>
-        </div>
-        <div class="schedule-item">
-          <div class="schedule-time">17:00</div>
-          <div class="schedule-content">
-            <h4>Takk for i år!</h4>
-            <p>Avslutning og sending</p>
-            <span class="schedule-tag tag-fest">Avslutning</span>
-          </div>
-        </div>
+      <div class="theme-card reveal reveal-d3">
+        <div class="theme-card-num" aria-hidden="true">03</div>
+        <h3>Videre — sammen</h3>
+        <p>GJV er ikke bare en konferanse. Det er en bevegelse av mennesker som vil gi troen videre til neste generasjon.</p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- SPEAKERS -->
-<section class="speakers" id="talere">
-  <div class="speakers-inner">
-    <div class="speakers-header">
-      <div>
-        <div class="section-label animate">Bidragsytere</div>
-        <h2 class="animate animate-delay-1">Talere og ressurspersoner</h2>
+<section class="section" id="talere">
+  <div class="section-inner">
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 24px; margin-bottom: 16px;">
+      <div class="reveal">
+        <div class="section-overline">Talere 2026</div>
+        <h2 class="section-title">Møt årets<br><span class="accent-orange">stemmer</span></h2>
       </div>
-      <a href="#" class="speakers-cta animate animate-delay-2">Se alle bidragsytere</a>
+      <a href="#" class="btn-ghost reveal reveal-d2" style="font-size: 0.85rem; padding: 14px 28px; border-color: var(--gjv-border); color: var(--gjv-text-light);">
+        Se alle talere →
+      </a>
     </div>
+
     <div class="speakers-grid">
-      <div class="speaker-card animate animate-delay-1">
+      <div class="speaker-card reveal reveal-d1">
         <div class="speaker-image">
-          <div class="placeholder-icon">👤</div>
-        </div>
-        <div class="speaker-info">
-          <div class="speaker-name">Hovedtaler 1</div>
-          <div class="speaker-role">Bekreftes snart</div>
-          <span class="speaker-tag">Hovedtaler</span>
+          <div class="speaker-image-inner">01</div>
+          <div class="speaker-overlay">
+            <span class="speaker-tag tag-main">Hovedtaler</span>
+            <div class="speaker-name">Bekreftes snart</div>
+            <div class="speaker-role">Hovedscenen, fredag</div>
+          </div>
         </div>
       </div>
-      <div class="speaker-card animate animate-delay-2">
+      <div class="speaker-card reveal reveal-d2">
         <div class="speaker-image">
-          <div class="placeholder-icon">👤</div>
-        </div>
-        <div class="speaker-info">
-          <div class="speaker-name">Hovedtaler 2</div>
-          <div class="speaker-role">Bekreftes snart</div>
-          <span class="speaker-tag">Hovedtaler</span>
+          <div class="speaker-image-inner">02</div>
+          <div class="speaker-overlay">
+            <span class="speaker-tag tag-main">Hovedtaler</span>
+            <div class="speaker-name">Bekreftes snart</div>
+            <div class="speaker-role">Hovedscenen, lørdag</div>
+          </div>
         </div>
       </div>
-      <div class="speaker-card animate animate-delay-3">
+      <div class="speaker-card reveal reveal-d3">
         <div class="speaker-image">
-          <div class="placeholder-icon">👤</div>
-        </div>
-        <div class="speaker-info">
-          <div class="speaker-name">Seminarleder</div>
-          <div class="speaker-role">Bekreftes snart</div>
-          <span class="speaker-tag" style="background: var(--sage-pale); color: var(--sage-dark);">Seminar</span>
+          <div class="speaker-image-inner">03</div>
+          <div class="speaker-overlay">
+            <span class="speaker-tag tag-workshop">Seminar</span>
+            <div class="speaker-name">Bekreftes snart</div>
+            <div class="speaker-role">Ungdomsarbeid i praksis</div>
+          </div>
         </div>
       </div>
-      <div class="speaker-card animate animate-delay-4">
+      <div class="speaker-card reveal reveal-d4">
         <div class="speaker-image">
-          <div class="placeholder-icon">👤</div>
-        </div>
-        <div class="speaker-info">
-          <div class="speaker-name">Seminarleder</div>
-          <div class="speaker-role">Bekreftes snart</div>
-          <span class="speaker-tag" style="background: var(--sage-pale); color: var(--sage-dark);">Seminar</span>
+          <div class="speaker-image-inner">04</div>
+          <div class="speaker-overlay">
+            <span class="speaker-tag tag-worship">Lovsang</span>
+            <div class="speaker-name">Bekreftes snart</div>
+            <div class="speaker-role">Musikk & lovsang</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CTA -->
-<section class="cta-section">
-  <div class="cta-inner">
-    <div class="cta-dot cta-dot-1"></div>
-    <div class="cta-dot cta-dot-2"></div>
-    <div class="cta-label animate">23–24. oktober 2026 · Oslo</div>
-    <h2 class="cta-heading animate animate-delay-1">
-      Bli med og gi Jesus<br><span>videre</span>
-    </h2>
-    <p class="cta-text animate animate-delay-2">
-      Meld deg på nå og sikre plassen din på årets viktigste samling for alle som arbeider med neste generasjon.
-    </p>
-    <div class="cta-buttons animate animate-delay-3">
-      <button class="btn-cta-primary">Meld deg på nå</button>
-      <button class="btn-cta-secondary">Last ned program (PDF)</button>
+<!-- FOR DEG -->
+<section class="section section-warm audience-section">
+  <div class="section-inner">
+    <div class="audience-header">
+      <div class="reveal">
+        <div class="section-overline">For deg</div>
+        <h2 class="section-title">GJV er for alle som<br>jobber med <span class="accent-sage">neste<br>generasjon</span></h2>
+      </div>
+      <p class="section-subtitle reveal reveal-d1">Uansett om du er ansatt, frivillig eller ung leder — her er det plass til deg. Du trenger ikke ha alle svarene. Bare et ønske om å gjøre en forskjell.</p>
+    </div>
+
+    <div class="audience-grid">
+      <div class="audience-card reveal reveal-d1">
+        <span class="audience-emoji" aria-hidden="true">🧑‍💼</span>
+        <h3>Ansatte</h3>
+        <p>Barne- og ungdomsarbeidere, pastorer, diakonale medarbeidere — faglig påfyll og nytt nettverk.</p>
+      </div>
+      <div class="audience-card reveal reveal-d2">
+        <span class="audience-emoji" aria-hidden="true">🤝</span>
+        <h3>Frivillige</h3>
+        <p>Søndagsskolelærere, ledere, mentorer — bli utrusta og inspirert til tjenesten du allerede gjør.</p>
+      </div>
+      <div class="audience-card reveal reveal-d3">
+        <span class="audience-emoji" aria-hidden="true">⭐</span>
+        <h3>Unge ledere</h3>
+        <p>Du som er i ferd med å finne din plass — verktøy, fellesskap og mot til å lede videre.</p>
+      </div>
     </div>
   </div>
 </section>
+
+<!-- PROGRAM -->
+<section class="section" id="program">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-overline">Program</div>
+      <h2 class="section-title">To intense dager<br>med <span class="accent-orange">innhold</span></h2>
+      <p class="section-subtitle" style="margin-bottom: 44px;">Plenum, seminarer, workshops og fellesskap — skreddersydd for deg som jobber med neste generasjon.</p>
+    </div>
+
+    <div class="program-tabs reveal reveal-d1" role="tablist">
+      <button class="tab active" role="tab" aria-selected="true">Fredag 23. okt</button>
+      <button class="tab" role="tab" aria-selected="false">Lørdag 24. okt</button>
+    </div>
+
+    <div class="program-list">
+      <div class="program-item reveal reveal-d1">
+        <div class="program-time">09:00</div>
+        <div class="program-info">
+          <h4>Registrering & kaffe</h4>
+          <p>Finn plassen din, hent navneskilt og start dagen med en kopp kaffe</p>
+        </div>
+        <span class="program-badge badge-pause">Sosialt</span>
+      </div>
+      <div class="program-item reveal reveal-d2">
+        <div class="program-time">10:00</div>
+        <div class="program-info">
+          <h4>Åpningsplenum: Tro i overlapp</h4>
+          <p>Hovedscenen — lovsang og åpningstale</p>
+        </div>
+        <span class="program-badge badge-plenum">Plenum</span>
+      </div>
+      <div class="program-item reveal reveal-d3">
+        <div class="program-time">12:00</div>
+        <div class="program-info">
+          <h4>Seminarer — runde 1</h4>
+          <p>Velg mellom 8+ seminarer tilpasset din rolle og interesse</p>
+        </div>
+        <span class="program-badge badge-seminar">Seminar</span>
+      </div>
+      <div class="program-item reveal reveal-d4">
+        <div class="program-time">14:00</div>
+        <div class="program-info">
+          <h4>Workshops & praktisk trening</h4>
+          <p>Hands-on workshops med verktøy du kan ta med hjem</p>
+        </div>
+        <span class="program-badge badge-seminar">Workshop</span>
+      </div>
+      <div class="program-item reveal reveal-d5">
+        <div class="program-time">18:00</div>
+        <div class="program-info">
+          <h4>Kveldssamling</h4>
+          <p>Fellesskap, lovsang og inspirasjon — avslutt dagen sammen</p>
+        </div>
+        <span class="program-badge badge-plenum">Plenum</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARTNERS -->
+<section class="section" style="padding-top: 0; padding-bottom: 40px;">
+  <div class="section-inner reveal">
+    <div class="section-overline" style="text-align: center; margin-bottom: 20px;">Samarbeidspartnere</div>
+    <div class="partners-strip" aria-label="Samarbeidspartnere">
+      <div class="partners-track">
+        <span class="partner-name">FBU</span>
+        <span class="partner-name">Metodistkirken Ung</span>
+        <span class="partner-name">Ung Baptist</span>
+        <span class="partner-name">Pinse Ung</span>
+        <span class="partner-name">FABU</span>
+        <span class="partner-name">Misjonskirken Ung</span>
+        <span class="partner-name">Frikirkens Barn & Unge</span>
+        <span class="partner-name">KRIK</span>
+        <span class="partner-name">Tro og Medier</span>
+        <span class="partner-name">Navigatørene</span>
+        <span class="partner-name">Acta</span>
+        <span class="partner-name">Frikvarteret</span>
+        <span class="partner-name">Damaris</span>
+        <span class="partner-name">Ny Generasjon</span>
+        <span class="partner-name">Laget</span>
+        <span class="partner-name">FBU</span>
+        <span class="partner-name">Metodistkirken Ung</span>
+        <span class="partner-name">Ung Baptist</span>
+        <span class="partner-name">Pinse Ung</span>
+        <span class="partner-name">FABU</span>
+        <span class="partner-name">Misjonskirken Ung</span>
+        <span class="partner-name">Frikirkens Barn & Unge</span>
+        <span class="partner-name">KRIK</span>
+        <span class="partner-name">Tro og Medier</span>
+        <span class="partner-name">Navigatørene</span>
+        <span class="partner-name">Acta</span>
+        <span class="partner-name">Frikvarteret</span>
+        <span class="partner-name">Damaris</span>
+        <span class="partner-name">Ny Generasjon</span>
+        <span class="partner-name">Laget</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA / BILLETTER -->
+<section class="section section-dark cta-section" id="billetter">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-overline" style="text-align: center;">Billetter</div>
+    </div>
+    <h2 class="cta-giant-text reveal reveal-d1">Bli med i <span class="hi-orange">Oslo.</span></h2>
+    <p class="section-subtitle reveal reveal-d2" style="text-align: center; margin: 0 auto;">
+      Tidligbillett gir best pris. Inkluderer to dager med plenum, seminarer, workshops, lunsj og kveldssamling.
+    </p>
+
+    <div class="cta-cards reveal reveal-d3">
+      <div class="cta-card">
+        <div class="cta-card-label">Ordinær</div>
+        <div class="cta-card-price">1 490,-</div>
+        <div class="cta-card-desc">Full konferanse — to dager med alt innhold, mat og fellesskap.</div>
+        <a href="#" class="btn-primary">Kjøp billett</a>
+      </div>
+      <div class="cta-card cta-card-featured">
+        <div class="cta-card-label">Tidligbillett</div>
+        <div class="cta-card-price">1 190,-</div>
+        <div class="cta-card-desc">Samme innhold, lavere pris. Begrenset antall — vær tidlig ute.</div>
+        <a href="#" class="btn-primary">Sikre tidligbillett</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER — full-width dark band -->
+<section class="newsletter-section">
+  <div class="newsletter-inner reveal">
+    <div>
+      <h3>Vær først ute.</h3>
+      <p>Meld deg på nyhetsbrevet — vær først til å vite om talere, program og tidligbilletter.</p>
+    </div>
+    <form class="newsletter-form" onsubmit="event.preventDefault()">
+      <label for="email" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">E-postadresse</label>
+      <input type="email" id="email" class="newsletter-input" placeholder="din@epost.no" required>
+      <button type="submit" class="btn-primary" style="white-space: nowrap;">Meld meg på</button>
+    </form>
+  </div>
+</section>
+
+</main>
 
 <!-- FOOTER -->
-<footer>
+<footer class="footer">
   <div class="footer-inner">
     <div class="footer-top">
       <div class="footer-brand">
         <div class="footer-logo">
-          <span class="logo-mark">GJV</span>
+          <svg viewBox="0 0 36 36" fill="none" width="32" height="32" aria-hidden="true">
+            <circle cx="14" cy="18" r="11" stroke="#F59E2A" stroke-width="1.5" fill="none" opacity="0.7"/>
+            <circle cx="22" cy="18" r="11" stroke="#4A8B6F" stroke-width="1.5" fill="none" opacity="0.7"/>
+          </svg>
           Gi Jesus Videre
         </div>
-        <p class="footer-desc">
-          En tverrkirkelig konferanse for alle som brenner for å utruste neste generasjon til å følge Jesus — livet ut.
-        </p>
+        <p>En tverrkirkelig konferanse for alle som arbeider med neste generasjon. Arrangert av FBU.</p>
       </div>
-      <div class="footer-links-group">
+      <div class="footer-col">
         <h4>Konferansen</h4>
+        <a href="#">Om GJV</a>
         <a href="#">Program</a>
         <a href="#">Talere</a>
-        <a href="#">Praktisk info</a>
-        <a href="#">FAQ</a>
+        <a href="#">Billetter</a>
       </div>
-      <div class="footer-links-group">
-        <h4>For deltakere</h4>
-        <a href="#">Påmelding</a>
+      <div class="footer-col">
+        <h4>Praktisk</h4>
         <a href="#">Overnatting</a>
-        <a href="#">Reise til Oslo</a>
-        <a href="#">Studentrabatt</a>
+        <a href="#">Reise & transport</a>
+        <a href="#">FAQ</a>
+        <a href="#">Kontakt</a>
       </div>
-      <div class="footer-links-group">
-        <h4>Kontakt</h4>
-        <a href="#">post@gijesusvidere.no</a>
-        <a href="#">Instagram</a>
-        <a href="#">Facebook</a>
+      <div class="footer-col">
+        <h4>Følg oss</h4>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/gijesusvidere/" aria-label="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg>
+          </a>
+          <a href="https://www.facebook.com/GiJesusVidere/" aria-label="Facebook">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3V2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <a href="mailto:hei@gijesusvidere.no" style="margin-top: 12px;">hei@gijesusvidere.no</a>
       </div>
     </div>
     <div class="footer-bottom">
-      <span class="footer-copy">&copy; 2026 Gi Jesus Videre. Alle rettigheter reservert.</span>
-      <span class="footer-orgs">Et samarbeid mellom norske kirkesamfunn og organisasjoner</span>
+      <span>&copy; Gi Jesus Videre 2026</span>
+      <span>Driftet av <a href="https://nettsmed.no/">Nettsmed</a></span>
     </div>
   </div>
 </footer>
 
 <script>
-  // Intersection Observer for scroll animations
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal, .reveal-scale');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-      }
+      if (entry.isIntersecting) entry.target.classList.add('visible');
     });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+  reveals.forEach(el => observer.observe(el));
 
-  document.querySelectorAll('.animate').forEach(el => observer.observe(el));
-
-  // Smooth nav background on scroll
-  const nav = document.querySelector('nav');
-  let lastScroll = 0;
+  // Nav scroll
+  const nav = document.querySelector('.nav');
   window.addEventListener('scroll', () => {
-    const scroll = window.scrollY;
-    if (scroll > 100) {
-      nav.style.background = 'rgba(30,29,27,0.97)';
-    } else {
-      nav.style.background = 'rgba(30,29,27,0.92)';
-    }
-    lastScroll = scroll;
+    nav.classList.toggle('scrolled', window.scrollY > 50);
   }, { passive: true });
-</script>
 
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  });
+
+  // Disable SVG animations for reduced motion
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('animate').forEach(el => el.remove());
+  }
+</script>
 </body>
 </html>
