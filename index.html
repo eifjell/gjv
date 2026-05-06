@@ -3,415 +3,856 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GJV 2026 — Mockups & Designarbeid</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800&display=swap" rel="stylesheet">
+<title>GJV Planlegger — Gi Jesus Videre 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --orange: #F59E2A;
-    --orange-light: #FDB94D;
-    --orange-dark: #D4850F;
-    --sage: #4A8B6F;
-    --sage-light: #6BAF8E;
-    --sage-pale: #E8F0EB;
-    --sage-dark: #2D6B4F;
-    --dark: #1E1D1B;
-    --dark-warm: #2C2926;
-    --cream: #FAF8F4;
-    --cream-warm: #F5F0E8;
-    --text: #3D3830;
-    --text-light: #78716C;
-    --text-muted: #A8A29E;
-    --border: #E7E2DA;
-    --font-display: 'Bricolage Grotesque', sans-serif;
-    --font-body: 'Plus Jakarta Sans', sans-serif;
+    --gjv-orange:#F59E2A;--gjv-orange-text:#9E5F00;--gjv-orange-light:#FDB94D;
+    --gjv-sage:#3B7860;--gjv-sage-ui:#4A8B6F;--gjv-sage-light:#6BAF8E;--gjv-sage-pale:#E8F0EB;--gjv-sage-dark:#2D6B4F;
+    --gjv-dark:#1E1D1B;--gjv-dark-warm:#2C2926;
+    --gjv-cream:#FAF8F4;--gjv-cream-warm:#F5F0E8;
+    --gjv-text:#3D3830;--gjv-text-light:#635D56;--gjv-text-muted:#756E68;
+    --gjv-border:#E7E2DA;--gjv-border-input:#968C7F;
+    --gjv-font-display:'Bricolage Grotesque',sans-serif;
+    --gjv-font-body:'Plus Jakarta Sans',sans-serif;
+    /* Status */
+    --green:#3B7860;--red:#C0392B;--yellow:#9E5F00;--purple:#6B4FA0;
   }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:var(--gjv-font-body);background:var(--gjv-cream);color:var(--gjv-text);min-height:100vh;}
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  /* LOGIN */
+  .login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:var(--gjv-dark);position:relative;overflow:hidden;}
+  .login-screen::before{content:'';position:absolute;width:500px;height:500px;border-radius:50%;border:1.5px solid rgba(245,158,42,.25);top:10%;left:-5%;animation:breathe 6s ease-in-out infinite;}
+  .login-screen::after{content:'';position:absolute;width:500px;height:500px;border-radius:50%;border:1.5px solid rgba(74,139,111,.25);bottom:5%;right:-8%;animation:breathe 6s ease-in-out infinite reverse;}
+  @keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+  .login-box{background:var(--gjv-dark-warm);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:48px 40px;width:100%;max-width:420px;text-align:center;position:relative;z-index:1;}
+  .login-logo{font-family:var(--gjv-font-display);font-size:1.75rem;font-weight:800;letter-spacing:-.5px;margin-bottom:4px;color:#fff;}
+  .login-logo span{color:var(--gjv-orange);}
+  .login-subtitle{color:rgba(255,255,255,.45);font-size:0.85rem;margin-bottom:32px;}
+  .login-box input,.input{width:100%;padding:12px 14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:#fff;font-size:0.875rem;margin-bottom:12px;outline:none;font-family:var(--gjv-font-body);transition:border-color .2s;}
+  .login-box input:focus,.input:focus{border-color:var(--gjv-orange);}
+  .login-box input::placeholder,.input::placeholder{color:rgba(255,255,255,.3);}
+  .btn-primary{width:100%;padding:14px;background:var(--gjv-orange);color:var(--gjv-dark);border:none;border-radius:10px;font-size:0.95rem;font-weight:700;cursor:pointer;transition:background .2s,transform .1s;font-family:var(--gjv-font-body);margin-top:8px;}
+  .btn-primary:hover{background:var(--gjv-orange-light);}.btn-primary:active{transform:scale(.98);}
+  .login-note{margin-top:20px;font-size:0.75rem;color:rgba(255,255,255,.3);line-height:1.5;}
+  .login-gradient{height:4px;background:linear-gradient(90deg,var(--gjv-orange),var(--gjv-sage-ui));border-radius:2px;margin-bottom:28px;}
 
-  body {
-    font-family: var(--font-body);
-    background: var(--dark);
-    color: var(--text);
-    line-height: 1.6;
-    min-height: 100vh;
-  }
+  /* APP */
+  .app{display:none;}.app.active{display:flex;min-height:100vh;}
+  .sidebar{width:260px;background:var(--gjv-dark);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;}
+  .sidebar-header{padding:24px 20px 20px;border-bottom:1px solid rgba(255,255,255,.06);}
+  .sidebar-brand{font-family:var(--gjv-font-display);font-size:1.125rem;font-weight:800;color:#fff;}.sidebar-brand span{color:var(--gjv-orange);}
+  .sidebar-tag{display:inline-block;background:var(--gjv-sage-dark);color:#fff;font-size:0.6rem;font-weight:700;padding:3px 10px;border-radius:4px;margin-top:6px;text-transform:uppercase;letter-spacing:1.5px;font-family:var(--gjv-font-body);}
+  .sidebar-nav{padding:16px 12px;flex:1;overflow-y:auto;}
+  .nav-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;cursor:pointer;font-size:0.875rem;font-weight:500;color:rgba(255,255,255,.5);transition:all .15s;margin-bottom:2px;}
+  .nav-item:hover{background:rgba(255,255,255,.04);color:rgba(255,255,255,.8);}
+  .nav-item.active{background:rgba(245,158,42,.08);color:var(--gjv-orange);}
+  .nav-item svg{width:20px;height:20px;flex-shrink:0;}
+  .nav-badge{margin-left:auto;background:var(--gjv-orange);color:var(--gjv-dark);font-size:0.7rem;font-weight:700;padding:2px 8px;border-radius:10px;}
+  .sidebar-user{padding:16px 20px;border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:12px;}
+  .user-avatar{width:36px;height:36px;border-radius:50%;background:var(--gjv-sage-dark);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.875rem;color:#fff;flex-shrink:0;}
+  .user-info{flex:1;min-width:0;}.user-name{font-size:0.8rem;font-weight:600;color:#fff;}.user-role{font-size:0.7rem;color:rgba(255,255,255,.35);}
+  .logout-btn{background:none;border:none;color:rgba(255,255,255,.3);cursor:pointer;padding:4px;transition:color .2s;}.logout-btn:hover{color:var(--red);}
+  .sidebar-gradient{height:3px;background:linear-gradient(90deg,var(--gjv-orange),var(--gjv-sage-ui));margin:0 20px;}
 
-  /* Noise */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
-    pointer-events: none;
-    opacity: 0.03;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-    background-repeat: repeat;
-    background-size: 256px;
-  }
+  .main{flex:1;margin-left:260px;}
+  .topbar{padding:20px 32px;border-bottom:1px solid var(--gjv-border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--gjv-cream);z-index:50;}
+  .topbar h1{font-family:var(--gjv-font-display);font-size:1.375rem;font-weight:800;letter-spacing:-.3px;color:var(--gjv-dark);}
+  .topbar-actions{display:flex;gap:10px;}
+  .btn-sm{padding:8px 16px;border-radius:10px;font-size:0.8rem;font-weight:600;cursor:pointer;border:1px solid var(--gjv-border);background:#fff;color:var(--gjv-text);font-family:var(--gjv-font-body);transition:all .15s;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;}
+  .btn-sm:hover{background:var(--gjv-cream-warm);border-color:var(--gjv-border-input);}
+  .btn-sm.accent{background:var(--gjv-orange);color:var(--gjv-dark);border-color:var(--gjv-orange);font-weight:700;}
+  .btn-sm.accent:hover{background:var(--gjv-orange-light);}
+  .btn-sm.secondary{background:var(--gjv-sage-dark);color:#fff;border-color:var(--gjv-sage-dark);}
+  .btn-sm.secondary:hover{background:var(--gjv-sage);}
+  .btn-sm.danger{background:rgba(192,57,43,.08);color:var(--red);border-color:rgba(192,57,43,.2);}.btn-sm.danger:hover{background:rgba(192,57,43,.15);}
+  .content{padding:28px 32px;}
 
-  /* Background decoration */
-  .bg-circles {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    overflow: hidden;
-  }
-  .bg-circle {
-    position: absolute;
-    border-radius: 50%;
-    border: 1px solid rgba(255,255,255,0.03);
-  }
-  .bg-circle-1 { width: 600px; height: 600px; top: -200px; right: -100px; }
-  .bg-circle-2 { width: 400px; height: 400px; bottom: -100px; left: -80px; border-color: rgba(74,139,111,0.06); }
-  .bg-circle-3 { width: 250px; height: 250px; top: 40%; right: 15%; border-color: rgba(245,158,42,0.04); }
-  .bg-glow-1 {
-    position: absolute;
-    top: -10%;
-    right: -5%;
-    width: 50%;
-    height: 60%;
-    background: radial-gradient(ellipse, rgba(245,158,42,0.04) 0%, transparent 60%);
-  }
-  .bg-glow-2 {
-    position: absolute;
-    bottom: -10%;
-    left: 10%;
-    width: 40%;
-    height: 50%;
-    background: radial-gradient(ellipse, rgba(74,139,111,0.04) 0%, transparent 60%);
-  }
+  /* STATS */
+  .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px;}
+  .stat-card{background:#fff;border:1px solid var(--gjv-border);border-radius:20px;padding:20px;}
+  .stat-label{font-size:0.65rem;color:var(--gjv-text-muted);text-transform:uppercase;letter-spacing:2px;font-weight:700;margin-bottom:8px;}
+  .stat-value{font-family:var(--gjv-font-display);font-size:2rem;font-weight:800;letter-spacing:-1px;}
+  .stat-value.orange{color:var(--gjv-orange-text);}.stat-value.sage{color:var(--gjv-sage);}.stat-value.green{color:var(--gjv-sage-dark);}.stat-value.red{color:var(--red);}
+  .stat-sub{font-size:0.75rem;color:var(--gjv-text-muted);margin-top:4px;}
+  .progress-bar{width:100%;height:8px;background:var(--gjv-cream-warm);border-radius:4px;overflow:hidden;margin-top:8px;}
+  .progress-fill{height:100%;border-radius:4px;transition:width .3s;}
 
-  .container {
-    max-width: 920px;
-    margin: 0 auto;
-    padding: 0 32px;
-    position: relative;
-    z-index: 1;
-  }
+  /* PROGRAM */
+  .day-section{margin-bottom:32px;}
+  .day-header{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+  .day-badge{background:var(--gjv-orange);color:var(--gjv-dark);font-family:var(--gjv-font-body);font-size:0.7rem;font-weight:800;padding:6px 14px;border-radius:8px;text-transform:uppercase;letter-spacing:1.5px;}
+  .day-date{font-family:var(--gjv-font-display);font-size:1rem;font-weight:600;color:var(--gjv-text);}
+  .meeting-section{margin-bottom:24px;background:#fff;border:1px solid var(--gjv-border);border-radius:20px;overflow:hidden;}
+  .meeting-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--gjv-border);background:var(--gjv-sage-pale);}
+  .meeting-title{font-family:var(--gjv-font-display);font-size:1rem;font-weight:700;color:var(--gjv-dark);}
+  .meeting-time{font-size:0.875rem;color:var(--gjv-sage);font-weight:600;}
+  .meeting-slots{padding:8px;}
+  .slot-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;margin-bottom:4px;cursor:grab;transition:all .15s;border:1px solid transparent;}
+  .slot-item:hover{background:var(--gjv-cream-warm);border-color:var(--gjv-border);}
+  .slot-item.dragging{opacity:.5;background:var(--gjv-cream-warm);}
+  .slot-item.drag-over{border-color:var(--gjv-sage-ui);background:rgba(74,139,111,.04);}
+  .slot-order{width:28px;height:28px;border-radius:8px;background:var(--gjv-cream-warm);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;color:var(--gjv-text-muted);flex-shrink:0;}
+  .slot-drag{color:var(--gjv-text-muted);cursor:grab;flex-shrink:0;font-size:1rem;user-select:none;}
+  .slot-info{flex:1;min-width:0;}
+  .slot-title{font-size:0.875rem;font-weight:600;margin-bottom:2px;color:var(--gjv-dark);}
+  .slot-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+  .type-badge{padding:2px 8px;border-radius:6px;font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.3px;}
+  .type-tale{background:rgba(245,158,42,.12);color:var(--gjv-orange-text);}
+  .type-sang{background:var(--gjv-sage-pale);color:var(--gjv-sage-dark);}
+  .type-gjv-talk{background:rgba(245,158,42,.2);color:var(--gjv-orange-text);}
+  .type-underholdning{background:rgba(107,80,160,.1);color:var(--purple);}
+  .type-panelsamtale{background:rgba(192,57,43,.08);color:var(--red);}
+  .type-video{background:rgba(158,95,0,.08);color:var(--yellow);}
+  .type-annet{background:rgba(61,56,48,.06);color:var(--gjv-text-light);}
+  .slot-contributor{font-size:0.75rem;color:var(--gjv-text-light);}
+  .slot-duration{font-size:0.75rem;color:var(--gjv-text-muted);white-space:nowrap;}
+  .slot-actions{display:flex;gap:4px;flex-shrink:0;}
+  .slot-btn{width:28px;height:28px;border-radius:8px;border:none;background:transparent;color:var(--gjv-text-muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0.875rem;transition:all .15s;}
+  .slot-btn:hover{background:var(--gjv-cream-warm);color:var(--gjv-text);}
+  .slot-btn.del:hover{color:var(--red);}
+  .add-slot-btn{width:100%;padding:10px;border:1px dashed var(--gjv-border);border-radius:10px;background:transparent;color:var(--gjv-text-muted);font-family:var(--gjv-font-body);font-size:0.8rem;cursor:pointer;transition:all .15s;margin:4px 0 8px;}
+  .add-slot-btn:hover{border-color:var(--gjv-sage-ui);color:var(--gjv-sage);background:rgba(74,139,111,.03);}
 
-  /* === HEADER === */
-  header {
-    padding: 64px 0 48px;
-    position: relative;
-  }
-  .header-overline {
-    font-size: 0.62rem;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--sage-light);
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    animation: fadeUp 0.6s cubic-bezier(0.22,1,0.36,1) 0.1s both;
-  }
-  .header-overline::before {
-    content: '';
-    width: 24px;
-    height: 2px;
-    background: var(--sage);
-    border-radius: 1px;
-  }
-  header h1 {
-    font-family: var(--font-display);
-    font-size: clamp(2.4rem, 5vw, 3.5rem);
-    font-weight: 800;
-    color: white;
-    letter-spacing: -1px;
-    line-height: 1;
-    margin-bottom: 14px;
-    animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.2s both;
-  }
-  header h1 span { color: var(--orange); }
-  header p {
-    color: rgba(255,255,255,0.4);
-    font-size: 1rem;
-    max-width: 500px;
-    line-height: 1.7;
-    animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.3s both;
-  }
+  /* MODAL */
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(30,29,27,.65);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(6px);}
+  .modal-overlay.show{display:flex;}
+  .modal{background:#fff;border:1px solid var(--gjv-border);border-radius:20px;padding:28px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;}
+  .modal h2{font-family:var(--gjv-font-display);font-size:1.125rem;font-weight:800;margin-bottom:20px;color:var(--gjv-dark);}
+  .form-group{margin-bottom:16px;}
+  .form-label{font-size:0.65rem;font-weight:700;color:var(--gjv-text-muted);text-transform:uppercase;letter-spacing:2px;margin-bottom:6px;display:block;font-family:var(--gjv-font-body);}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .modal .input{background:var(--gjv-cream);border:1px solid var(--gjv-border-input);color:var(--gjv-text);}
+  .modal .input:focus{border-color:var(--gjv-sage);}
+  .modal .input::placeholder{color:var(--gjv-text-muted);}
+  select.input{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23756E68' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;cursor:pointer;}
+  textarea.input{min-height:70px;resize:vertical;}
+  .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px;padding-top:16px;border-top:1px solid var(--gjv-border);}
 
-  /* Gradient bar under header */
-  .header-bar {
-    height: 3px;
-    background: linear-gradient(90deg, var(--orange), var(--sage));
-    border-radius: 2px;
-    margin-bottom: 48px;
-    animation: fadeUp 0.6s cubic-bezier(0.22,1,0.36,1) 0.4s both;
-  }
+  /* BIDRAGSYTERE TABLE */
+  .filter-bar{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;align-items:center;}
+  .search-input{flex:1;min-width:200px;padding:10px 14px;background:#fff;border:1px solid var(--gjv-border-input);border-radius:10px;color:var(--gjv-text);font-size:0.875rem;font-family:var(--gjv-font-body);outline:none;}
+  .search-input:focus{border-color:var(--gjv-sage);}.search-input::placeholder{color:var(--gjv-text-muted);}
+  .filter-chip{padding:8px 14px;border-radius:20px;font-size:0.8rem;font-weight:500;cursor:pointer;border:1px solid var(--gjv-border);background:#fff;color:var(--gjv-text-light);font-family:var(--gjv-font-body);transition:all .15s;}
+  .filter-chip:hover{border-color:var(--gjv-border-input);}.filter-chip.active{background:var(--gjv-sage-dark);color:#fff;border-color:var(--gjv-sage-dark);}
+  .table-wrap{background:#fff;border:1px solid var(--gjv-border);border-radius:16px;overflow:hidden;overflow-x:auto;}
+  table{width:100%;border-collapse:collapse;min-width:800px;}
+  th{text-align:left;padding:14px 16px;font-size:0.65rem;text-transform:uppercase;letter-spacing:2px;color:var(--gjv-text-muted);border-bottom:1px solid var(--gjv-border);background:var(--gjv-cream-warm);font-weight:700;}
+  td{padding:12px 16px;font-size:0.875rem;border-bottom:1px solid var(--gjv-border);vertical-align:middle;}
+  tr:last-child td{border-bottom:none;}tr:hover td{background:rgba(74,139,111,.02);}
+  .td-name{font-weight:600;white-space:nowrap;color:var(--gjv-dark);}.td-org{color:var(--gjv-text-light);font-size:0.8rem;}
+  .td-title{font-size:0.8rem;line-height:1.4;max-width:320px;}
+  .badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:12px;font-size:0.75rem;font-weight:600;white-space:nowrap;}
+  .badge-signert{background:var(--gjv-sage-pale);color:var(--gjv-sage-dark);}
+  .badge-sendt{background:rgba(158,95,0,.1);color:var(--yellow);}
+  .badge-spurt{background:rgba(245,158,42,.12);color:var(--gjv-orange-text);}
+  .badge-avvent{background:rgba(107,80,160,.08);color:var(--purple);}
+  .badge-avslatt{background:rgba(192,57,43,.08);color:var(--red);}
+  .komite-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:12px;font-size:0.75rem;font-weight:600;background:rgba(107,80,160,.08);color:var(--purple);}
+  .edit-btn{width:30px;height:30px;border-radius:8px;border:none;background:transparent;color:var(--gjv-text-muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0.875rem;transition:all .15s;}
+  .edit-btn:hover{background:var(--gjv-cream-warm);color:var(--gjv-sage);}
+  tr[data-idx]{cursor:pointer;}tr[data-idx]:hover td{background:rgba(74,139,111,.04);}
+  th.sortable{cursor:pointer;user-select:none;position:relative;padding-right:24px;}
+  th.sortable:hover{color:var(--gjv-sage);}
+  th.sortable::after{content:'\2195';position:absolute;right:8px;opacity:.4;font-size:0.65rem;}
+  th.sortable.asc::after{content:'\2191';opacity:.8;color:var(--gjv-sage);}
+  th.sortable.desc::after{content:'\2193';opacity:.8;color:var(--gjv-sage);}
+  .meeting-edit-btn{background:none;border:none;color:var(--gjv-text-muted);cursor:pointer;font-size:0.875rem;padding:4px 8px;border-radius:8px;transition:all .15s;margin-left:8px;}
+  .meeting-edit-btn:hover{background:rgba(74,139,111,.06);color:var(--gjv-sage);}
+  .contrib-select-wrap{max-height:180px;overflow-y:auto;background:var(--gjv-cream);border:1px solid var(--gjv-border-input);border-radius:10px;padding:8px;}
+  .contrib-select-wrap label{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:8px;font-size:0.8rem;cursor:pointer;transition:background .15s;color:var(--gjv-text);}
+  .contrib-select-wrap label:hover{background:var(--gjv-cream-warm);}
+  .contrib-select-wrap input[type=checkbox]{accent-color:var(--gjv-sage-dark);width:16px;height:16px;cursor:pointer;}
+  .progpost-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:10px;font-size:0.7rem;font-weight:600;background:rgba(245,158,42,.12);color:var(--gjv-orange-text);margin:1px 2px;}
+  .progpost-none{color:var(--gjv-text-muted);font-size:0.75rem;font-style:italic;}
 
-  /* === CARDS === */
-  .cards {
-    display: grid;
-    gap: 20px;
-    padding-bottom: 80px;
-  }
+  /* INNSPILL */
+  .feed-list{max-width:700px;}
+  .feed-item{background:#fff;border:1px solid var(--gjv-border);border-radius:16px;padding:20px;margin-bottom:12px;}
+  .feed-header{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+  .feed-avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.75rem;color:#fff;flex-shrink:0;}
+  .feed-author{font-size:0.875rem;font-weight:600;color:var(--gjv-dark);}.feed-time{font-size:0.75rem;color:var(--gjv-text-muted);margin-left:auto;}
+  .feed-body{font-size:0.875rem;line-height:1.7;color:var(--gjv-text-light);}
+  .feed-tag{display:inline-block;padding:2px 8px;background:var(--gjv-sage-pale);color:var(--gjv-sage-dark);border-radius:6px;font-size:0.75rem;font-weight:600;margin-top:10px;}
+  .new-post{background:#fff;border:1px solid var(--gjv-border);border-radius:16px;padding:20px;margin-bottom:24px;}
+  .new-post textarea{width:100%;background:var(--gjv-cream);border:1px solid var(--gjv-border-input);border-radius:10px;padding:12px;color:var(--gjv-text);font-family:var(--gjv-font-body);font-size:0.875rem;min-height:80px;resize:vertical;outline:none;margin-bottom:10px;}
+  .new-post textarea:focus{border-color:var(--gjv-sage);}.new-post textarea::placeholder{color:var(--gjv-text-muted);}
+  .new-post-actions{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;}
+  .new-post select.input{background:#fff;color:var(--gjv-text);}
+  .page{display:none;}.page.active{display:block;}
+  .toast{position:fixed;bottom:24px;right:24px;background:#fff;border:1px solid var(--gjv-sage);color:var(--gjv-text);padding:14px 20px;border-radius:14px;font-size:0.875rem;font-weight:500;z-index:999;opacity:0;transform:translateY(20px);transition:all .3s;display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,.08);}
+  .toast.show{opacity:1;transform:translateY(0);}
+  .empty-state{text-align:center;padding:40px;color:var(--gjv-text-muted);font-size:0.875rem;}
+  .time-calc{font-size:0.7rem;color:var(--gjv-text-muted);margin-top:2px;}
 
-  .card {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 20px;
-    padding: 36px 40px;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
-    gap: 32px;
-    text-decoration: none;
-    color: inherit;
-    transition: all 0.35s cubic-bezier(0.22,1,0.36,1);
-    position: relative;
-    overflow: hidden;
-    animation: fadeUp 0.6s cubic-bezier(0.22,1,0.36,1) both;
-  }
-  .card:nth-child(1) { animation-delay: 0.45s; }
-  .card:nth-child(2) { animation-delay: 0.55s; }
-  .card:nth-child(3) { animation-delay: 0.65s; }
-  .card:nth-child(4) { animation-delay: 0.75s; }
+  @media(max-width:900px){.stats-grid{grid-template-columns:repeat(2,1fr);}.sidebar{transform:translateX(-100%);transition:transform .3s;}.sidebar.open{transform:translateX(0);}.main{margin-left:0;}}
+  /* SYNC INDICATOR */
+  .sync-bar{padding:8px 20px;display:flex;align-items:center;gap:8px;font-size:0.7rem;font-weight:600;border-top:1px solid rgba(255,255,255,.06);}
+  .sync-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+  .sync-dot.connected{background:#6BAF8E;}
+  .sync-dot.local{background:var(--gjv-orange);}
+  .sync-dot.syncing{background:var(--gjv-orange);animation:pulse 1s infinite;}
+  .sync-dot.error{background:#C0392B;}
+  .sync-label{color:rgba(255,255,255,.45);}
+  .sync-action{background:none;border:none;color:rgba(255,255,255,.35);cursor:pointer;font-size:0.65rem;font-family:var(--gjv-font-body);text-decoration:underline;margin-left:auto;padding:0;}
+  .sync-action:hover{color:rgba(255,255,255,.6);}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+  /* LOADING OVERLAY */
+  .loading-overlay{position:fixed;inset:0;background:var(--gjv-cream);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;transition:opacity .3s;}
+  .loading-overlay.hidden{opacity:0;pointer-events:none;}
+  .loading-spinner{width:32px;height:32px;border:3px solid var(--gjv-border);border-top-color:var(--gjv-sage);border-radius:50%;animation:spin .8s linear infinite;}
+  .loading-text{font-size:0.85rem;color:var(--gjv-text-muted);font-weight:500;}
+  @keyframes spin{to{transform:rotate(360deg)}}
 
-  .card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  .card:nth-child(1)::before,
-  .card:nth-child(3)::before { background: var(--orange); }
-  .card:nth-child(2)::before,
-  .card:nth-child(4)::before { background: var(--sage); }
-
-  .card:hover {
-    background: rgba(255,255,255,0.05);
-    border-color: rgba(255,255,255,0.1);
-    transform: translateY(-4px);
-    box-shadow: 0 16px 48px rgba(0,0,0,0.2);
-  }
-  .card:hover::before { opacity: 1; }
-
-  .card-number {
-    font-family: var(--font-display);
-    font-size: 0.6rem;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 8px;
-  }
-  .card:nth-child(1) .card-number,
-  .card:nth-child(3) .card-number { color: var(--orange-dark); }
-  .card:nth-child(2) .card-number,
-  .card:nth-child(4) .card-number { color: var(--sage); }
-
-  .card-title {
-    font-family: var(--font-display);
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: white;
-    letter-spacing: -0.3px;
-    margin-bottom: 6px;
-  }
-  .card-desc {
-    font-size: 0.88rem;
-    color: rgba(255,255,255,0.4);
-    line-height: 1.6;
-    max-width: 480px;
-  }
-
-  .card-tags {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-    margin-top: 12px;
-  }
-  .tag {
-    font-size: 0.6rem;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    padding: 4px 10px;
-    border-radius: 100px;
-  }
-  .tag-orange { background: rgba(245,158,42,0.12); color: var(--orange); }
-  .tag-sage { background: rgba(74,139,111,0.12); color: var(--sage-light); }
-  .tag-dark { background: rgba(255,255,255,0.06); color: var(--text-muted); }
-
-  .card-arrow {
-    width: 48px;
-    height: 48px;
-    border-radius: 14px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.06);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    transition: all 0.3s;
-  }
-  .card:hover .card-arrow {
-    background: rgba(255,255,255,0.08);
-    border-color: rgba(255,255,255,0.12);
-    transform: translateX(4px);
-  }
-  .card-arrow svg {
-    width: 20px;
-    height: 20px;
-    color: rgba(255,255,255,0.4);
-    transition: color 0.3s;
-  }
-  .card:hover .card-arrow svg { color: rgba(255,255,255,0.7); }
-
-  /* === FOOTER === */
-  .footer {
-    padding: 24px 0 40px;
-    border-top: 1px solid rgba(255,255,255,0.04);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 12px;
-    animation: fadeUp 0.6s cubic-bezier(0.22,1,0.36,1) 0.85s both;
-  }
-  .footer-left {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .footer-logo {
-    width: 24px;
-    height: 24px;
-    background: linear-gradient(135deg, var(--orange), var(--sage));
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.5rem;
-    font-weight: 800;
-    color: white;
-  }
-  .footer-text {
-    font-size: 0.75rem;
-    color: rgba(255,255,255,0.2);
-  }
-  .footer-right {
-    font-size: 0.7rem;
-    color: rgba(255,255,255,0.15);
-  }
-
-  /* Animations */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @media (max-width: 640px) {
-    .container { padding: 0 20px; }
-    header { padding: 48px 0 32px; }
-    .card { grid-template-columns: 1fr; padding: 28px; }
-    .card-arrow { display: none; }
-  }
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition-duration:.01ms!important;}}
 </style>
 </head>
 <body>
 
-<div class="bg-circles">
-  <div class="bg-glow-1"></div>
-  <div class="bg-glow-2"></div>
-  <div class="bg-circle bg-circle-1"></div>
-  <div class="bg-circle bg-circle-2"></div>
-  <div class="bg-circle bg-circle-3"></div>
+<!-- LOADING -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-spinner"></div>
+  <div class="loading-text">Henter data...</div>
 </div>
 
-<div class="container">
-
-  <header>
-    <div class="header-overline">Designarbeid 2026</div>
-    <h1>Gi Jesus <span>Videre</span></h1>
-    <p>Mockups og designkonsepter for den refreshede profilen. Arbeidsdokumenter — ikke ferdige leveranser.</p>
-  </header>
-
-  <div class="header-bar"></div>
-
-  <div class="cards">
-
-    <a href="gjv-2026-designkonsept.html" class="card">
-      <div>
-        <div class="card-number">01 — Designsystem</div>
-        <div class="card-title">Designkonsept</div>
-        <div class="card-desc">Refreshed fargepalett, typografi-alternativer, UI-komponenter og hero-varianter. Grunnmuren for ny visuell profil.</div>
-        <div class="card-tags">
-          <span class="tag tag-orange">Farger</span>
-          <span class="tag tag-sage">Typografi</span>
-          <span class="tag tag-dark">Komponenter</span>
-        </div>
-      </div>
-      <div class="card-arrow">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </div>
-    </a>
-
-    <a href="gjv-2026-tema-sirkler.html" class="card">
-      <div>
-        <div class="card-number">02 — Temavisualisering</div>
-        <div class="card-title">Overlappende sirkler</div>
-        <div class="card-desc">Temaformulering og visuell signatur med overlappende sirkler — generasjoner som møtes i tro. Fire sirkel-varianter og hero-konsept.</div>
-        <div class="card-tags">
-          <span class="tag tag-sage">Tema</span>
-          <span class="tag tag-orange">Sirkelmotiv</span>
-          <span class="tag tag-dark">Ordvalg</span>
-        </div>
-      </div>
-      <div class="card-arrow">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </div>
-    </a>
-
-    <a href="gjv-2026-landingsside.html" class="card">
-      <div>
-        <div class="card-number">03 — Nettside-mockup</div>
-        <div class="card-title">Landingsside</div>
-        <div class="card-desc">Full landingsside-mockup med hero, program, talere, features og CTA — i ny designprofil med salviegrønn og Bricolage Grotesque.</div>
-        <div class="card-tags">
-          <span class="tag tag-orange">Hero</span>
-          <span class="tag tag-sage">Program</span>
-          <span class="tag tag-dark">Responsiv</span>
-        </div>
-      </div>
-      <div class="card-arrow">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </div>
-    </a>
-
-    <a href="gjv-planlegger.html" class="card">
-      <div>
-        <div class="card-number">04 — Verktøy</div>
-        <div class="card-title">GJV-planlegger</div>
-        <div class="card-desc">Interaktiv planlegger for konferansen — program, tidslinje og praktisk info samlet ett sted.</div>
-        <div class="card-tags">
-          <span class="tag tag-sage">Interaktiv</span>
-          <span class="tag tag-dark">Planlegging</span>
-        </div>
-      </div>
-      <div class="card-arrow">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </div>
-    </a>
-
+<!-- LOGIN -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-box">
+    <div class="login-gradient"></div>
+    <div class="login-logo"><span>GI JESUS VIDERE</span></div>
+    <div style="font-family:var(--gjv-font-display);font-size:1rem;font-weight:600;color:rgba(255,255,255,.7);margin-bottom:4px;">Planlegger</div>
+    <div class="login-subtitle">Internt arbeidsverktoy for hovedkomitéen</div>
+    <input type="email" id="loginEmail" placeholder="din@gjv.no" autocomplete="email" />
+    <input type="password" id="loginPass" placeholder="Passord" />
+    <button class="btn-primary" onclick="doLogin()">Logg inn</button>
+    <div class="login-note">Bruk din @gjv.no-konto for å logge inn.<br>Kontakt admin om du trenger tilgang.</div>
   </div>
+</div>
 
-  <div class="footer">
-    <div class="footer-left">
-      <div class="footer-logo">GJV</div>
-      <span class="footer-text">Gi Jesus Videre 2026 — Internt designarbeid</span>
+<!-- APP -->
+<div class="app" id="app">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-brand"><span>GJV</span> Planlegger</div>
+      <div class="sidebar-tag">23-24 okt 2026</div>
     </div>
-    <div class="footer-right">Oppdatert mars 2026</div>
-  </div>
+    <div class="sidebar-gradient"></div>
+    <nav class="sidebar-nav">
+      <div class="nav-item active" data-page="program" onclick="showPage('program')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+        Program
+      </div>
+      <div class="nav-item" data-page="bidragsytere" onclick="showPage('bidragsytere')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Bidragsytere
+        <span class="nav-badge" id="bidragCount">0</span>
+      </div>
+    </nav>
+    <div class="sync-bar" id="syncBar">
+      <span class="sync-dot local" id="syncDot"></span>
+      <span class="sync-label" id="syncLabel">Lokal modus</span>
+      <button class="sync-action" id="syncAction" onclick="reloadFromSheet()" style="display:none">Synk nå</button>
+    </div>
+    <div class="sidebar-user">
+      <div class="user-avatar" id="userAvatar">E</div>
+      <div class="user-info"><div class="user-name" id="userName">Eirik</div><div class="user-role">Hovedkomité</div></div>
+      <button class="logout-btn" onclick="doLogout()" title="Logg ut">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+      </button>
+    </div>
+  </aside>
 
+  <div class="main">
+    <!-- PROGRAM -->
+    <div class="page active" id="page-program">
+      <div class="topbar"><h1>Program</h1></div>
+      <div class="content" id="programContent"></div>
+    </div>
+
+    <!-- BIDRAGSYTERE -->
+    <div class="page" id="page-bidragsytere">
+      <div class="topbar"><h1>Bidragsytere</h1><div class="topbar-actions"><button class="btn-sm accent" onclick="openBidragModal()">+ Ny bidragsyter</button></div></div>
+      <div class="content">
+        <div class="filter-bar">
+          <input type="text" class="search-input" placeholder="Søk etter navn, org. eller programpost..." id="searchInput" oninput="renderBidrag()" />
+          <button class="filter-chip active" data-filter="all" onclick="setFilter(this,'all')">Alle</button>
+          <button class="filter-chip" data-filter="Signert" onclick="setFilter(this,'Signert')">Signert</button>
+          <button class="filter-chip" data-filter="Kontrakt sendt" onclick="setFilter(this,'Kontrakt sendt')">Sendt</button>
+          <button class="filter-chip" data-filter="Spurt" onclick="setFilter(this,'Spurt')">Spurt</button>
+          <button class="filter-chip" data-filter="Avvent" onclick="setFilter(this,'Avvent')">Avvent</button>
+          <button class="filter-chip" data-filter="Avslått" onclick="setFilter(this,'Avslått')">Avslått</button>
+        </div>
+        <div class="table-wrap"><table><thead><tr>
+          <th class="sortable" data-col="navn" onclick="sortBidrag('navn',this)">Navn</th>
+          <th class="sortable" data-col="org" onclick="sortBidrag('org',this)">Org</th>
+          <th class="sortable" data-col="programpost" onclick="sortBidrag('programpost',this)">Programpost(er)</th>
+          <th class="sortable" data-col="ansvarlig" onclick="sortBidrag('ansvarlig',this)">Ansvarlig</th>
+          <th class="sortable" data-col="status" onclick="sortBidrag('status',this)">Status</th>
+        </tr></thead><tbody id="bidragTable"></tbody></table></div>
+      </div>
+    </div>
+
+    <!-- Innspill-fane fjernet -->
+  </div>
 </div>
 
+<!-- MODAL: Slot (programpost) -->
+<div class="modal-overlay" id="slotModal">
+  <div class="modal">
+    <h2 id="slotModalTitle">Ny programpost</h2>
+    <input type="hidden" id="slotEditDay" /><input type="hidden" id="slotEditMeeting" /><input type="hidden" id="slotEditIdx" />
+    <div class="form-group"><label class="form-label">Tittel</label><input class="input" id="slotTitleInput" placeholder="Hva er denne programposten?" style="margin-bottom:0"/></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Type</label>
+        <select class="input" id="slotTypeInput" style="margin-bottom:0">
+          <option value="tale">Tale</option><option value="sang">Sang</option><option value="gjv-talk">GJV-talk</option>
+          <option value="underholdning">Underholdning</option><option value="panelsamtale">Panelsamtale</option>
+          <option value="video">Video</option><option value="annet">Annet</option>
+        </select>
+      </div>
+      <div class="form-group"><label class="form-label">Varighet (min)</label><input class="input" id="slotDurInput" type="number" value="15" min="5" step="5" style="margin-bottom:0"/></div>
+    </div>
+    <div class="form-group"><label class="form-label">Bidragsyter(e)</label>
+      <div class="contrib-select-wrap" id="slotContribWrap"><em style="color:var(--gjv-text-muted);font-size:0.75rem">Ingen signerte bidragsytere ennå</em></div>
+    </div>
+    <div class="form-group"><label class="form-label">Beskrivelse / notater</label><textarea class="input" id="slotDescInput" placeholder="Valgfritt..." style="margin-bottom:0"></textarea></div>
+    <div class="modal-actions">
+      <button class="btn-sm" onclick="closeModal('slotModal')">Avbryt</button>
+      <button class="btn-sm accent" onclick="saveSlot()">Lagre</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Bidragsyter -->
+<div class="modal-overlay" id="bidragModal">
+  <div class="modal">
+    <h2 id="bidragModalTitle">Ny bidragsyter</h2>
+    <input type="hidden" id="bidragEditIdx" />
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Navn</label><input class="input" id="bidragNavnInput" placeholder="Fullt navn" style="margin-bottom:0"/></div>
+      <div class="form-group"><label class="form-label">Organisasjon</label><input class="input" id="bidragOrgInput" placeholder="Org / kirkesamfunn" style="margin-bottom:0"/></div>
+    </div>
+    <div class="form-group"><label class="form-label">Bidragstittel / notat</label><input class="input" id="bidragTittelInput" placeholder="Beskrivelse av bidrag (valgfritt)" style="margin-bottom:0"/></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Ansvarlig i komitéen</label>
+        <select class="input" id="bidragAnsvarligInput" style="margin-bottom:0">
+          <option value="">— Velg —</option>
+          <option>Mats</option><option>Roald</option><option>Bente</option>
+          <option>Eirik</option><option>Per Kristian</option><option>Ståle</option>
+        </select>
+      </div>
+      <div class="form-group"><label class="form-label">Status</label>
+        <select class="input" id="bidragStatusInput" style="margin-bottom:0">
+          <option>Spurt</option><option>Kontrakt sendt</option><option>Signert</option><option>Avvent</option><option>Avslått</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group"><label class="form-label">E-post</label><input class="input" id="bidragEpostInput" placeholder="epost@eksempel.no" style="margin-bottom:0"/></div>
+    <div class="form-group"><label class="form-label">Telefon</label><input class="input" id="bidragTlfInput" placeholder="+47 ..." style="margin-bottom:0"/></div>
+    <div class="form-group"><label class="form-label">Notater</label><textarea class="input" id="bidragNotaterInput" placeholder="Interne notater..." style="margin-bottom:0"></textarea></div>
+    <div class="modal-actions">
+      <button class="btn-sm danger" id="bidragDeleteBtn" style="display:none;margin-right:auto" onclick="deleteBidrag()">Slett</button>
+      <button class="btn-sm" onclick="closeModal('bidragModal')">Avbryt</button>
+      <button class="btn-sm accent" onclick="saveBidrag()">Lagre</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Meeting edit -->
+<div class="modal-overlay" id="meetingModal">
+  <div class="modal">
+    <h2>Rediger møtepunkt</h2>
+    <input type="hidden" id="meetingEditIdx" />
+    <div class="form-group"><label class="form-label">Tittel</label><input class="input" id="meetingTitleInput" placeholder="Møtetittel" style="margin-bottom:0"/></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Starttid</label><input class="input" id="meetingStartInput" type="time" style="margin-bottom:0"/></div>
+      <div class="form-group"><label class="form-label">Sluttid</label><input class="input" id="meetingEndInput" type="time" style="margin-bottom:0"/></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-sm" onclick="closeModal('meetingModal')">Avbryt</button>
+      <button class="btn-sm accent" onclick="saveMeetingEdit()">Lagre</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ======= DATA =======
+const komite = ['Mats','Roald','Bente','Eirik','Per Kristian','Ståle'];
+const slotTypes = {tale:'Tale',sang:'Sang','gjv-talk':'GJV-talk',underholdning:'Underholdning',panelsamtale:'Panelsamtale',video:'Video',annet:'Annet'};
+
+const defaultMeetings = [
+  { day:0, id:'m1', title:'“Det faste”', startTime:'11:00', endTime:'13:00', slots:[ {title:'Velkommen og åpning',type:'gjv-talk',duration:15,contributors:[],desc:''},{title:'Devotion',type:'tale',duration:20,contributors:[],desc:''},{title:'Det grunnleggende i barne- og ungdomsarbeid',type:'tale',duration:45,contributors:[],desc:''} ]},
+  { day:0, id:'m2', title:'Fasefest', startTime:'15:00', endTime:'17:00', slots:[ {title:'Intro og inndeling',type:'gjv-talk',duration:10,contributors:[],desc:''},{title:'Workshop barn',type:'annet',duration:50,contributors:[],desc:''},{title:'Workshop ungdom',type:'annet',duration:50,contributors:[],desc:''} ]},
+  { day:0, id:'m3', title:'“Det som rører seg”', startTime:'19:00', endTime:'21:00', slots:[ {title:'Aktuelle temaer',type:'tale',duration:30,contributors:[],desc:''},{title:'Paneldebatt',type:'panelsamtale',duration:45,contributors:[],desc:''},{title:'Åpen dialog',type:'annet',duration:30,contributors:[],desc:''} ]},
+  { day:1, id:'m4', title:'Seminarer / Organisasjonssamling', startTime:'09:00', endTime:'10:30', slots:[ {title:'Seminar 1',type:'tale',duration:60,contributors:[],desc:'Parallelt seminar'},{title:'Seminar 2',type:'tale',duration:60,contributors:[],desc:'Parallelt seminar'},{title:'Seminar 3',type:'tale',duration:60,contributors:[],desc:'Parallelt seminar'} ]},
+  { day:1, id:'m5', title:'“Det nye”', startTime:'11:00', endTime:'13:00', slots:[ {title:'Nytenkning og innovasjon',type:'gjv-talk',duration:30,contributors:[],desc:''},{title:'Nye initiativer',type:'tale',duration:40,contributors:[],desc:''} ]},
+  { day:1, id:'m6', title:'“Det evige”', startTime:'15:00', endTime:'17:00', slots:[ {title:'Evangeliet i dag',type:'tale',duration:40,contributors:[],desc:''},{title:'Lovsang',type:'sang',duration:20,contributors:[],desc:''},{title:'Avslutningsgudstjeneste',type:'tale',duration:45,contributors:[],desc:''} ]}
+];
+
+const defaultBidragsytere = [
+  {navn:'Janne Dale Hauger',org:'Annet',tittel:'Alle trenger å bli sett',ansvarlig:'Eirik',status:'Signert',epost:'',tlf:'',notater:''},
+  {navn:'Helga Irene Fossum',org:'Annet',tittel:'Støtte og tilskudd til menigheten',ansvarlig:'Bente',status:'Signert',epost:'',tlf:'',notater:''},
+  {navn:'Andreas Bjørntvedt',org:'Annet',tittel:'Hvem og hva har betydning ved etablering av trospraksis hos unge?',ansvarlig:'Roald',status:'Signert',epost:'',tlf:'',notater:''},
+  {navn:'Jorun Singstad Djupvik',org:'Annet',tittel:'Tweens i tjeneste',ansvarlig:'Bente',status:'Signert',epost:'',tlf:'',notater:''},
+  {navn:'Asbjørn Håkonseth',org:'Annet',tittel:'Barneteologi for å gi Jesus videre',ansvarlig:'Bente',status:'Signert',epost:'',tlf:'',notater:''},
+  {navn:'Peder Kjøs',org:'Annet',tittel:'Samtale over kløfta',ansvarlig:'Eirik',status:'Kontrakt sendt',epost:'',tlf:'',notater:''},
+  {navn:'Hans Magnus Gjerlaug',org:'Annet',tittel:'Hvordan arbeide forebyggende blant barn og unge?',ansvarlig:'Per Kristian',status:'Kontrakt sendt',epost:'',tlf:'',notater:''},
+  {navn:'Kristian Landro',org:'Annet',tittel:'Hvordan disippelgjøre/nå ungdom utenfor kristne sammenhenger',ansvarlig:'Eirik',status:'Signert',epost:'',tlf:'',notater:''},
+  {navn:'Olve Fagermoen',org:'Annet',tittel:'KVS Krigerne - Hvordan engasjere Gen Z',ansvarlig:'Eirik',status:'Signert',epost:'',tlf:'',notater:''},
+  {navn:'Sigurd Stakkeland',org:'Annet',tittel:'Familier og vennergjenger som lever ut troen i hverdagen',ansvarlig:'Mats',status:'Signert',epost:'',tlf:'',notater:''},
+  {navn:'Joakim Magnus',org:'Annet',tittel:'Kristen i verden / Teologi for livet',ansvarlig:'Eirik',status:'Signert',epost:'',tlf:'',notater:''},
+  {navn:'Hewan Negassi / Sindre Sørlie',org:'Annet',tittel:'Historier fra disippelhus - studenter og unge voksne',ansvarlig:'Ståle',status:'Signert',epost:'',tlf:'',notater:''},
+  {navn:'Linn Margit Bru',org:'Annet',tittel:'Disippelskap som sprenger tradisjonelle rammer',ansvarlig:'Roald',status:'Signert',epost:'',tlf:'',notater:''},
+  {navn:'Mark DeYMaz + Baptist/Bente',org:'Baptist',tittel:'Fleretniske menigheter (3 seminarer)',ansvarlig:'Bente',status:'Signert',epost:'',tlf:'',notater:'Kan delta digitalt – hybridløsning nødvendig'},
+  {navn:'Jan Inge Jenssen',org:'FriBU',tittel:'Kristent barne-/ungdomsarbeid i Nord-Norge',ansvarlig:'Eirik',status:'Signert',epost:'',tlf:'',notater:''},
+  {navn:'Ruben Lie',org:'FriBU',tittel:'Å lede barn og unge inn i bønn som livsstil',ansvarlig:'Eirik',status:'Signert',epost:'',tlf:'',notater:''},
+  {navn:'Yvonne Aas',org:'FriBU',tittel:'Hvordan lage trosopplæring alle vil ha?',ansvarlig:'Mats',status:'Signert',epost:'',tlf:'',notater:''},
+  {navn:'FriBU Team',org:'FriBU',tittel:'Konfirmant som disippel',ansvarlig:'Mats',status:'Signert',epost:'',tlf:'',notater:''},
+  {navn:'Gunnhild Litleskare',org:'Pinse',tittel:'Hvordan bruke Bibelen med barn?',ansvarlig:'Bente',status:'Signert',epost:'',tlf:'',notater:''},
+  {navn:'Karen Hetland',org:'MBU',tittel:'Samtale og sjelesorg med unge',ansvarlig:'Per Kristian',status:'Signert',epost:'',tlf:'',notater:''},
+  {navn:'Hege Bergjord',org:'FaBU',tittel:'Foreldreveiledning i tro',ansvarlig:'Roald',status:'Signert',epost:'',tlf:'',notater:''},
+  {navn:'Torbjørg Oline Nyli & Martin Jakobsen',org:'Annet',tittel:'Om kjønnsroller og ledelse / Kvinner i tjeneste',ansvarlig:'Ståle',status:'Avvent',epost:'',tlf:'',notater:''},
+  {navn:'Britt Solveig Spilde',org:'Annet',tittel:'Bety en forskjell i nabolaget',ansvarlig:'Roald',status:'Avvent',epost:'',tlf:'',notater:''},
+  {navn:'Eirin Sørheim',org:'Annet',tittel:'Samhandling og relasjon mellom barn og Den Hellige Ånd',ansvarlig:'Bente',status:'Avslått',epost:'',tlf:'',notater:''},
+  {navn:'Maria Østhassel Abrahamsen',org:'Annet',tittel:'Psykt deg',ansvarlig:'Mats',status:'Avslått',epost:'',tlf:'',notater:''},
+  {navn:'Damaris Norge',org:'Partner',tittel:'Kritisk medieforståelse for ungdom',ansvarlig:'Eirik',status:'Spurt',epost:'',tlf:'',notater:''},
+  {navn:'Awana / Laget',org:'Partner',tittel:'Disippelskap i praksis – verktøy og ressurser',ansvarlig:'Per Kristian',status:'Spurt',epost:'',tlf:'',notater:''},
+];
+
+// Innspill-data fjernet (fanen er ikke lenger i bruk)
+
+const days = [{label:'Fredag',date:'23. oktober 2026'},{label:'Lørdag',date:'24. oktober 2026'}];
+
+// ======= KONFIGURASJON =======
+// Lim inn URL-en fra Apps Script-deployet her:
+const SCRIPT_URL = '';
+// Eksempel: 'https://script.google.com/macros/s/AKfyc.../exec'
+
+// ======= PERSISTENS (Sheet + localStorage fallback) =======
+let sheetConnected = false;
+let saving = false;
+
+function loadLocal(key, fallback) {
+  try {
+    const saved = localStorage.getItem('gjv_' + key);
+    if (saved) return JSON.parse(saved);
+  } catch(e) {}
+  return JSON.parse(JSON.stringify(fallback));
+}
+function saveLocal() {
+  try {
+    localStorage.setItem('gjv_meetings', JSON.stringify(meetings));
+    localStorage.setItem('gjv_bidragsytere', JSON.stringify(bidragsytere));
+  } catch(e) {}
+}
+
+function updateSyncUI(state, label) {
+  const dot = document.getElementById('syncDot');
+  const lbl = document.getElementById('syncLabel');
+  const btn = document.getElementById('syncAction');
+  if (!dot) return;
+  dot.className = 'sync-dot ' + state;
+  lbl.textContent = label;
+  btn.style.display = (state === 'connected') ? 'block' : 'none';
+}
+
+async function loadFromSheet() {
+  if (!SCRIPT_URL) {
+    updateSyncUI('local', 'Lokal modus — ingen Sheet-URL');
+    return false;
+  }
+  try {
+    updateSyncUI('syncing', 'Kobler til Sheet...');
+    const resp = await fetch(SCRIPT_URL);
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const data = await resp.json();
+    if (data.error) throw new Error(data.error);
+    if (data.meetings && data.meetings.length > 0) meetings = data.meetings;
+    if (data.bidragsytere && data.bidragsytere.length > 0) bidragsytere = data.bidragsytere;
+    saveLocal(); // cache lokalt
+    sheetConnected = true;
+    updateSyncUI('connected', 'Koblet til Google Sheet');
+    return true;
+  } catch(e) {
+    console.warn('Sheet-henting feilet:', e);
+    updateSyncUI('error', 'Feil — bruker lokal data');
+    setTimeout(() => {
+      if (!sheetConnected) updateSyncUI('local', 'Lokal modus');
+    }, 3000);
+    return false;
+  }
+}
+
+async function saveToSheet() {
+  if (!SCRIPT_URL || !sheetConnected || saving) return;
+  saving = true;
+  updateSyncUI('syncing', 'Lagrer til Sheet...');
+  try {
+    const resp = await fetch(SCRIPT_URL, {
+      method: 'POST',
+      headers: {'Content-Type': 'text/plain'}, // Apps Script krever dette for CORS
+      body: JSON.stringify({
+        meetings: meetings,
+        bidragsytere: bidragsytere
+      })
+    });
+    const result = await resp.json();
+    if (result.error) throw new Error(result.error);
+    updateSyncUI('connected', 'Lagret til Sheet');
+  } catch(e) {
+    console.warn('Sheet-lagring feilet:', e);
+    updateSyncUI('error', 'Lagring feilet — lagret lokalt');
+    setTimeout(() => updateSyncUI('connected', 'Koblet til Google Sheet'), 3000);
+  }
+  saving = false;
+}
+
+function persist() {
+  saveLocal();
+  saveToSheet(); // async, feiler stille
+}
+
+async function reloadFromSheet() {
+  const loaded = await loadFromSheet();
+  if (loaded) { renderAll(); toast('Data synkronisert fra Sheet'); }
+}
+
+// Initialiser data fra localStorage (rask oppstart)
+let meetings = loadLocal('meetings', defaultMeetings);
+let bidragsytere = loadLocal('bidragsytere', defaultBidragsytere);
+// innspillData fjernet
+
+let currentFilter = 'all';
+let currentUser = {name:'Eirik',email:'eirik@gjv.no',initials:'E'};
+let dragState = null;
+
+// ======= AUTH =======
+function doLogin(){
+  const email = document.getElementById('loginEmail').value || 'eirik@gjv.no';
+  const name = email.split('@')[0];
+  currentUser = {name:name.charAt(0).toUpperCase()+name.slice(1),email,initials:name.charAt(0).toUpperCase()};
+  document.getElementById('userName').textContent = currentUser.name;
+  document.getElementById('userAvatar').textContent = currentUser.initials;
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('app').classList.add('active');
+  renderAll();
+}
+function doLogout(){document.getElementById('app').classList.remove('active');document.getElementById('loginScreen').style.display='flex';}
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active',n.dataset.page===id));
+}
+
+// ======= RENDER ALL =======
+function renderAll(){renderProgram();renderBidrag();populateContribSelect();updateBidragCount();}
+
+function calcTimeSlots(meeting){
+  const [sh,sm] = meeting.startTime.split(':').map(Number);
+  let mins = sh*60+sm;
+  return meeting.slots.map(s=>{
+    const startH = String(Math.floor(mins/60)).padStart(2,'0');
+    const startM = String(mins%60).padStart(2,'0');
+    const end = mins + s.duration;
+    const endH = String(Math.floor(end/60)).padStart(2,'0');
+    const endM = String(end%60).padStart(2,'0');
+    const r = {start:`${startH}:${startM}`,end:`${endH}:${endM}`};
+    mins = end;
+    return r;
+  });
+}
+
+// ======= HELPER: finn programposter for en bidragsyter =======
+function getSlotsByContributor(navn){
+  const result=[];
+  meetings.forEach(m=>{
+    m.slots.forEach(s=>{
+      if((s.contributors||[]).includes(navn)){
+        result.push({meetingTitle:m.title,slotTitle:s.title,meetingId:m.id});
+      }
+    });
+  });
+  return result;
+}
+
+// ======= BIDRAG COUNT =======
+function updateBidragCount(){
+  const el = document.getElementById('bidragCount');
+  if (el) el.textContent = bidragsytere.length;
+}
+
+// ======= PROGRAM =======
+function renderProgram(){
+  let html = '';
+  days.forEach((day,di)=>{
+    const dayMeetings = meetings.filter(m=>m.day===di);
+    html += `<div class="day-section"><div class="day-header"><span class="day-badge">${day.label}</span><span class="day-date">${day.date}</span></div>`;
+    dayMeetings.forEach(m=>{
+      const mi = meetings.indexOf(m);
+      const times = calcTimeSlots(m);
+      const totalUsed = m.slots.reduce((a,s)=>a+s.duration,0);
+      const [eh,em] = m.endTime.split(':').map(Number);
+      const [sh,smm] = m.startTime.split(':').map(Number);
+      const totalAvail = (eh*60+em)-(sh*60+smm);
+      const remaining = totalAvail - totalUsed;
+      html += `<div class="meeting-section">
+        <div class="meeting-header">
+          <div><span class="meeting-title">${m.title}</span><button class="meeting-edit-btn" onclick="openMeetingEditModal(${mi})" title="Rediger møtepunkt">✏️</button>
+            <div class="time-calc">${totalUsed} av ${totalAvail} min brukt${remaining>0?` · <span style="color:var(--gjv-sage)">${remaining} min ledig</span>`:(remaining<0?` · <span style="color:var(--red)">${Math.abs(remaining)} min over!</span>`:' · Fullt')}</div>
+          </div>
+          <span class="meeting-time">${m.startTime}–${m.endTime}</span>
+        </div>
+        <div class="meeting-slots" id="slots-${mi}">`;
+      m.slots.forEach((s,si)=>{
+        const contribs2 = (s.contributors||[]).filter(c=>c);
+        const contribHtml = contribs2.length ? `<span class="slot-contributor">→ ${contribs2.join(', ')}</span>` : '';
+        html += `<div class="slot-item" draggable="true" data-mi="${mi}" data-si="${si}"
+          ondragstart="dragStart(event)" ondragover="dragOver(event)" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" ondrop="dragDrop(event)" ondragend="dragEnd(event)">
+          <span class="slot-drag">⠇</span>
+          <span class="slot-order">${si+1}</span>
+          <div class="slot-info">
+            <div class="slot-title">${s.title}</div>
+            <div class="slot-meta">
+              <span class="type-badge type-${s.type}">${slotTypes[s.type]}</span>
+              ${contribHtml}
+              <span class="slot-duration">${times[si].start}–${times[si].end} (${s.duration} min)</span>
+            </div>
+          </div>
+          <div class="slot-actions">
+            <button class="slot-btn" onclick="event.stopPropagation();editSlot(${mi},${si})" title="Rediger">✏️</button>
+            <button class="slot-btn del" onclick="event.stopPropagation();deleteSlot(${mi},${si})" title="Slett">🗑</button>
+          </div>
+        </div>`;
+      });
+      html += `</div><button class="add-slot-btn" onclick="openSlotModal(${mi})">+ Legg til programpost</button></div>`;
+    });
+    html += '</div>';
+  });
+  document.getElementById('programContent').innerHTML = html;
+}
+
+// Drag & drop
+function dragStart(e){
+  const el=e.currentTarget;dragState={mi:+el.dataset.mi,si:+el.dataset.si};
+  el.classList.add('dragging');e.dataTransfer.effectAllowed='move';
+}
+function dragOver(e){e.preventDefault();e.dataTransfer.dropEffect='move';}
+function dragEnter(e){e.preventDefault();const el=e.currentTarget;if(el.classList.contains('slot-item'))el.classList.add('drag-over');}
+function dragLeave(e){e.currentTarget.classList.remove('drag-over');}
+function dragDrop(e){
+  e.preventDefault();const el=e.currentTarget;el.classList.remove('drag-over');
+  if(!dragState)return;
+  const tmi=+el.dataset.mi,tsi=+el.dataset.si;
+  if(dragState.mi===tmi){
+    const m=meetings[tmi];const item=m.slots.splice(dragState.si,1)[0];
+    m.slots.splice(tsi,0,item);persist();renderProgram();toast('Rekkefølge oppdatert');
+  }
+}
+function dragEnd(e){e.currentTarget.classList.remove('dragging');dragState=null;document.querySelectorAll('.drag-over').forEach(el=>el.classList.remove('drag-over'));}
+
+// Slot modal
+function openSlotModal(mi,si){
+  document.getElementById('slotModalTitle').textContent = si!==undefined ? 'Rediger programpost' : 'Ny programpost';
+  document.getElementById('slotEditMeeting').value = mi;
+  document.getElementById('slotEditIdx').value = si!==undefined ? si : -1;
+  const selected = si!==undefined ? (meetings[mi].slots[si].contributors||[]) : [];
+  populateContribSelect(selected);
+  if(si!==undefined){
+    const s=meetings[mi].slots[si];
+    document.getElementById('slotTitleInput').value=s.title;
+    document.getElementById('slotTypeInput').value=s.type;
+    document.getElementById('slotDurInput').value=s.duration;
+    document.getElementById('slotDescInput').value=s.desc||'';
+  } else {
+    document.getElementById('slotTitleInput').value='';
+    document.getElementById('slotTypeInput').value='tale';
+    document.getElementById('slotDurInput').value=15;
+    document.getElementById('slotDescInput').value='';
+  }
+  document.getElementById('slotModal').classList.add('show');
+}
+function editSlot(mi,si){openSlotModal(mi,si);}
+function saveSlot(){
+  const mi=+document.getElementById('slotEditMeeting').value;
+  const si=+document.getElementById('slotEditIdx').value;
+  const checkedBoxes = document.querySelectorAll('#slotContribWrap input[type=checkbox]:checked');
+  const selectedContribs = Array.from(checkedBoxes).map(cb=>cb.value);
+  const data={
+    title:document.getElementById('slotTitleInput').value||'Uten tittel',
+    type:document.getElementById('slotTypeInput').value,
+    duration:+document.getElementById('slotDurInput').value||15,
+    contributors:selectedContribs,
+    desc:document.getElementById('slotDescInput').value
+  };
+  if(si>=0){meetings[mi].slots[si]=data;}else{meetings[mi].slots.push(data);}
+  persist();closeModal('slotModal');renderProgram();toast(si>=0?'Programpost oppdatert':'Programpost lagt til');
+}
+function deleteSlot(mi,si){
+  if(confirm('Slett denne programposten?')){meetings[mi].slots.splice(si,1);persist();renderProgram();toast('Programpost slettet');}
+}
+
+function populateContribSelect(selected){
+  selected = selected || [];
+  const wrap=document.getElementById('slotContribWrap');
+  const signerte=bidragsytere.filter(b=>b.status==='Signert');
+  if(signerte.length===0){
+    wrap.innerHTML='<em style="color:var(--gjv-text-muted);font-size:0.75rem">Ingen signerte bidragsytere ennå</em>';
+  } else {
+    wrap.innerHTML=signerte.map(b=>{
+      const checked=selected.includes(b.navn)?'checked':'';
+      return `<label><input type="checkbox" value="${b.navn}" ${checked}/>${b.navn} <span style="color:var(--gjv-text-muted);font-size:0.7rem">(${b.org})</span></label>`;
+    }).join('');
+  }
+}
+
+// ======= BIDRAGSYTERE =======
+function setFilter(el,filter){
+  currentFilter=filter;
+  document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  renderBidrag();
+}
+function renderBidrag(){
+  const query=(document.getElementById('searchInput')?.value||'').toLowerCase();
+  const filtered=bidragsytere.filter(b=>{
+    const matchFilter=currentFilter==='all'||b.status===currentFilter;
+    const slots=getSlotsByContributor(b.navn);
+    const slotNames=slots.map(s=>s.slotTitle+' '+s.meetingTitle).join(' ').toLowerCase();
+    const matchSearch=!query||b.navn.toLowerCase().includes(query)||b.org.toLowerCase().includes(query)||slotNames.includes(query)||(b.ansvarlig||'').toLowerCase().includes(query)||(b.tittel||'').toLowerCase().includes(query);
+    return matchFilter&&matchSearch;
+  });
+  document.getElementById('bidragTable').innerHTML=filtered.map((b,i)=>{
+    const realIdx=bidragsytere.indexOf(b);
+    const bc=b.status==='Signert'?'badge-signert':b.status==='Kontrakt sendt'?'badge-sendt':b.status==='Spurt'?'badge-spurt':b.status==='Avvent'?'badge-avvent':'badge-avslatt';
+    const slots=getSlotsByContributor(b.navn);
+    let progpostHtml;
+    if(slots.length>0){
+      progpostHtml=slots.map(s=>`<span class="progpost-badge" title="${s.meetingTitle}">${s.slotTitle}</span>`).join('');
+    } else {
+      progpostHtml=b.tittel?`<span class="progpost-none">${b.tittel}</span>`:'<span class="progpost-none">Ikke tilknyttet</span>';
+    }
+    return `<tr data-idx="${realIdx}" onclick="openBidragModal(${realIdx})">
+      <td class="td-name">${b.navn}</td>
+      <td class="td-org">${b.org}</td>
+      <td class="td-title">${progpostHtml}</td>
+      <td>${b.ansvarlig?`<span class="komite-badge">${b.ansvarlig}</span>`:'-'}</td>
+      <td><span class="badge ${bc}">${b.status}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+function openBidragModal(idx){
+  const isEdit=idx!==undefined&&idx>=0;
+  document.getElementById('bidragModalTitle').textContent=isEdit?'Rediger bidragsyter':'Ny bidragsyter';
+  document.getElementById('bidragEditIdx').value=isEdit?idx:-1;
+  document.getElementById('bidragDeleteBtn').style.display=isEdit?'inline-flex':'none';
+  if(isEdit){
+    const b=bidragsytere[idx];
+    document.getElementById('bidragNavnInput').value=b.navn;
+    document.getElementById('bidragOrgInput').value=b.org;
+    document.getElementById('bidragTittelInput').value=b.tittel;
+    document.getElementById('bidragAnsvarligInput').value=b.ansvarlig||'';
+    document.getElementById('bidragStatusInput').value=b.status;
+    document.getElementById('bidragEpostInput').value=b.epost||'';
+    document.getElementById('bidragTlfInput').value=b.tlf||'';
+    document.getElementById('bidragNotaterInput').value=b.notater||'';
+  } else {
+    ['bidragNavnInput','bidragOrgInput','bidragTittelInput','bidragEpostInput','bidragTlfInput','bidragNotaterInput'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('bidragAnsvarligInput').value='';
+    document.getElementById('bidragStatusInput').value='Spurt';
+  }
+  document.getElementById('bidragModal').classList.add('show');
+}
+function saveBidrag(){
+  const idx=+document.getElementById('bidragEditIdx').value;
+  const data={
+    navn:document.getElementById('bidragNavnInput').value||'Ukjent',
+    org:document.getElementById('bidragOrgInput').value||'',
+    tittel:document.getElementById('bidragTittelInput').value||'',
+    ansvarlig:document.getElementById('bidragAnsvarligInput').value,
+    status:document.getElementById('bidragStatusInput').value,
+    epost:document.getElementById('bidragEpostInput').value,
+    tlf:document.getElementById('bidragTlfInput').value,
+    notater:document.getElementById('bidragNotaterInput').value
+  };
+  if(idx>=0){bidragsytere[idx]=data;}else{bidragsytere.push(data);}
+  persist();closeModal('bidragModal');renderAll();toast(idx>=0?'Bidragsyter oppdatert':'Ny bidragsyter lagt til');
+}
+function deleteBidrag(){
+  const idx=+document.getElementById('bidragEditIdx').value;
+  if(idx>=0&&confirm('Slett denne bidragsyteren?')){
+    bidragsytere.splice(idx,1);persist();closeModal('bidragModal');renderAll();toast('Bidragsyter slettet');
+  }
+}
+
+// ======= SORTING =======
+let sortCol=null,sortDir='asc';
+function sortBidrag(col,thEl){
+  document.querySelectorAll('th.sortable').forEach(th=>th.classList.remove('asc','desc'));
+  if(sortCol===col){sortDir=sortDir==='asc'?'desc':'asc';}else{sortCol=col;sortDir='asc';}
+  thEl.classList.add(sortDir);
+  bidragsytere.sort((a,b)=>{
+    let va,vb;
+    if(col==='programpost'){
+      const sa=getSlotsByContributor(a.navn);
+      const sb=getSlotsByContributor(b.navn);
+      va=(sa.length?sa.map(s=>s.slotTitle).join(', '):a.tittel||'').toLowerCase();
+      vb=(sb.length?sb.map(s=>s.slotTitle).join(', '):b.tittel||'').toLowerCase();
+    } else {
+      va=(a[col]||'').toLowerCase();
+      vb=(b[col]||'').toLowerCase();
+    }
+    if(va<vb)return sortDir==='asc'?-1:1;
+    if(va>vb)return sortDir==='asc'?1:-1;
+    return 0;
+  });
+  renderBidrag();
+}
+
+// ======= MEETING EDIT =======
+function openMeetingEditModal(mi){
+  const m=meetings[mi];
+  document.getElementById('meetingEditIdx').value=mi;
+  document.getElementById('meetingTitleInput').value=m.title;
+  document.getElementById('meetingStartInput').value=m.startTime;
+  document.getElementById('meetingEndInput').value=m.endTime;
+  document.getElementById('meetingModal').classList.add('show');
+}
+function saveMeetingEdit(){
+  const mi=+document.getElementById('meetingEditIdx').value;
+  meetings[mi].title=document.getElementById('meetingTitleInput').value||meetings[mi].title;
+  meetings[mi].startTime=document.getElementById('meetingStartInput').value||meetings[mi].startTime;
+  meetings[mi].endTime=document.getElementById('meetingEndInput').value||meetings[mi].endTime;
+  persist();closeModal('meetingModal');renderProgram();toast('Møtepunkt oppdatert');
+}
+
+// ======= UTILS =======
+function closeModal(id){document.getElementById(id).classList.remove('show');}
+function toast(msg){const t=document.getElementById('toast');t.innerHTML='✅ '+msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){document.querySelectorAll('.modal-overlay.show').forEach(m=>m.classList.remove('show'));}
+  if(e.key==='Enter'&&document.getElementById('loginScreen').style.display!=='none'){doLogin();}
+});
+document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('show');}));
+
+// ======= OPPSTART =======
+async function init() {
+  // Vis appen med lokal data først (instant)
+  doLogin();
+
+  // Prøv å hente fra Sheet i bakgrunnen
+  const loaded = await loadFromSheet();
+  if (loaded) renderAll();
+
+  // Skjul loading overlay
+  const overlay = document.getElementById('loadingOverlay');
+  if (overlay) overlay.classList.add('hidden');
+  setTimeout(() => { if (overlay) overlay.remove(); }, 500);
+}
+init();
+</script>
 </body>
 </html>
